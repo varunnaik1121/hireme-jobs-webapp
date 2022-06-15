@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/hireme-jobs-webapp/static/css/main.42739428.css",
+    "main.js": "/hireme-jobs-webapp/static/js/main.9677e1b9.js",
+    "index.html": "/hireme-jobs-webapp/index.html",
+    "main.42739428.css.map": "/hireme-jobs-webapp/static/css/main.42739428.css.map",
+    "main.9677e1b9.js.map": "/hireme-jobs-webapp/static/js/main.9677e1b9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.42739428.css",
+    "static/js/main.9677e1b9.js"
+  ]
+}
