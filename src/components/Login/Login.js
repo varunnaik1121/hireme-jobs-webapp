@@ -57,7 +57,7 @@ const Login = () => {
         <div className="user signupBx">
           <div className="imgBx">
             <img
-              src="https://images.unsplash.com/photo-1543599538-a6c4f6cc5c05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+              src="https://images.unsplash.com/photo-1600058644231-c99658f408ce?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=736&q=80"
               alt="image"
             ></img>
           </div>
