@@ -37,10 +37,18 @@ const Login = () => {
             </form>
           </div>
           <div className="imgBx">
-            <img
+            {/* <img
               src="https://images.unsplash.com/photo-1487528278747-ba99ed528ebc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
               alt="image"
-            ></img>
+            ></img> */}
+            <div className="gradient">
+              <h1 className="title">Now or Never.</h1>
+              <p className="subtitle">
+                " Choose a job you love, and you will never have to work a day
+                in your life ".
+              </p>
+              <span className="author">- Helen Keller</span>
+            </div>
           </div>
         </div>
 
@@ -49,7 +57,7 @@ const Login = () => {
         <div className="user signupBx">
           <div className="imgBx">
             <img
-              src="https://images.unsplash.com/photo-1655312214809-553e851782ae?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=993&q=80"
+              src="https://images.unsplash.com/photo-1543599538-a6c4f6cc5c05?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
               alt="image"
             ></img>
           </div>
