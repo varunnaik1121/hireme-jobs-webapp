@@ -114,8 +114,6 @@ section .container .user .formBx .inputBox input{
     transition: .4s;
     font-weight: 500;
     min-width: 300px;
-
-  
 }
 .inputBox span{
     position: absolute;
@@ -142,8 +140,7 @@ section .container .user .formBx .inputBox input{
     /* letter-spacing: .5px; */
 }
 section .container .user .formBx .inputBox input:focus{
-    /* outline: none !important; */
-    /* border: none; */
+    
     border: 1px solid #2028eb;
     outline: 1px solid #2028eb;
 }
@@ -417,9 +414,64 @@ font-size: 30px;
    
     
 }
+/* .inputBox .error{
+    border: 1px solid red;
+} */
+
+/*  
+section .container .user .formBx .inputBox {
+    outline: none;
+    border: 1px solid red;
+} */
+
+/* section .container .user .formBx .inputBox input{
+    outline: none;
+    border: 1px solid #edf0f7;
+}  */
+
+section .container .user .formBx .inputBox input{
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #abb8c5;
+    border-radius: 2px;
+    outline: none;
+    color: #000;
+    font-size: 14px;
+    transition: .4s;
+    font-weight: 500;
+    min-width: 300px;
+}
+
+section .container .user .formBx .inputBox.error input{
+    outline: none ;
+    border: 1px solid red;
+}
 
 
 
+.inputBox input .error input{
+    border: none;
+}
 
 
+section .container .user .formBx .inputBox input:focus{
+    border: none; 
+ outline: none;
+   outline: 1px solid #2028eb;
+}
 
+.green{
+    border: 1px solid green;
+}
+.error-message{
+    margin: 0;
+    font-size: 10px;
+    padding: 2px 5px;
+  
+    color: red;
+    width: 100%;
+    /* border: 1px solid red; */
+    margin-top: 2px;
+
+
+}

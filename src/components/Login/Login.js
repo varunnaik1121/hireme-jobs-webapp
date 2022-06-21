@@ -1,14 +1,49 @@
 import React, { useState } from "react";
 import "./Login.css";
 import googleIcon from "../../assests/Login-page-images/google-icon.png";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+
 const Login = () => {
   const [isActive, setIsActive] = useState(false);
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const {
+    register: register2,
+    formState: { errors: errors2 },
+    handleSubmit: handleSubmit2,
+  } = useForm();
+
+  const onSignInSubmit = (values) => {
+    const { signInEmail } = values;
+
+    // console.log(signInEmail);
+    console.log("there were no errors");
+  };
+
+  const onSignUpSubmit = (values) => {
+    const { signUpEmail } = values;
+
+    // console.log(signInEmail);
+    console.log("there were no errors");
+  };
+
+  console.log(errors2);
+
+  const navigate = useNavigate();
+
   return (
     <section>
       <div className={`container ${isActive && "active"}`}>
         <div className="user signinBx">
           <div className="formBx">
-            <form>
+            <form onSubmit={handleSubmit(onSignInSubmit)}>
               <h1>
                 Welcome to <span className="special">Hire Me</span>
               </h1>
@@ -16,15 +51,39 @@ const Login = () => {
                 Find your dream jobs through hire me. Lets get started.
               </p>
 
-              <div className="inputBox">
-                <input type="text" placeholder="example@gmail.com"></input>
+              <div className={`inputBox `}>
+                <input
+                  type="email"
+                  {...register("signInEmail", {
+                    required: "email required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "invalid email address",
+                    },
+                  })}
+                ></input>
                 <span>E-mail</span>
               </div>
+              {errors.signInEmail && (
+                <p className="error-message">{errors.signInEmail.message}</p>
+              )}
 
-              <div className="inputBox">
-                <input type="password" placeholder="6+ strong character" />
+              <div className={`inputBox `}>
+                <input
+                  type="password"
+                  {...register("signInPassword", {
+                    required: "password required",
+                    minLength: {
+                      value: 6,
+                      message: "password is too short",
+                    },
+                  })}
+                />
                 <span>Password</span>
               </div>
+              {errors.signInPassword && (
+                <p className="error-message">{errors.signInPassword.message}</p>
+              )}
 
               <input type="submit" value="Login" />
               <p className="signup">
@@ -51,9 +110,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-
-        {/* next page starts here */}
-
+        0 {/* next page starts here */}
         <div className="user signupBx">
           <div className="imgBx">
             <img
@@ -62,23 +119,67 @@ const Login = () => {
             ></img>
           </div>
           <div className="formBx">
-            <form>
+            <form onSubmit={handleSubmit2(onSignUpSubmit)}>
               <h2>
                 Create an <span className="special">Account</span>
               </h2>
               <div className="inputBox">
-                <input type="text" placeholder="example@gmail.com"></input>
+                <input
+                  placeholder="example@gmail.com"
+                  type="email"
+                  {...register2("signUpEmail", {
+                    required: "email required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "invalid email address",
+                    },
+                  })}
+                ></input>
                 <span>E-mail</span>
               </div>
-              <div className="inputBox">
-                <input type="text" placeholder="example123"></input>
-                <span>Username</span>
-              </div>
+              {errors2.signUpEmail && (
+                <p className="error-message">{errors2.signUpEmail.message}</p>
+              )}
 
               <div className="inputBox">
-                <input type="password" placeholder="6+ strong character" />
+                <input
+                  type="text"
+                  placeholder="example123"
+                  {...register2("signUpUsername", {
+                    required: "Username required",
+                    minLength: {
+                      value: 4,
+                      message: "username is too short",
+                    },
+                  })}
+                ></input>
+                <span>Username</span>
+              </div>
+              {errors2.signUpUsername && (
+                <p className="error-message">
+                  {errors2.signUpUsername.message}
+                </p>
+              )}
+
+              <div className="inputBox">
+                <input
+                  type="password"
+                  placeholder="6+ strong character"
+                  {...register2("signUpPassword", {
+                    required: "password required",
+                    minLength: {
+                      value: 6,
+                      message: "password is too short",
+                    },
+                  })}
+                />
                 <span>Password</span>
               </div>
+              {errors2.signUpPassword && (
+                <p className="error-message">
+                  {errors2.signUpPassword.message}
+                </p>
+              )}
 
               <input type="submit" value="Create an account" />
               <div className="span-container">
