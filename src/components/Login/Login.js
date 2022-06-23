@@ -4,9 +4,12 @@ import googleIcon from "../../assests/Login-page-images/google-icon.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 const Login = () => {
   const [isActive, setIsActive] = useState(false);
+  const { currentUser } = useContext(UserContext);
+  console.log(currentUser);
 
   const {
     handleSubmit,
