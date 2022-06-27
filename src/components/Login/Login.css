@@ -6,7 +6,7 @@ section{
     justify-content: center;
     align-items: center;
     padding: 20px;
-    transition: .5s;
+    transition: all .5s;
     width: 100%;
     /* border: 1px solid red; */
   
@@ -75,7 +75,7 @@ section .container .user .formBx{
     justify-content: center;
     align-items: center;
     padding: 40px;
-    transition: 0.5s;
+    transition: all 0.5s;
     border-radius: inherit;
     /* border: 1px solid red; */
   
@@ -146,7 +146,7 @@ section .container .user .formBx .inputBox input:focus{
 }
 
 
-section .container .user .formBx input[type="submit"]{
+section .container .user .formBx input[type="submit"],.btn{
     width: 100%;
     padding: 10px 12px;
     margin-top: 25px;
@@ -242,12 +242,12 @@ section .container .signupBx .formBx{
     top: 100%;
     /* opacity: 0; */
     opacity: 0;
-    transition: .5s;
+    transition: all .5s;
 
 }
 section .container .signinBx .formBx{
     top: 0;
-    transition: .5s;
+    transition: all .5s;
    
   
   
@@ -316,7 +316,7 @@ section .container .signinBx .imgBx{
 
 
 section .container.active .signinBx .imgBx{
-    transition: .5s;
+    transition: all .5s;
     top: -100%;
     opacity: 0;
 }
@@ -474,4 +474,17 @@ section .container .user .formBx .inputBox input:focus{
     margin-top: 2px;
 
 
+}
+.btn{
+    transition: all .3s ease;
+   
+}
+
+.btn:hover{
+    transform: scale(1.02);
+    background-color:#151cf0 ;
+}
+
+.btn:disabled{
+    background-color:#5a5ff6 ;
 }

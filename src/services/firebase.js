@@ -1,9 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { toast } from "react-hot-toast";
+
 const firebaseConfig = {
   apiKey: "AIzaSyCWgHYBRMUjMDCkVj9EkfOixBF57ptbN6E",
   authDomain: "hireme-d514e.firebaseapp.com",
@@ -15,7 +20,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const auth = getAuth(app);
+export const auth = getAuth();
 
 export const useAuthListener = () => {
   const [currentUser, setCurrentUser] = useState(
@@ -23,7 +28,7 @@ export const useAuthListener = () => {
   );
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
         localStorage.setItem("authUser", JSON.stringify(user));
         setCurrentUser(user);
@@ -32,15 +37,14 @@ export const useAuthListener = () => {
         setCurrentUser(null);
       }
     });
+    return () => {
+      unsub();
+    };
   }, []);
 
   return { currentUser };
 };
 
-export const signUp = async (email, password) => {
-  try {
-    await createUserWithEmailAndPassword(auth, email, password);
-  } catch (err) {
-    console.log(err);
-  }
+export const Login = async (email, password) => {
+  return await signInWithEmailAndPassword(auth, email, password);
 };

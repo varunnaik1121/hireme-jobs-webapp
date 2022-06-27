@@ -1,0 +1,41 @@
+.Home-container{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+   flex-direction: column;
+    border: 1px solid red;
+    min-height: 100vh;
+    align-items: center;
+
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px 10px;
+}
+.navbar ul{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    
+
+}
+.navbar ul li{
+  
+    list-style-type: none;
+    padding: 6px 20px;
+    transition: all .3s ease;
+    
+}
+.navbar button{
+  padding: 6px 20px;
+
+}
+.navbar ul li:hover{
+    background-color: blue;
+    color: white;
+}
