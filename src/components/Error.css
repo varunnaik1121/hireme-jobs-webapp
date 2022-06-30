@@ -1,0 +1,65 @@
+
+
+.page_404{
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.gif{
+ 
+ background-image: url(https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif);
+    height: 400px;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+   
+ }
+ 
+ .text-center{
+    text-align: center;
+    font-size: 80px;
+    margin-top: -20px;
+  
+ }
+ 
+ .btn-error{
+    padding: 10px 14px;
+    background: #39ac31;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #fff !important;
+    box-shadow: 2px 2px 4px rgba(0,0,0,.2);
+ }
+ .sec-below{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+ }
+ .sec-below p{
+    margin: 20px 0;
+    
+ }
+ .sec-below h3{
+  font-size: 30px;
+    
+ }
+
+ .link{
+    text-decoration: none;
+    color: #fff !important;
+
+ }
+
+ @media screen and (max-width:450px){
+   .text-center{
+      text-align: center;
+      font-size: 60px;
+      margin-top: 0px;
+    
+   }
+
+   
+ }

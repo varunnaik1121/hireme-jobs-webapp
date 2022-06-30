@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import "../Home/Home.css";
 import { useGlobalUser } from "../../context/userContext";
 import { UserContext } from "../../context/useUser";
-
+import AnimatedPage from "../AnimatedPage";
 export const Home = () => {
   const { logOut } = useGlobalUser();
   const handleLogOut = () => {
@@ -13,6 +13,10 @@ export const Home = () => {
   };
 
   const currentUser = useContext(UserContext);
+
+  useEffect(() => {
+    console.count("home page");
+  }, []);
 
   useEffect(() => {
     toast.dismiss();
@@ -24,20 +28,22 @@ export const Home = () => {
   }, [currentUser]);
 
   return (
-    <div className="Home-container">
-      <h1>This is Home page and this is protected</h1>
-      <nav className="navbar">
-        <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-        </ul>
+    <AnimatedPage>
+      <div className="Home-container">
+        <h1>This is Home page and this is protected</h1>
+        <nav className="navbar">
+          <ul>
+            <li>Home</li>
+            <li>About</li>
+            <li>Contact</li>
+          </ul>
 
-        <button onClick={handleLogOut} className="">
-          logout
-        </button>
-      </nav>
-      <div>content will deliver here later🙂..</div>
-    </div>
+          <button onClick={handleLogOut} className="">
+            logout
+          </button>
+        </nav>
+        <div>content will deliver here later🙂..</div>
+      </div>
+    </AnimatedPage>
   );
 };

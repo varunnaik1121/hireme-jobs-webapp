@@ -184,6 +184,8 @@ section .container .user .formBx .signup{
 a{
     color: #2028eb;
     text-decoration: none;
+    padding: 2px 4px;
+    text-decoration: underline;
 }
 
 .span-container{
@@ -192,6 +194,7 @@ a{
     align-items: center;
     /* border: 1px solid red; */
     margin-top: 15px;
+
 }
 .span-container span{
     width: 30% ;
