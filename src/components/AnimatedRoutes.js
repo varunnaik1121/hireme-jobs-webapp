@@ -4,6 +4,7 @@ import Error from "./Error";
 import { Home } from "./Home/Home";
 import { Route, Routes, useLocation } from "react-router";
 import Loading from "./Loading/Loading";
+import PostJobPage from "./Post-A-Job/PostJobPage";
 const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const AnimatedRoutes = ({ currentUser }) => {
@@ -21,6 +22,7 @@ const AnimatedRoutes = ({ currentUser }) => {
             </ProtectedRoute>
           }
         ></Route>
+        <Route path="/postJob" element={<PostJobPage />}></Route>
         <Route path="*" element={<Error />}></Route>
       </Routes>
     </Suspense>

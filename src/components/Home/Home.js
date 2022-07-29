@@ -6,8 +6,18 @@ import "../Home/Home.css";
 import { useGlobalUser } from "../../context/userContext";
 import { UserContext } from "../../context/useUser";
 import AnimatedPage from "../AnimatedPage";
+import { Container, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import Header from "../Header/Header";
+const useStyles = makeStyles({
+  container: {
+    border: "1px solid red",
+  },
+});
 export const Home = () => {
+  const classes = useStyles();
   const { logOut } = useGlobalUser();
+
   const handleLogOut = () => {
     logOut();
   };
@@ -29,21 +39,7 @@ export const Home = () => {
 
   return (
     <AnimatedPage>
-      <div className="Home-container">
-        <h1>This is Home page and this is protected</h1>
-        <nav className="navbar">
-          <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
-
-          <button onClick={handleLogOut} className="">
-            logout
-          </button>
-        </nav>
-        <div>content will deliver here later🙂..</div>
-      </div>
+      <Header />
     </AnimatedPage>
   );
 };
