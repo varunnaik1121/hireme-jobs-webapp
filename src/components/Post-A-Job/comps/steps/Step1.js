@@ -11,12 +11,12 @@ const Step1 = ({ formDetails, onChange, handleNext }) => {
         alignItems: "center",
         margin: "30px 0",
         flexDirection: "column",
-        padding: "10px 15px",
+        padding: "10px 10px",
       }}
     >
       <TextBox
         name={"name"}
-        label={"name"}
+        label={"company name"}
         value={formDetails.name}
         onChange={onChange}
       />

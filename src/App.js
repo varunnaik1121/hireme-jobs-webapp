@@ -16,24 +16,10 @@ const App = () => {
 
   return (
     <>
-      <UserContext.Provider value={currentUser}>
+      <UserContext.Provider value={{ currentUser }}>
         <Toast />
         <AnimatePresence exitBeforeEnter>
           <BrowserRouter>
-            {/* <Suspense fallback={<Loading />}>
-              <Routes key={location.pathname} location={location}>
-                <Route path="/login" element={<Login />}></Route>
-                <Route
-                  exact
-                  path="/"
-                  element={
-                    <ProtectedRoute user={currentUser}>
-                      <Home />
-                    </ProtectedRoute>
-                  }
-                ></Route>
-              </Routes>
-            </Suspense> */}
             <AnimatedRoutes currentUser={currentUser} />
           </BrowserRouter>
         </AnimatePresence>

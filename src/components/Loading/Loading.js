@@ -1,10 +1,16 @@
+import { fontSize } from "@mui/system";
 import React from "react";
-import { FadeLoader } from "react-spinners";
-const Loading = () => {
+import { TailSpin } from "react-loader-spinner";
+const Loading = ({ height, width, color }) => {
   return (
-    <div className="loading-container">
-      <FadeLoader loading size={70} speedMultiplier={1} />
-    </div>
+    <TailSpin
+      height={height}
+      width={width}
+      color={color}
+      ariaLabel="tail-spin-loading"
+      radius="2"
+      visible={true}
+    />
   );
 };
 

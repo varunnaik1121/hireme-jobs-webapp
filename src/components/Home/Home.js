@@ -9,6 +9,8 @@ import AnimatedPage from "../AnimatedPage";
 import { Container, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Header from "../Header/Header";
+import { collection } from "firebase/firestore";
+import { db } from "../../services/firebase";
 const useStyles = makeStyles({
   container: {
     border: "1px solid red",
@@ -22,7 +24,7 @@ export const Home = () => {
     logOut();
   };
 
-  const currentUser = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     console.count("home page");
@@ -39,7 +41,7 @@ export const Home = () => {
 
   return (
     <AnimatedPage>
-      <Header />
+      <Header logOut={handleLogOut} />
     </AnimatedPage>
   );
 };

@@ -8,15 +8,26 @@ import {
   Paper,
   Divider,
   Step,
-  StepButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import TextBox from "./comps/TextBox";
+import { useGlobalUser } from "../../context/userContext";
 import { useState } from "react";
 import GetCurentStep from "./comps/GetCurentStep";
 import { useEffect } from "react";
-import { db, storage } from "../../services/firebase";
-import { collection } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import Button from "@mui/material";
+import {
+  collection,
+  getDoc,
+  onSnapshot,
+  query,
+  where,
+  doc,
+  getDocs,
+} from "firebase/firestore";
+import { useContext } from "react";
+import { UserContext } from "../../context/useUser";
+import Loading from "../Loading/Loading";
 const useStyles = makeStyles({
   container: {
     display: "flex",
@@ -34,10 +45,12 @@ const useStyles = makeStyles({
 
 //functional coomponent starts
 
-const PostJobPage = () => {
+const PostJobPage = ({ currentUser }) => {
+  const { loading, setLoading } = useGlobalUser();
   const classes = useStyles();
-  const [myCompanyRequest, setMyCompanyRequest] = useState([]);
+  const [myCompanyDetails, setMyCompanyDetails] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
+
   const [formDetails, setFormDetails] = useState({
     name: "",
     headquatar: "",
@@ -60,9 +73,32 @@ const PostJobPage = () => {
     ],
   });
 
-  const requestRef=
+  useEffect(() => {
+    setLoading(true);
 
-  useEffect(() => {}, []);
+    const getData = async () => {
+      try {
+        const q = query(
+          collection(db, "requests"),
+          where("companyId", "==", currentUser.uid)
+        );
+
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          setMyCompanyDetails({ ...doc.data(), id: doc.id });
+        });
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
+
+  console.log(myCompanyDetails);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,6 +114,43 @@ const PostJobPage = () => {
     setActiveStep((prev) => prev + 1);
   };
 
+  const deleteDetails = () => {
+    console.log("details deleted");
+  };
+
+  if (loading) {
+    return (
+      <Container
+        maxWidth="sm"
+        sx={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Loading height={50} width={50} color={"#100EB0"} />
+      </Container>
+    );
+  }
+
+  if (myCompanyDetails?.status === " fullfilled") {
+    return <div>post job page</div>;
+  }
+
+  if (myCompanyDetails?.status === "pending") {
+    return <div>we will verify you soooner</div>;
+  }
+
+  if (myCompanyDetails?.status === "rejected") {
+    return (
+      <div>
+        your request was rejected try to fill the form another time
+        <Button onClick={deleteDetails}>continue</Button>
+      </div>
+    );
+  }
   return (
     <>
       <Box className={classes.container}>
@@ -86,7 +159,11 @@ const PostJobPage = () => {
       </Box>
       <Container
         maxWidth="sm"
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         <form
           style={{

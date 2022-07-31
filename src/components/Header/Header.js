@@ -1,10 +1,11 @@
-import { AppBar, Toolbar } from "@mui/material";
+import { AppBar, Button, Toolbar } from "@mui/material";
 import React from "react";
 
-const Header = () => {
+const Header = ({ logOut }) => {
   return (
-    <AppBar>
-      <Toolbar >Logo</Toolbar>
+    <AppBar sx={{ bgColor: "primary.light !important" }}>
+      <Toolbar>Logo</Toolbar>
+      <Button onClick={logOut}>logout</Button>
     </AppBar>
   );
 };

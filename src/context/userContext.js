@@ -15,7 +15,9 @@ const Context = createContext();
 
 export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+
   const provider = new GoogleAuthProvider();
+
   provider.setCustomParameters({ prompt: "select_account" });
 
   //function related to user login
@@ -88,9 +90,20 @@ export const UserProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+  const addCompanyDetails = async (payload) => {};
+
   return (
     <Context.Provider
-      value={{ loading, signUp, setLoading, logIn, logOut, logInWithGoogle }}
+      value={{
+        signUp,
+
+        logIn,
+        logOut,
+        logInWithGoogle,
+        addCompanyDetails,
+        setLoading,
+        loading,
+      }}
     >
       {children}
     </Context.Provider>
@@ -100,3 +113,36 @@ export const UserProvider = ({ children }) => {
 export const useGlobalUser = () => {
   return useContext(Context);
 };
+
+/*const handleSubmit = async () => {
+  const addImages = async () => {
+    images.forEach((file) => {
+      const storageRef = ref(storage, `images/${file.name}`);
+      uploadBytes(storageRef, file).then(() => {
+        getDownloadURL(storageRef);
+      });
+    });
+    console.log(urls);
+  };
+
+  addImages();
+
+  // const addComapnyDetails = async () => {
+  //   const payload = {
+  //     name: formDetails.name,
+  //     headquatar: formDetails.headquatar,
+  //     about: formDetails.about,
+  //     benefits: formDetails.benefits,
+  //     industry: formDetails.industry,
+  //     website: formDetails.website,
+  //     type: formDetails.type,
+  //     specialities: formDetails.specialities,
+  //     timestamp: serverTimestamp(),
+  //     isVerified: false,
+  //     image: urls,
+  //   };
+  //   await addDoc(collectionRef, payload);
+  // };
+
+  // await awaitedPush(callback);
+};*/

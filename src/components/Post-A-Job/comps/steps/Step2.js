@@ -31,7 +31,7 @@ const Step2 = ({ formDetails, onChange, handleNext, handlePrevClick }) => {
         alignItems: "center",
         margin: "30px 0",
         flexDirection: "column",
-        padding: "10px 15px",
+        padding: "10px 10px",
       }}
     >
       <TextBox
