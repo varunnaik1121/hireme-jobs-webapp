@@ -18,12 +18,12 @@ import { serverTimestamp } from "firebase/firestore";
 import TextBox from "../TextBox";
 import Loading from "../../../Loading/Loading";
 import { useGlobalUser } from "../../../../context/userContext";
-import { PhoneAuthCredential } from "firebase/auth";
+
 const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
   const [images, setImages] = useState([]);
-
+  const { setIsFormSubmitted } = useGlobalUser();
   const USER_ID = auth.currentUser.uid;
-  const { setLoading, loading } = useGlobalUser();
+  const [loading, setLoading] = useState(false);
   const collectionRef = collection(db, "requests");
 
   const handleImageChanges = (e) => {
@@ -74,8 +74,10 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
       isVerified: false,
       images: photos,
       companyId: USER_ID,
+      status: "pending",
     };
     await addDoc(collectionRef, payload);
+    setIsFormSubmitted(true);
     setLoading(false);
   };
 

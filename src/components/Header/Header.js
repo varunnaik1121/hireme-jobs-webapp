@@ -3,9 +3,12 @@ import React from "react";
 
 const Header = ({ logOut }) => {
   return (
-    <AppBar sx={{ bgColor: "primary.light !important" }}>
-      <Toolbar>Logo</Toolbar>
-      <Button onClick={logOut}>logout</Button>
+    <AppBar>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-bet" }}>
+        <Button onClick={logOut} sx={{ color: "white", background: "red" }}>
+          logout
+        </Button>
+      </Toolbar>
     </AppBar>
   );
 };

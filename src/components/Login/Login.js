@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { loading, signUp, logIn, logInWithGoogle } = useGlobalUser();
-  const currentUser = useContext(UserContext);
+  const { currentUser } = useContext(UserContext);
   useEffect(() => {
     console.count("component re renders");
   }, []);

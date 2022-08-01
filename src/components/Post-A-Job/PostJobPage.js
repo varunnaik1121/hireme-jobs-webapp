@@ -15,7 +15,7 @@ import { useState } from "react";
 import GetCurentStep from "./comps/GetCurentStep";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
-import Button from "@mui/material";
+import { Button } from "@mui/material";
 import {
   collection,
   getDoc,
@@ -46,11 +46,11 @@ const useStyles = makeStyles({
 //functional coomponent starts
 
 const PostJobPage = ({ currentUser }) => {
-  const { loading, setLoading } = useGlobalUser();
   const classes = useStyles();
+  const { isFormSubmitted } = useGlobalUser();
   const [myCompanyDetails, setMyCompanyDetails] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
-
+  const [loading, setLoading] = useState(false);
   const [formDetails, setFormDetails] = useState({
     name: "",
     headquatar: "",
@@ -72,6 +72,8 @@ const PostJobPage = ({ currentUser }) => {
       },
     ],
   });
+
+  console.log(currentUser);
 
   useEffect(() => {
     setLoading(true);
@@ -98,8 +100,6 @@ const PostJobPage = ({ currentUser }) => {
     getData();
   }, []);
 
-  console.log(myCompanyDetails);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormDetails({ ...formDetails, [name]: value });
@@ -114,10 +114,11 @@ const PostJobPage = ({ currentUser }) => {
     setActiveStep((prev) => prev + 1);
   };
 
-  const deleteDetails = () => {
-    console.log("details deleted");
+  const deleteDetails = (id) => {
+    
   };
 
+  console.log(myCompanyDetails);
   if (loading) {
     return (
       <Container
@@ -135,11 +136,11 @@ const PostJobPage = ({ currentUser }) => {
     );
   }
 
-  if (myCompanyDetails?.status === " fullfilled") {
+  if (myCompanyDetails?.status === "fullfilled") {
     return <div>post job page</div>;
   }
 
-  if (myCompanyDetails?.status === "pending") {
+  if (myCompanyDetails?.status === "pending" || isFormSubmitted) {
     return <div>we will verify you soooner</div>;
   }
 
@@ -147,7 +148,7 @@ const PostJobPage = ({ currentUser }) => {
     return (
       <div>
         your request was rejected try to fill the form another time
-        <Button onClick={deleteDetails}>continue</Button>
+        <Button onClick={() => deleteDetails(myCompanyDetails.id)}>continue</Button>
       </div>
     );
   }

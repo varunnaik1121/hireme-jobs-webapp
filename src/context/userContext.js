@@ -15,6 +15,7 @@ const Context = createContext();
 
 export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const provider = new GoogleAuthProvider();
 
@@ -90,19 +91,19 @@ export const UserProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
-  const addCompanyDetails = async (payload) => {};
-
   return (
     <Context.Provider
       value={{
+        loading,
         signUp,
+
+        setLoading,
+        isFormSubmitted,
+        setIsFormSubmitted,
 
         logIn,
         logOut,
         logInWithGoogle,
-        addCompanyDetails,
-        setLoading,
-        loading,
       }}
     >
       {children}

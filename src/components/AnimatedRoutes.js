@@ -12,7 +12,21 @@ const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const AnimatedRoutes = ({ currentUser }) => {
   const location = useLocation();
   return (
-    <Suspense fallback={<Loading size={60} />}>
+    <Suspense
+      fallback={
+        <div
+          style={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Loading height={50} width={50} color={"blue"} />
+        </div>
+      }
+    >
       <Routes key={location.pathname} location={location}>
         <Route path="/login" element={<Login />}></Route>
         <Route
