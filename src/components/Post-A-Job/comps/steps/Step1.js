@@ -12,6 +12,7 @@ const Step1 = ({ formDetails, onChange, handleNext }) => {
         margin: "30px 0",
         flexDirection: "column",
         padding: "10px 10px",
+        maxWidth: "380px",
       }}
     >
       <TextBox

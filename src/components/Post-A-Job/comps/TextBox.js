@@ -10,7 +10,13 @@ const TextBox = ({ name, label, value, onChange }) => {
       label={label}
       onChange={onChange}
       size={"medium"}
-      sx={{ margin: "15px", minWidth: "300px" }}
+      sx={{
+        margin: "15px",
+        minWidth: "300px",
+        marginTop: {
+          xs: "10px",
+        },
+      }}
       required
       color="primary"
     ></TextField>

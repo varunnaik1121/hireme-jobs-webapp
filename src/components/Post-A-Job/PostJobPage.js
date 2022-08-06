@@ -15,19 +15,11 @@ import { useState } from "react";
 import GetCurentStep from "./comps/GetCurentStep";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
-import { Button } from "@mui/material";
-import {
-  collection,
-  getDoc,
-  onSnapshot,
-  query,
-  where,
-  doc,
-  getDocs,
-} from "firebase/firestore";
-import { useContext } from "react";
-import { UserContext } from "../../context/useUser";
+import RejectedPage from "./comps/RejectedPage";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
 import Loading from "../Loading/Loading";
+import PendingPage from "./comps/PendingPage";
 const useStyles = makeStyles({
   container: {
     display: "flex",
@@ -35,7 +27,7 @@ const useStyles = makeStyles({
     alignItems: "center",
     flexDirection: "column",
 
-    padding: "40px 10px",
+    padding: "40px 0",
     textTransform: "capitalize",
   },
   subtitle: {
@@ -114,10 +106,6 @@ const PostJobPage = ({ currentUser }) => {
     setActiveStep((prev) => prev + 1);
   };
 
-  const deleteDetails = (id) => {
-    
-  };
-
   console.log(myCompanyDetails);
   if (loading) {
     return (
@@ -141,21 +129,19 @@ const PostJobPage = ({ currentUser }) => {
   }
 
   if (myCompanyDetails?.status === "pending" || isFormSubmitted) {
-    return <div>we will verify you soooner</div>;
+    return <PendingPage />;
   }
 
   if (myCompanyDetails?.status === "rejected") {
-    return (
-      <div>
-        your request was rejected try to fill the form another time
-        <Button onClick={() => deleteDetails(myCompanyDetails.id)}>continue</Button>
-      </div>
-    );
+    return <RejectedPage myCompanyDetails={myCompanyDetails} />;
   }
   return (
     <>
       <Box className={classes.container}>
-        <Typography variant="h5"> basic company details</Typography>
+        <Typography variant="h5" sx={{ borderBottom: "1px solid red" }}>
+          {" "}
+          basic company details
+        </Typography>
         <Divider></Divider>
       </Box>
       <Container
@@ -168,15 +154,17 @@ const PostJobPage = ({ currentUser }) => {
       >
         <form
           style={{
-            marginTop: "20px",
-            padding: "10px",
+            marginTop: "10px",
           }}
         >
-          <Paper sx={{ padding: "25px 10px 5px 10px" }} elevation={2}>
+          <Paper
+            sx={{ padding: "25px 5px 5px 5px", maxWidth: "380px" }}
+            elevation={2}
+          >
             <Stepper activeStep={activeStep} alternativeLabel>
               {formDetails.steps.map((item) => (
                 <Step key={item.label}>
-                  <StepLabel sx={{ minWidth: "100px" }}>{item.label}</StepLabel>
+                  <StepLabel sx={{ minWidth: "80px" }}>{item.label}</StepLabel>
                 </Step>
               ))}
             </Stepper>

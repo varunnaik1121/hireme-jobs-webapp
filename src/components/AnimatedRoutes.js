@@ -28,6 +28,7 @@ const AnimatedRoutes = ({ currentUser }) => {
       }
     >
       <Routes key={location.pathname} location={location}>
+        
         <Route path="/login" element={<Login />}></Route>
         <Route
           exact

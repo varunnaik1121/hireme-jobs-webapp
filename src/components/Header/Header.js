@@ -1,10 +1,10 @@
-import { AppBar, Button, Toolbar } from "@mui/material";
+import { AppBar, Button, ThemeProvider, Toolbar } from "@mui/material";
 import React from "react";
-
+import { theme } from "../../MaterialTheme/theme";
 const Header = ({ logOut }) => {
   return (
-    <AppBar>
-      <Toolbar sx={{ display: "flex", justifyContent: "space-bet" }}>
+    <AppBar color="primary">
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
         <Button onClick={logOut} sx={{ color: "white", background: "red" }}>
           logout
         </Button>
