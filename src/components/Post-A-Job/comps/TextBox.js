@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import React from "react";
 
-const TextBox = ({ name, label, value, onChange }) => {
+const TextBox = ({ name, label, value, onChange, placeholder }) => {
   return (
     <TextField
       variant="outlined"
@@ -19,6 +19,7 @@ const TextBox = ({ name, label, value, onChange }) => {
       }}
       required
       color="primary"
+      placeholder={placeholder}
     ></TextField>
   );
 };

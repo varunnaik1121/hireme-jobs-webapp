@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { auth } from "../../../../services/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import { uploadBytes, ref, getDownloadURL } from "firebase/storage";
@@ -18,9 +18,11 @@ import { serverTimestamp } from "firebase/firestore";
 import TextBox from "../TextBox";
 import Loading from "../../../Loading/Loading";
 import { useGlobalUser } from "../../../../context/userContext";
+import imageCompression from "browser-image-compression";
 
 const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
   const [images, setImages] = useState([]);
+  const [companyImage, setCompanyImage] = useState(null);
   const { setIsFormSubmitted } = useGlobalUser();
   const USER_ID = auth.currentUser.uid;
   const [loading, setLoading] = useState(false);
@@ -40,45 +42,91 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
     }
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCompanyImage(file);
+      console.log(companyImage);
+    } else {
+    }
+  };
+
   const handleSubmit = async () => {
     setLoading(true);
-    const promises = [];
 
-    for (var i = 0; i < images.length; i++) {
-      // files.values contains all the files objects
-      const file = images[i];
+    try {
+      const promises = [];
 
-      const storageRef = ref(storage, `images/${file.name}`);
+      for (var i = 0; i < images.length; i++) {
+        const file = images[i];
+        console.log("originalFile instanceof Blob", file instanceof Blob); // true
+        console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
 
-      promises.push(
-        uploadBytes(storageRef, file).then((uploadResult) => {
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+          fileType: "images/jpg,images/png,images/jpeg",
+        };
+        const compressedFile = await imageCompression(file, options);
+        console.log(
+          "compressedFile instanceof Blob",
+          compressedFile instanceof Blob
+        ); // true
+        console.log(
+          `compressedFile size ${compressedFile.size / 1024 / 1024} MB`
+        ); // smaller than maxSizeMB
+
+        const storageRef = ref(storage, `images/${compressedFile.name}`);
+
+        console.log(storageRef);
+        const metadata = {
+          contentType: "image/jpeg",
+        };
+
+        promises.push(
+          uploadBytes(storageRef, compressedFile, metadata)
+            .then((uploadResult) => {
+              return getDownloadURL(uploadResult.ref);
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        );
+      }
+
+      const photos = await Promise.all(promises);
+      const storageRef = ref(storage, `images/${companyImage.name}`);
+      const companyImageUrl = await uploadBytes(storageRef, companyImage).then(
+        (uploadResult) => {
           return getDownloadURL(uploadResult.ref);
-        })
+        }
       );
+
+      await console.log(photos);
+      const payload = {
+        name: formDetails.name,
+        headquatar: formDetails.headquatar,
+        about: formDetails.about,
+        benefits: formDetails.benefits,
+        industry: formDetails.industry,
+        website: formDetails.website,
+        type: formDetails.type,
+        specialities: formDetails.specialities,
+        timestamp: serverTimestamp(),
+        isVerified: false,
+        images: photos,
+        companyId: USER_ID,
+        status: "pending",
+        companyProfile: companyImageUrl,
+      };
+      await addDoc(collectionRef, payload);
+      setIsFormSubmitted(true);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(true);
     }
-    console.log(promises);
-
-    const photos = await Promise.all(promises);
-
-    await console.log(photos);
-    const payload = {
-      name: formDetails.name,
-      headquatar: formDetails.headquatar,
-      about: formDetails.about,
-      benefits: formDetails.benefits,
-      industry: formDetails.industry,
-      website: formDetails.website,
-      type: formDetails.type,
-      specialities: formDetails.specialities,
-      timestamp: serverTimestamp(),
-      isVerified: false,
-      images: photos,
-      companyId: USER_ID,
-      status: "pending",
-    };
-    await addDoc(collectionRef, payload);
-    setIsFormSubmitted(true);
-    setLoading(false);
   };
 
   return (
@@ -145,6 +193,35 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
           onChange={onChange}
           label={"website link"}
         />
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="label"
+        >
+          <Typography variant="subtitle1" sx={{ margin: "0 10px" }}>
+            upload company profile
+          </Typography>
+          <input
+            hidden
+            accept="image/*"
+            type="file"
+            onChange={handleImageChange}
+          />
+          <PhotoCameraIcon />
+        </IconButton>
+        {companyImage && (
+          <Card
+            sx={{ minWidth: 50, maxWidth: 70, margin: "2px 4px" }}
+            elevation={0}
+          >
+            <CardMedia
+              component="img"
+              height={50}
+              image={URL.createObjectURL(companyImage)}
+              alt="Paella dish"
+            ></CardMedia>
+          </Card>
+        )}
 
         <Box sx={{ padding: "20px" }}>
           <Button onClick={handlePrevClick}>Back</Button>

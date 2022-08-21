@@ -5,10 +5,10 @@ import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { getStorage } from "firebase/storage";
 import {
-  createUserWithEmailAndPassword,
+ 
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { toast } from "react-hot-toast";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCWgHYBRMUjMDCkVj9EkfOixBF57ptbN6E",

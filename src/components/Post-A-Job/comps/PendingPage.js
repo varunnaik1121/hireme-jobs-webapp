@@ -1,17 +1,16 @@
 import {
   CardMedia,
   Container,
-  Paper,
+ 
   Typography,
   Card,
   Divider,
-  Box,
+ 
 } from "@mui/material";
 import React from "react";
 import pendingGif from "../../../assests/pending/waiting.gif";
 
 const PendingPage = () => {
- 
   return (
     <Container
       maxWidth="sm"
@@ -19,7 +18,7 @@ const PendingPage = () => {
         padding: "15px ",
         width: "100%",
         minHeight: "100vh",
-        backgroundColor: "#EDEEF1",
+
         display: "flex",
         justifyContent: "space-around",
         alignItems: "center",
@@ -36,6 +35,7 @@ const PendingPage = () => {
           alignItems: "center",
           flexDirection: "column",
         }}
+        elevation={3}
       >
         <Typography
           variant="h4"

@@ -12,21 +12,23 @@ import {
 import { makeStyles } from "@mui/styles";
 import { useGlobalUser } from "../../context/userContext";
 import { useState } from "react";
-import GetCurentStep from "./comps/GetCurentStep";
+
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
-import RejectedPage from "./comps/RejectedPage";
+
 import { collection, query, where, getDocs } from "firebase/firestore";
 
 import Loading from "../Loading/Loading";
-import PendingPage from "./comps/PendingPage";
+
+const PendingPage = React.lazy(() => import("./comps/PendingPage"));
+const RejectedPage = React.lazy(() => import("./comps/RejectedPage"));
+const GetCurentStep = React.lazy(() => import("./comps/GetCurentStep"));
 const useStyles = makeStyles({
   container: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
-
     padding: "40px 0",
     textTransform: "capitalize",
   },
@@ -37,7 +39,7 @@ const useStyles = makeStyles({
 
 //functional coomponent starts
 
-const PostJobPage = ({ currentUser }) => {
+const PostJobPage = React.memo(({ currentUser }) => {
   const classes = useStyles();
   const { isFormSubmitted } = useGlobalUser();
   const [myCompanyDetails, setMyCompanyDetails] = useState(null);
@@ -65,8 +67,6 @@ const PostJobPage = ({ currentUser }) => {
     ],
   });
 
-  console.log(currentUser);
-
   useEffect(() => {
     setLoading(true);
 
@@ -74,7 +74,7 @@ const PostJobPage = ({ currentUser }) => {
       try {
         const q = query(
           collection(db, "requests"),
-          where("companyId", "==", currentUser.uid)
+          where("companyId", "==", currentUser?.uid)
         );
 
         const querySnapshot = await getDocs(q);
@@ -85,7 +85,7 @@ const PostJobPage = ({ currentUser }) => {
         setLoading(false);
       } catch (err) {
         console.log(err);
-        setLoading(false);
+        setLoading(true);
       }
     };
 
@@ -106,7 +106,6 @@ const PostJobPage = ({ currentUser }) => {
     setActiveStep((prev) => prev + 1);
   };
 
-  console.log(myCompanyDetails);
   if (loading) {
     return (
       <Container
@@ -180,6 +179,6 @@ const PostJobPage = ({ currentUser }) => {
       </Container>
     </>
   );
-};
+});
 
 export default PostJobPage;

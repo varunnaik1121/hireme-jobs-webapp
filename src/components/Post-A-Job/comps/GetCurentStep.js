@@ -1,4 +1,4 @@
-import { AppBar, Paper } from "@mui/material";
+
 import React from "react";
 import AnimatedPage from "../../AnimatedPage";
 import Step1 from "./steps/Step1";
@@ -47,4 +47,4 @@ const GetCurentStep = ({
   );
 };
 
-export default GetCurentStep;
+export default React.memo(GetCurentStep);

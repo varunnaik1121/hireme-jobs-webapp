@@ -1,19 +1,19 @@
 import {
   Button,
   Card,
-  Paper,
+
   CardMedia,
   CardContent,
   Typography,
 } from "@mui/material";
-import { Container, Box } from "@mui/system";
+import {  Box } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../services/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import Loading from "../../Loading/Loading";
-import { useHistory, useLocation } from "react-router-dom";
+
 import useStyles from "../../../MaterialTheme/styles";
 import rejectedImage from "../../../assests/pending/rejected.jpg";
 const RejectedPage = ({ myCompanyDetails }) => {

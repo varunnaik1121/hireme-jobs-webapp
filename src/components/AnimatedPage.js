@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-
+import React from "react";
 const animations = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
@@ -20,4 +20,4 @@ const AnimatedPage = ({ children }) => {
   );
 };
 
-export default AnimatedPage;
+export default React.memo(AnimatedPage);

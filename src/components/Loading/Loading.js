@@ -1,4 +1,4 @@
-import { fontSize } from "@mui/system";
+
 import React from "react";
 import { TailSpin } from "react-loader-spinner";
 const Loading = ({ height, width, color }) => {

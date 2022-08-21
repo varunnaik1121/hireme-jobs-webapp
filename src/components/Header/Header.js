@@ -1,6 +1,7 @@
-import { AppBar, Button, ThemeProvider, Toolbar } from "@mui/material";
+import { AppBar, Button, Toolbar } from "@mui/material";
 import React from "react";
-import { theme } from "../../MaterialTheme/theme";
+import { Link } from "react-router-dom";
+
 const Header = ({ logOut }) => {
   return (
     <AppBar color="primary">
@@ -8,6 +9,7 @@ const Header = ({ logOut }) => {
         <Button onClick={logOut} sx={{ color: "white", background: "red" }}>
           logout
         </Button>
+        <Link to={"postJob"}>Post job</Link>
       </Toolbar>
     </AppBar>
   );

@@ -6,18 +6,13 @@ import "../Home/Home.css";
 import { useGlobalUser } from "../../context/userContext";
 import { UserContext } from "../../context/useUser";
 import AnimatedPage from "../AnimatedPage";
-import { Container, Typography } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+
 import Header from "../Header/Header";
-import { collection } from "firebase/firestore";
-import { db } from "../../services/firebase";
-const useStyles = makeStyles({
-  container: {
-    border: "1px solid red",
-  },
-});
+
+
+
 export const Home = () => {
-  const classes = useStyles();
+
   const { logOut } = useGlobalUser();
 
   const handleLogOut = () => {

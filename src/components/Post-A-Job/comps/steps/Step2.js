@@ -1,23 +1,19 @@
 import {
-  Paper,
+
   Box,
-  TextareaAutosize,
+ 
   Button,
-  Menu,
+
   MenuItem,
 } from "@mui/material";
 import React from "react";
 import TextBox from "../TextBox";
 import { TextField } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
-  button: {
-    margin: "10px",
-  },
-});
+
+
 const Step2 = ({ formDetails, onChange, handleNext, handlePrevClick }) => {
-  const classes = useStyles();
+ 
   const options = [
     { value: "on-site" },
     { value: "off-site" },
@@ -39,12 +35,14 @@ const Step2 = ({ formDetails, onChange, handleNext, handlePrevClick }) => {
         label={"benefits"}
         value={formDetails.benefits}
         onChange={onChange}
+        placeholder={"eg:caffeteria,sports court,gym etc.."}
       />
       <TextBox
         name={"industry"}
         label={"industry"}
         value={formDetails.industry}
         onChange={onChange}
+        placeholder={"eg: software industry,etc.."}
       />
       <TextField
         select

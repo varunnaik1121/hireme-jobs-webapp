@@ -1,4 +1,4 @@
-import { Paper, Box, TextareaAutosize, Button } from "@mui/material";
+import {Box, TextareaAutosize, Button } from "@mui/material";
 import React from "react";
 import TextBox from "../TextBox";
 
@@ -26,6 +26,7 @@ const Step1 = ({ formDetails, onChange, handleNext }) => {
         label={"headquatar"}
         value={formDetails.headquatar}
         onChange={onChange}
+        placeholder={"eg: Karnataka,india"}
       />
       <TextareaAutosize
         aria-label="empty textarea"
