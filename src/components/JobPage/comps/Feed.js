@@ -3,8 +3,9 @@ import { Box, Stack, Pagination, Divider } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import CardComp from "./Card";
-const Feed = () => {
-  const [totalJobs, setTotalJobs] = useState(Array(42).fill(""));
+const Feed = ({ data, loading }) => {
+  const [dummySkeleton, setDummySkeleton] = useState(Array(6).fill(""));
+
   const minimumCardsPerPage = 15;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -13,10 +14,10 @@ const Feed = () => {
   const [currentCards, setCurrentCards] = useState([]);
 
   useEffect(() => {
-    setCurrentCards(totalJobs.slice(indexOfFirstJob, indexOfLastJob));
-  }, [currentPage, indexOfFirstJob, indexOfLastJob, totalJobs]);
+    setCurrentCards(data.slice(indexOfFirstJob, indexOfLastJob));
+  }, [currentPage, indexOfFirstJob, indexOfLastJob, data]);
 
-  console.log(currentCards);
+
 
   const filterPagination = (e, page) => {
     setCurrentPage(parseInt(page));
@@ -48,7 +49,7 @@ const Feed = () => {
           fontFamily={`'Poppins', sans-serif`}
           fontWeight={600}
           fontSize={20}
-        >{`Showing ${totalJobs.length} jobs`}</Typography>
+        >{`Showing ${data.length} jobs`}</Typography>
       </Box>
       <Box
         sx={{
@@ -62,17 +63,27 @@ const Feed = () => {
           alignItems: "center",
         }}
       >
-        {currentCards?.map((job, index) => {
-          return <CardComp key={index} length={totalJobs.length} />;
-        })}
+        {loading &&
+          dummySkeleton.map((item, index) => {
+            return <CardComp key={index} loading={loading} />;
+          })}
+        {currentCards &&
+          currentCards.map((job, index) => {
+            return (
+              <CardComp
+                key={index}
+                length={data.length}
+                loading={loading}
+                data={job}
+              />
+            );
+          })}
         <Stack
           spacing={2}
           sx={{ margin: "10px 0", padding: "20px", width: "100%" }}
         >
           <Pagination
-            count={
-              totalJobs ? Math.ceil(totalJobs.length / minimumCardsPerPage) : 1
-            }
+            count={data ? Math.ceil(data.length / minimumCardsPerPage) : 1}
             onChange={(e, pageNumber) => filterPagination(e, pageNumber)}
             size={"medium"}
             color="primary"

@@ -6,15 +6,33 @@ import {
   Typography,
   Button,
   IconButton,
-  Paper,
   Tooltip,
-  Skeleton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { styled } from "@mui/styles";
 import SkeletonComp from "./SkeletonComp";
-const CardComp = ({ length }) => {
-  const [loading, setLoading] = useState(true);
+import { useGlobalUser } from "../../../context/userContext";
+import { Link } from "@mui/material";
+import { useEffect } from "react";
+import { onSnapshot } from "firebase/firestore";
+import { useAuthListener } from "../../../services/firebase";
+import { db } from "../../../services/firebase";
+import { doc } from "firebase/firestore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+const CardComp = ({ loading, data }) => {
+  const { currentUser } = useAuthListener();
+  const { addToFavourites, removeFromFavourites } = useGlobalUser();
+  const [myFavourites, setMyFavourites] = useState(null);
+
+  useEffect(() => {
+    const docRef = doc(db, `users/${currentUser?.uid}`);
+
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      setMyFavourites(snapshot.data().favourites);
+    });
+    return () => unsub();
+  }, []);
+
   const StyledBox = styled("div")(({ theme }) => ({
     // border: "2px solid red",
     fontSize: 10,
@@ -73,7 +91,10 @@ const CardComp = ({ length }) => {
             variant="circle"
             alt="icon"
             sx={{ backgroundColor: "black", width: "44px", height: "44px" }}
-            src="https://images.unsplash.com/photo-1635821410579-baa223cff5e6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80"
+            src={
+              data?.companyProfile ||
+              "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
+            }
           ></Avatar>
         )}
         <Box
@@ -92,20 +113,37 @@ const CardComp = ({ length }) => {
               fontWeight={700}
               textTransform={"capitalize"}
             >
-              Microsoft
+              {data?.companyName}
             </Typography>
           )}
         </Box>
         {loading ? (
           <SkeletonComp variant={"circular"} width={30} height={22} />
+        ) : myFavourites && myFavourites.includes(data?.id) ? (
+          <>
+            <Tooltip title="Remove from favourites">
+              <IconButton
+                size="medium"
+                onClick={() => removeFromFavourites(data?.id)}
+              >
+                <FavoriteIcon fontSize="small" color="error" />
+              </IconButton>
+            </Tooltip>
+          </>
         ) : (
-          <Tooltip title="bookmark">
-            <IconButton size="medium">
-              <FavoriteBorderIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+          <>
+            <Tooltip title="Add to favourites">
+              <IconButton
+                size="medium"
+                onClick={() => addToFavourites(data?.id)}
+              >
+                <FavoriteBorderIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </>
         )}
       </Box>
+
       <Box
         sx={{
           // border: "1px solid red",
@@ -117,14 +155,16 @@ const CardComp = ({ length }) => {
         {loading ? (
           <SkeletonComp variant={"text"} width={180} height={14} />
         ) : (
-          <Typography
-            variant="h6"
-            fontSize={14}
-            fontWeight={700}
-            textTransform={"capitalize"}
-          >
-            Web Developement
-          </Typography>
+          <Link href={`/jobDetails/${data?.id}`} underline="hover">
+            <Typography
+              variant="h6"
+              fontSize={14}
+              fontWeight={700}
+              textTransform={"capitalize"}
+            >
+              {data?.title}
+            </Typography>
+          </Link>
         )}
         {loading ? (
           <SkeletonComp variant={"text"} width={140} height={10} />
@@ -134,7 +174,7 @@ const CardComp = ({ length }) => {
             component="span"
             sx={{ fontSize: 12, fontWeight: "600", color: "text.secondary" }}
           >
-            Caifornia, India
+            {data?.location}
           </Typography>
         )}
       </Box>
@@ -159,18 +199,18 @@ const CardComp = ({ length }) => {
           {loading ? (
             <SkeletonComp variant={"text"} width={60} height={24} />
           ) : (
-            <StyledBox>Mid Level</StyledBox>
+            <StyledBox>{data?.workLevel}</StyledBox>
           )}
           {loading ? (
             <SkeletonComp variant={"text"} width={60} height={24} />
           ) : (
-            <StyledBox>Part Time</StyledBox>
+            <StyledBox>{data?.workType}</StyledBox>
           )}
           {loading ? (
             <SkeletonComp variant={"text"} width={60} height={24} />
           ) : (
             <StyledBox>
-              Sal : <span>10k</span>-<span>50k</span>
+              Sal : <span>{data?.salary}</span>
             </StyledBox>
           )}
         </Box>
@@ -233,20 +273,22 @@ const CardComp = ({ length }) => {
         {loading ? (
           <SkeletonComp variant={"text"} width={120} height={35} />
         ) : (
-          <Button
-            variant="outlined"
-            size="small"
-            sx={{
-              textTransform: "capitalize",
-              minWidth: "120px",
-              fontWeight: "600",
-              padding: "5px",
-              fontSize: 12,
-              backgroundColor: "#f6f7f9",
-            }}
-          >
-            View More
-          </Button>
+          <Link href={`jobDetails/${data?.id}`} underline="none">
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                textTransform: "capitalize",
+                minWidth: "120px",
+                fontWeight: "600",
+                padding: "5px",
+                fontSize: 12,
+                backgroundColor: "#f6f7f9",
+              }}
+            >
+              View More
+            </Button>
+          </Link>
         )}
       </Box>
       <Box></Box>

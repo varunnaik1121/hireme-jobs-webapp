@@ -6,9 +6,12 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import Sidebar from "./comps/Sidebar";
 import { useState } from "react";
 import AnimatedPage from "../AnimatedPage";
+import { useEffect } from "react";
+import { useDbFetch } from "../../context/userContext";
 
 const Jobs = () => {
   const [open, setOpen] = useState(false);
+  const { data, loading } = useDbFetch("jobs");
 
   const handleFilterClose = () => {
     setOpen(false);
@@ -87,7 +90,7 @@ const Jobs = () => {
           <Sidebar />
         </Grid>
         <Grid item sm={12} xs={12} md={9} lg={10}>
-          <Feed />
+          <Feed data={data} loading={loading} />
         </Grid>
       </Grid>
     </Box>

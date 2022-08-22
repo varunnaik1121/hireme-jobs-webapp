@@ -8,12 +8,23 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
-import { auth } from "../services/firebase";
+import { auth, useAuthListener } from "../services/firebase";
 import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
+import {
+  arrayUnion,
+  collection,
+  doc,
+  onSnapshot,
+  setDoc,
+  arrayRemove,
+} from "firebase/firestore";
+import { db } from "../services/firebase";
 const Context = createContext();
 
 export const UserProvider = ({ children }) => {
+  const { currentUser } = useAuthListener();
   const [loading, setLoading] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
@@ -91,6 +102,34 @@ export const UserProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
+  const addToFavourites = async (jobId) => {
+    const userId = currentUser?.uid;
+    toast.success("Added To Favourites");
+    await setDoc(
+      doc(db, "users", userId),
+      {
+        favourites: arrayUnion(jobId),
+      },
+      { merge: true }
+    ).catch((err) => {
+      toast.error("something went wrong");
+    });
+  };
+
+  const removeFromFavourites = async (jobId) => {
+    const userId = currentUser?.uid;
+    toast.success("Removed From Favourites");
+    await setDoc(
+      doc(db, "users", userId),
+      {
+        favourites: arrayRemove(jobId),
+      },
+      { merge: true }
+    ).catch((err) => {
+      toast.error("something went wrong");
+    });
+  };
+
   return (
     <Context.Provider
       value={{
@@ -104,6 +143,8 @@ export const UserProvider = ({ children }) => {
         logIn,
         logOut,
         logInWithGoogle,
+        addToFavourites,
+        removeFromFavourites,
       }}
     >
       {children}
@@ -113,6 +154,29 @@ export const UserProvider = ({ children }) => {
 
 export const useGlobalUser = () => {
   return useContext(Context);
+};
+
+export const useDbFetch = (path) => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setLoading(true);
+
+    const collectionRef = collection(db, path);
+
+    const unsub = onSnapshot(collectionRef, (snapshot) => {
+      setData(
+        snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        })
+      );
+      setLoading(false);
+    });
+
+    return unsub;
+  }, [path]);
+  return { data, loading };
 };
 
 /*const handleSubmit = async () => {

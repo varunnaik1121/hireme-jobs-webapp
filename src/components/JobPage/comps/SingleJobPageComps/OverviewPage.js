@@ -1,0 +1,56 @@
+import React from "react";
+import { Box } from "@mui/system";
+import { Skeleton, Typography } from "@mui/material";
+const OverviewPage = ({ label, description, loading }) => {
+  return (
+    <Box sx={{ width: "100%", padding: "10px 10px" }}>
+      {loading ? (
+        <>
+          <Typography
+            variant="h6"
+            fontSize={16}
+            fontWeight={700}
+            component="h6"
+            padding={"5px 0 15px 0"}
+            sx={{ color: "text.primary" }}
+          >
+            <Skeleton variant="text" width={200} height={20} />
+          </Typography>
+          <Typography
+            variant="subtitle2"
+            component={"p"}
+            sx={{ fontSize: "13px", lineHeight: "25px" }}
+          >
+            <Skeleton variant="text" width={"100%"} height={14} />
+            <Skeleton variant="text" width={"100%"} height={14} />
+            <Skeleton variant="text" width={"100%"} height={14} />
+            <Skeleton variant="text" width={"100%"} height={14} />
+            <Skeleton variant="text" width={"100%"} height={14} />
+          </Typography>
+        </>
+      ) : (
+        <>
+          <Typography
+            variant="h6"
+            fontSize={16}
+            fontWeight={700}
+            component="h6"
+            padding={"5px 0 15px 0"}
+            sx={{ color: "text.primary" }}
+          >
+            {label}
+          </Typography>
+          <Typography
+            variant="subtitle2"
+            component={"p"}
+            sx={{ fontSize: "13px", lineHeight: "25px" }}
+          >
+            {description}
+          </Typography>
+        </>
+      )}
+    </Box>
+  );
+};
+
+export default OverviewPage;
