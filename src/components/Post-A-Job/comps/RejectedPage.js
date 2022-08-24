@@ -1,12 +1,11 @@
 import {
   Button,
   Card,
-
   CardMedia,
   CardContent,
   Typography,
 } from "@mui/material";
-import {  Box } from "@mui/system";
+import { Box } from "@mui/system";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { db } from "../../../services/firebase";
@@ -18,7 +17,6 @@ import useStyles from "../../../MaterialTheme/styles";
 import rejectedImage from "../../../assests/pending/rejected.jpg";
 const RejectedPage = ({ myCompanyDetails }) => {
   const classes = useStyles();
-  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const deleteRequest = async (id, path) => {

@@ -21,11 +21,7 @@ const OverviewPage = ({ label, description, loading }) => {
             component={"p"}
             sx={{ fontSize: "13px", lineHeight: "25px" }}
           >
-            <Skeleton variant="text" width={"100%"} height={14} />
-            <Skeleton variant="text" width={"100%"} height={14} />
-            <Skeleton variant="text" width={"100%"} height={14} />
-            <Skeleton variant="text" width={"100%"} height={14} />
-            <Skeleton variant="text" width={"100%"} height={14} />
+            <Skeleton variant="text" width={"70%"} height={25} />
           </Typography>
         </>
       ) : (

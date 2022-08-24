@@ -16,7 +16,14 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
 
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  onSnapshot,
+  doc,
+} from "firebase/firestore";
 
 import Loading from "../Loading/Loading";
 
@@ -42,7 +49,7 @@ const useStyles = makeStyles({
 const PostJobPage = React.memo(({ currentUser }) => {
   const classes = useStyles();
   const { isFormSubmitted } = useGlobalUser();
-  const [myCompanyDetails, setMyCompanyDetails] = useState(null);
+  const [myCompanyDetails, setMyCompanyDetails] = useState([]);
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [formDetails, setFormDetails] = useState({
@@ -67,31 +74,46 @@ const PostJobPage = React.memo(({ currentUser }) => {
     ],
   });
 
+  // useEffect(() => {
+  //   setLoading(true);
+
+  //   const getData = async () => {
+  //     try {
+  //       const q = query(
+  //         collection(db, "requests"),
+  //         where("companyId", "==", currentUser?.uid)
+  //       );
+  //       const querySnapshot = await getDocs(q);
+  //       querySnapshot.forEach((doc) => {
+  //         // doc.data() is never undefined for query doc snapshots
+  //         setMyCompanyDetails({ ...doc.data(), id: doc.id });
+  //       });
+  //       setLoading(false);
+  //     } catch (err) {
+  //       console.log(err);
+  //       setLoading(true);
+  //     }
+  //   };
+
+  //   getData();
+  // }, []);
+
   useEffect(() => {
     setLoading(true);
-
-    const getData = async () => {
-      try {
-        const q = query(
-          collection(db, "requests"),
-          where("companyId", "==", currentUser?.uid)
-        );
-
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          setMyCompanyDetails({ ...doc.data(), id: doc.id });
-        });
-        setLoading(false);
-      } catch (err) {
-        console.log(err);
-        setLoading(true);
-      }
-    };
-
-    getData();
+    const q = query(
+      collection(db, "requests"),
+      where("companyId", "==", currentUser?.uid)
+    );
+    const unsub = onSnapshot(q, (snapshot) => {
+      setMyCompanyDetails(
+        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+      setLoading(false);
+    });
+    return () => unsub();
   }, []);
 
+  console.log(myCompanyDetails && myCompanyDetails?.status);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormDetails({ ...formDetails, [name]: value });
@@ -123,15 +145,18 @@ const PostJobPage = React.memo(({ currentUser }) => {
     );
   }
 
-  if (myCompanyDetails?.status === "fullfilled") {
+  if (myCompanyDetails?.length && myCompanyDetails[0]?.status === "success") {
     return <div>post job page</div>;
   }
 
-  if (myCompanyDetails?.status === "pending" || isFormSubmitted) {
+  if (
+    (myCompanyDetails?.length && myCompanyDetails[0]?.status === "pending") ||
+    isFormSubmitted
+  ) {
     return <PendingPage />;
   }
 
-  if (myCompanyDetails?.status === "rejected") {
+  if (myCompanyDetails?.length && myCompanyDetails[0]?.status === "rejected") {
     return <RejectedPage myCompanyDetails={myCompanyDetails} />;
   }
   return (

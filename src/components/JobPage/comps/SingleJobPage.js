@@ -11,12 +11,18 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebase";
+import { useGlobalUser } from "../../../context/userContext";
+import { onSnapshot } from "firebase/firestore";
+import FormModal from "./FormModal";
 const SingleJobPage = () => {
+  const { currentUser } = useGlobalUser();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [companyDetails, setCompanyDetails] = useState(null);
+  const [myFavourites, setMyFavourites] = useState(null);
   const { id } = useParams();
   console.log(id);
+
   useEffect(() => {
     setLoading(true);
     const docRef = doc(db, "jobs", id);
@@ -42,12 +48,21 @@ const SingleJobPage = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    const docRef = doc(db, `users/${currentUser?.uid}`);
+
+    const unsub = onSnapshot(docRef, (snapshot) => {
+      setMyFavourites(snapshot.data().favourites);
+    });
+    return () => unsub();
+  }, []);
+
   return (
     <Box
       sx={{
         width: "100vw",
         minHeight: "100vh",
-        border: "1px solid red",
+
         padding: "35px 0",
       }}
     >
@@ -72,6 +87,9 @@ const SingleJobPage = () => {
             experience={data?.experience}
             companyName={data?.companyName}
             loading={loading}
+            location={data?.location}
+            myFavourites={myFavourites}
+            id={id}
           />
           <OverviewPage
             label={"overview"}
@@ -86,6 +104,7 @@ const SingleJobPage = () => {
           />
           <ButtonContainer loading={loading} />
         </Box>
+        <FormModal id={id} />
       </Container>
     </Box>
   );

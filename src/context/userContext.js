@@ -27,6 +27,7 @@ export const UserProvider = ({ children }) => {
   const { currentUser } = useAuthListener();
   const [loading, setLoading] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [IsOpenApplyModal, setIsOpenApplyModal] = useState(false);
 
   const provider = new GoogleAuthProvider();
 
@@ -104,7 +105,9 @@ export const UserProvider = ({ children }) => {
 
   const addToFavourites = async (jobId) => {
     const userId = currentUser?.uid;
-    toast.success("Added To Favourites");
+    toast.success("Added To Favourites", {
+      duration: 1500,
+    });
     await setDoc(
       doc(db, "users", userId),
       {
@@ -118,7 +121,9 @@ export const UserProvider = ({ children }) => {
 
   const removeFromFavourites = async (jobId) => {
     const userId = currentUser?.uid;
-    toast.success("Removed From Favourites");
+    toast.success("Removed From Favourites", {
+      duration: 1500,
+    });
     await setDoc(
       doc(db, "users", userId),
       {
@@ -130,21 +135,31 @@ export const UserProvider = ({ children }) => {
     });
   };
 
+  const openApplyModal = () => {
+    setIsOpenApplyModal(true);
+  };
+  const closeApplyModal = () => {
+  setIsOpenApplyModal(false);
+  };
+
   return (
     <Context.Provider
       value={{
         loading,
         signUp,
-
         setLoading,
         isFormSubmitted,
         setIsFormSubmitted,
-
+        currentUser,
         logIn,
         logOut,
         logInWithGoogle,
         addToFavourites,
         removeFromFavourites,
+        IsOpenApplyModal,
+        setIsOpenApplyModal,
+        openApplyModal,
+        closeApplyModal,
       }}
     >
       {children}

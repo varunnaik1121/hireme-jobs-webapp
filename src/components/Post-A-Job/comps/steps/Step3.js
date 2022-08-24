@@ -51,23 +51,30 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
     }
   };
 
+  //submitting the company details along with image compression
   const handleSubmit = async () => {
     setLoading(true);
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+      fileType: "images/jpg,images/png,images/jpeg",
+    };
+
+    const compressedCompanyImage = await imageCompression(
+      companyImage,
+      options
+    );
 
     try {
       const promises = [];
+      //compressing profiel picture
 
       for (var i = 0; i < images.length; i++) {
         const file = images[i];
         console.log("originalFile instanceof Blob", file instanceof Blob); // true
         console.log(`originalFile size ${file.size / 1024 / 1024} MB`);
 
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true,
-          fileType: "images/jpg,images/png,images/jpeg",
-        };
         const compressedFile = await imageCompression(file, options);
         console.log(
           "compressedFile instanceof Blob",
@@ -96,14 +103,16 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
       }
 
       const photos = await Promise.all(promises);
-      const storageRef = ref(storage, `images/${companyImage.name}`);
-      const companyImageUrl = await uploadBytes(storageRef, companyImage).then(
-        (uploadResult) => {
-          return getDownloadURL(uploadResult.ref);
-        }
-      );
+      const storageRef = ref(storage, `images/${compressedCompanyImage.name}`);
+      const companyImageUrl = await uploadBytes(
+        storageRef,
+        compressedCompanyImage
+      ).then((uploadResult) => {
+        return getDownloadURL(uploadResult.ref);
+      });
 
       await console.log(photos);
+
       const payload = {
         name: formDetails.name,
         headquatar: formDetails.headquatar,
@@ -121,7 +130,7 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
         companyProfile: companyImageUrl,
       };
       await addDoc(collectionRef, payload);
-      setIsFormSubmitted(true);
+
       setLoading(false);
     } catch (err) {
       console.log(err);

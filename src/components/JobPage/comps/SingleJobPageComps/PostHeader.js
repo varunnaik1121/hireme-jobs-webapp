@@ -9,8 +9,10 @@ import {
   Skeleton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import { useGlobalUser } from "../../../../context/userContext";
 const PostHeader = ({
   title,
   companyName,
@@ -21,13 +23,18 @@ const PostHeader = ({
   workType,
   salary,
   loading,
+  myFavourites,
+  id,
 }) => {
+  const { addToFavourites, removeFromFavourites, currentUser } =
+    useGlobalUser();
+
   return (
     <Box sx={{ width: "100%", marginTop: "30px" }}>
       <Box
         sx={{
           width: "100%",
-          //   border: "1px solid red",
+
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -64,15 +71,29 @@ const PostHeader = ({
               fontWeight={700}
               textTransform="capitalize"
               fontSize={20}
+              color="primary"
             >
-              UI/UX Designer
+              {title}
             </Typography>
             <ButtonGroup>
-              <Tooltip title="add to favourites">
-                <IconButton>
-                  <FavoriteBorderIcon fontSize="small" />
-                </IconButton>
-              </Tooltip>
+              {myFavourites?.includes(id) ? (
+                <>
+                  <Tooltip title="Remove from favourites">
+                    <IconButton onClick={() => removeFromFavourites(id)}>
+                      <FavoriteIcon fontSize="small" color="error" />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              ) : (
+                <>
+                  <Tooltip title="add to favourites">
+                    <IconButton onClick={() => addToFavourites(id)}>
+                      <FavoriteBorderIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </>
+              )}
+
               <Tooltip title="share">
                 <IconButton>
                   <ShareIcon fontSize="small" />
@@ -91,7 +112,12 @@ const PostHeader = ({
           padding: "5px 10px",
         }}
       >
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           {loading ? (
             <Skeleton variant="text" width={150} height={10} />
           ) : (
@@ -100,17 +126,23 @@ const PostHeader = ({
               component={"span"}
               sx={{
                 color: "text.secondary",
-                fontSize: "14px",
+                fontSize: "13px",
                 fontWeight: "600",
                 marginRight: "10px",
                 letterSpacing: "1px",
+                marginLeft: "3px",
               }}
             >
-              Microsoft
+              {companyName}
             </Typography>
           )}
 
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             {loading ? (
               <Skeleton variant="text" width={100} height={10} />
             ) : (
@@ -121,9 +153,10 @@ const PostHeader = ({
                     fontSize: "12px",
                     fontWeight: "600",
                     letterSpacing: "1px",
+                    padding: "0 4px",
                   }}
                 >
-                  Delhi,india
+                  {location}
                 </Typography>
                 <LocationOnIcon
                   fontSize="small"
@@ -160,7 +193,7 @@ const PostHeader = ({
         }}
       >
         {loading ? (
-          <Skeleton variant="reactangular" width={"100%"} height={40} />
+          <Skeleton variant="reactangular" width={"96%"} height={40} />
         ) : (
           <>
             <Box
@@ -189,7 +222,7 @@ const PostHeader = ({
                 fontWeight={700}
                 sx={{ color: "text.primary" }}
               >
-                Minimum 1 Year
+                {experience}
               </Typography>
             </Box>
             <Box
@@ -218,7 +251,7 @@ const PostHeader = ({
                 fontWeight={700}
                 sx={{ color: "text.primary" }}
               >
-                senior level
+                {workLevel}
               </Typography>
             </Box>
             <Box
@@ -247,7 +280,7 @@ const PostHeader = ({
                 fontWeight={700}
                 sx={{ color: "text.primary" }}
               >
-                full time jobs
+                {workType}
               </Typography>
             </Box>
             <Box
@@ -276,7 +309,7 @@ const PostHeader = ({
                 fontWeight={700}
                 sx={{ color: "text.primary" }}
               >
-                50k/month
+                {salary}
               </Typography>
             </Box>
           </>

@@ -9,10 +9,7 @@ import AnimatedPage from "../AnimatedPage";
 
 import Header from "../Header/Header";
 
-
-
 export const Home = () => {
-
   const { logOut } = useGlobalUser();
 
   const handleLogOut = () => {

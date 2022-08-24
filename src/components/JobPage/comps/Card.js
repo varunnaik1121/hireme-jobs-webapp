@@ -7,6 +7,7 @@ import {
   Button,
   IconButton,
   Tooltip,
+  Modal,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { styled } from "@mui/styles";
@@ -19,11 +20,12 @@ import { useAuthListener } from "../../../services/firebase";
 import { db } from "../../../services/firebase";
 import { doc } from "firebase/firestore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import FormModal from "./FormModal";
 const CardComp = ({ loading, data }) => {
   const { currentUser } = useAuthListener();
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
   const [myFavourites, setMyFavourites] = useState(null);
-
+  const { openApplyModal } = useGlobalUser();
   useEffect(() => {
     const docRef = doc(db, `users/${currentUser?.uid}`);
 
@@ -38,12 +40,12 @@ const CardComp = ({ loading, data }) => {
     fontSize: 10,
     textAlign: "center",
     fontWeight: "500",
-    padding: "4px 8px",
+    padding: "5px 10px",
     backgroundColor: "#e2ebfc",
     color: theme.palette.primary.main,
     borderRadius: "20px",
     textTransform: "capitalize",
-    margin: "0 6px 0 -2px",
+    margin: "0 6px 0 0px",
     minWdith: "70px",
   }));
 
@@ -60,8 +62,8 @@ const CardComp = ({ loading, data }) => {
         boxShadow: "1px 1px 4px rgba(0,0,0,.1)",
         borderRadius: "10px",
         minWidth: {
-          xs: "340px",
-          sm: "340px",
+          xs: "330px",
+          sm: "350px",
           md: "360px",
           lg: "360px",
         },
@@ -112,6 +114,7 @@ const CardComp = ({ loading, data }) => {
               fontSize={16}
               fontWeight={700}
               textTransform={"capitalize"}
+              mt={"4px"}
             >
               {data?.companyName}
             </Typography>
@@ -219,7 +222,7 @@ const CardComp = ({ loading, data }) => {
             <SkeletonComp variant={"text"} width={70} height={18} />
           ) : (
             <>
-              <Typography
+              {/* <Typography
                 variant="h6"
                 component={"span"}
                 fontSize={12}
@@ -227,7 +230,7 @@ const CardComp = ({ loading, data }) => {
                 sx={{ color: "primary.main" }}
               >
                 New
-              </Typography>
+              </Typography> */}
               <Typography
                 variant="h6"
                 component={"span"}
@@ -266,6 +269,7 @@ const CardComp = ({ loading, data }) => {
               fontWeight: "600",
               fontSize: 12,
             }}
+            onClick={openApplyModal}
           >
             Apply Now
           </Button>
@@ -291,7 +295,7 @@ const CardComp = ({ loading, data }) => {
           </Link>
         )}
       </Box>
-      <Box></Box>
+      <FormModal />
     </Card>
   );
 };

@@ -6,7 +6,7 @@ import { Route, Routes, useLocation } from "react-router";
 import Loading from "./Loading/Loading";
 import PostJobPage from "./Post-A-Job/PostJobPage";
 import SingleJobPage from "./JobPage/comps/SingleJobPage";
-
+import JobApplications from "./JobPage/comps/JobApplications";
 const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const Jobs = React.lazy(() => import("./JobPage/Jobs"));
@@ -19,7 +19,7 @@ const AnimatedRoutes = ({ currentUser }) => {
           style={{
             width: "100%",
             height: "100vh",
-            display: "flex",
+              display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -46,6 +46,7 @@ const AnimatedRoutes = ({ currentUser }) => {
         <Route path="/jobs" element={<Jobs />}></Route>
         <Route path="*" element={<Error />}></Route>
         <Route path="/jobDetails/:id" element={<SingleJobPage />}></Route>
+        <Route path="/jobApplications" element={<JobApplications />}></Route>
       </Routes>
     </Suspense>
   );

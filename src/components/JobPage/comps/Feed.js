@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Stack, Pagination, Divider } from "@mui/material";
+import { Box, Stack, Pagination, Divider, Modal } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import CardComp from "./Card";
@@ -16,8 +16,6 @@ const Feed = ({ data, loading }) => {
   useEffect(() => {
     setCurrentCards(data.slice(indexOfFirstJob, indexOfLastJob));
   }, [currentPage, indexOfFirstJob, indexOfLastJob, data]);
-
-
 
   const filterPagination = (e, page) => {
     setCurrentPage(parseInt(page));
@@ -94,6 +92,7 @@ const Feed = ({ data, loading }) => {
           <Divider />
         </Box>
       </Box>
+     
     </Box>
   );
 };
