@@ -119,13 +119,13 @@ const PostHeader = ({
           }}
         >
           {loading ? (
-            <Skeleton variant="text" width={150} height={10} />
+            ""
           ) : (
             <Typography
               variant="h6"
               component={"span"}
               sx={{
-                color: "text.secondary",
+                // color: "text.secondary",
                 fontSize: "13px",
                 fontWeight: "600",
                 marginRight: "10px",
@@ -133,7 +133,10 @@ const PostHeader = ({
                 marginLeft: "3px",
               }}
             >
-              <a href={`/company/${companyId}`} style={{ color: "grey" }}>
+              <a
+                href={`/company/${companyId}`}
+                style={{ textDecoration: "none" }}
+              >
                 {companyName}
               </a>
             </Typography>
@@ -146,7 +149,7 @@ const PostHeader = ({
             }}
           >
             {loading ? (
-              <Skeleton variant="text" width={100} height={10} />
+              ""
             ) : (
               <>
                 <Typography
@@ -282,7 +285,7 @@ const PostHeader = ({
                 fontWeight={700}
                 sx={{ color: "text.primary" }}
               >
-                {workType}
+                {workType ? workType : "--"}
               </Typography>
             </Box>
             <Box
@@ -311,7 +314,7 @@ const PostHeader = ({
                 fontWeight={700}
                 sx={{ color: "text.primary" }}
               >
-                {salary}
+                {salary ? salary : "--"}
               </Typography>
             </Box>
           </>

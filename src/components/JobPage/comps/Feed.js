@@ -1,9 +1,26 @@
 import React from "react";
-import { Box, Stack, Pagination, Divider, Modal } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Pagination,
+  Divider,
+  Modal,
+  Skeleton,
+} from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import CardComp from "./Card";
-const Feed = ({ data, loading }) => {
+const Feed = ({
+  data,
+  loading,
+  limitedJobs,
+  setLimitedJobs,
+  filteredJobs,
+  setFilteredJobs,
+  totalJobs,
+  setTotalJobs,
+}) => {
   const [dummySkeleton, setDummySkeleton] = useState(Array(6).fill(""));
 
   const minimumCardsPerPage = 15;
@@ -11,15 +28,17 @@ const Feed = ({ data, loading }) => {
 
   const indexOfLastJob = currentPage * minimumCardsPerPage;
   const indexOfFirstJob = indexOfLastJob - minimumCardsPerPage;
-  const [currentCards, setCurrentCards] = useState([]);
 
   useEffect(() => {
-    setCurrentCards(data.slice(indexOfFirstJob, indexOfLastJob));
-  }, [currentPage, indexOfFirstJob, indexOfLastJob, data]);
+    if (data) {
+      setLimitedJobs(totalJobs?.slice(indexOfFirstJob, indexOfLastJob));
+    }
+  }, [currentPage, indexOfFirstJob, indexOfLastJob, totalJobs]);
 
   const filterPagination = (e, page) => {
     setCurrentPage(parseInt(page));
   };
+
   return (
     <Box
       sx={{
@@ -41,14 +60,27 @@ const Feed = ({ data, loading }) => {
         // border: "1px solid red",
       }}
     >
-      <Box sx={{ padding: "10px 40px" }}>
-        <Typography
-          variant="h6"
-          fontFamily={`'Poppins', sans-serif`}
-          fontWeight={600}
-          fontSize={20}
-        >{`Showing ${data.length} jobs`}</Typography>
-      </Box>
+      {loading ? (
+        <Skeleton
+          width={250}
+          height={20}
+          variant="rectangular"
+          sx={{ margin: "10px 0" }}
+        ></Skeleton>
+      ) : (
+        <Box sx={{ padding: "10px 40px" }}>
+          <Typography
+            variant="h6"
+            fontFamily={`'Poppins', sans-serif`}
+            fontWeight={600}
+            fontSize={20}
+          >
+            {totalJobs.length == 0
+              ? "No Records Found"
+              : `Showing ${totalJobs?.length} jobs`}
+          </Typography>
+        </Box>
+      )}
       <Box
         sx={{
           display: "flex",
@@ -65,34 +97,64 @@ const Feed = ({ data, loading }) => {
           dummySkeleton.map((item, index) => {
             return <CardComp key={index} loading={loading} />;
           })}
-        {currentCards &&
-          currentCards.map((job, index) => {
-            return (
-              <CardComp
-                key={index}
-                length={data.length}
-                loading={loading}
-                data={job}
-              />
-            );
-          })}
-        <Stack
-          spacing={2}
-          sx={{ margin: "10px 0", padding: "20px", width: "100%" }}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+
+            justifyContent: {
+              xs: "center",
+              md: "center",
+              lg: "flex-start",
+            },
+            alignItems: "center",
+            // display: "grid",
+            // gridTemplateColumns: "repeat(autoFit,minmax(340px,1fr))",
+          }}
+          component={motion.div}
+          // animate={{ opacity: 1 }}
+          // initial={{ opacity: 0 }}
         >
-          <Pagination
-            count={data ? Math.ceil(data.length / minimumCardsPerPage) : 1}
-            onChange={(e, pageNumber) => filterPagination(e, pageNumber)}
-            size={"medium"}
-            color="primary"
-            sx={{ margin: "0 auto" }}
-          />
-        </Stack>
+          {" "}
+          <AnimatePresence>
+            {limitedJobs &&
+              limitedJobs.map((job, index) => {
+                return (
+                  <CardComp
+                    key={index}
+                    length={data.length}
+                    loading={loading}
+                    data={job}
+                  />
+                );
+              })}
+          </AnimatePresence>
+        </Box>
+
+        {limitedJobs?.length > 0 && (
+          <Stack
+            spacing={2}
+            sx={{
+              margin: "10px 0",
+              padding: "20px",
+              width: "100%",
+            }}
+          >
+            <Pagination
+              count={
+                data ? Math.ceil(limitedJobs?.length / minimumCardsPerPage) : 1
+              }
+              onChange={(e, pageNumber) => filterPagination(e, pageNumber)}
+              size={"medium"}
+              color="primary"
+              sx={{ margin: "0 auto" }}
+            />
+          </Stack>
+        )}
         <Box color={"black"} sx={{ width: "100%", marginTop: "15px" }}>
           <Divider />
         </Box>
       </Box>
-     
     </Box>
   );
 };

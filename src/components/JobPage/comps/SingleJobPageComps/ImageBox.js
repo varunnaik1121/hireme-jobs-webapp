@@ -34,10 +34,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
       ) : (
         <>
           <img
-            src={
-              companyCoverPhoto ||
-              "https://images.unsplash.com/photo-1435575653489-b0873ec954e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-            }
+            src={companyCoverPhoto}
             alt="company image"
             style={{
               width: "100%",
@@ -45,7 +42,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
               objectFit: "cover",
               borderRadius: "inherit",
             }}
-          ></img>
+          />
           <Box
             sx={{
               width: "60px",
@@ -59,10 +56,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
             }}
           >
             <img
-              src={
-                companyProfile ||
-                "https://images.unsplash.com/photo-1560179707-f14e90ef3623?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8Y29tcGFueXxlbnwwfHwwfHw%3D&w=1000&q=80"
-              }
+              src={companyProfile}
               alt="logo"
               style={{
                 objectFit: "cover",

@@ -20,63 +20,45 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const Sidebar = ({ handleFilterClose }) => {
-  const [filtered, setFiltered] = useState([]);
-  const tempDb = [
-    {
-      title: "web developer",
-      salary: "20K-35K",
-      keywords: ["technical", "website", "developers"],
-      workType: "part time",
-      workLevel: "senior",
-    },
-    {
-      title: "data scientist",
-      salary: "50K-75K",
-      keywords: ["Ai", "data analyser", "tester"],
-      workType: "part time",
-      workLevel: "student",
-    },
-    {
-      title: "App developer",
-      salary: "10K-25K",
-      keywords: ["technical", "app", "developers"],
-      workType: "full time",
-      workLevel: "senior",
-    },
-  ];
-  const [skills, setSkills] = useState([]);
-  const handleFilter = () => {
-    console.log("data filtered based on your choice");
-  };
+const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
+  // const [filtered, setFiltered] = useState([]);
 
-  useEffect(() => {
-    setFiltered(tempDb);
-  }, []);
+  const [skills, setSkills] = useState([]);
+
+  const handleFilter = () => {
+    handleFilterClose();
+  };
 
   const filterJobsOnCheck = (jobs) => {
     var filteredJobs = [];
     jobs.forEach((job) => {
       const singleJobKeyWords = [
-        job.title,
-        job.salary,
-        job.workType,
-        job.workLevel,
+        job.title.toString().toLowerCase(),
+        job.salary.toString().toLowerCase(),
+        job.workType.toString().toLowerCase(),
+        job.workLevel.toString().toLowerCase(),
       ];
-      if (job.includes(singleJobKeyWords)) {
-        filteredJobs.push(job);
-      }
+      skills.forEach((value) => {
+        if (singleJobKeyWords.includes(value.toString().toLowerCase())) {
+          filteredJobs.push(job);
+        } else {
+          return;
+        }
+      });
     });
-    return filteredJobs;
+    setTotalJobs([...new Set(filteredJobs)]);
   };
 
   useEffect(() => {
-    if (skills) {
-      console.log(filterJobsOnCheck(tempDb));
+    if (skills.length) {
+      filterJobsOnCheck(data);
+    } else {
+      setTotalJobs([...data]);
     }
   }, [skills]);
 
   console.log({ skills });
+
   return (
     <Paper
       sx={{
@@ -133,7 +115,7 @@ const Sidebar = ({ handleFilterClose }) => {
       >
         <Typography
           variant="h6"
-          fontSize={16}
+          fontSize={18}
           fontWeight={600}
           color="primary"
           textAlign="center"
@@ -141,12 +123,12 @@ const Sidebar = ({ handleFilterClose }) => {
         >
           Filter Jobs
         </Typography>
-        <FormGroup sx={{ margin: "10px 0" }}>
+        <FormGroup sx={{ margin: "15px 0" }}>
           <Typography
             variant="h6"
-            fontSize={16}
+            textAlign={"left"}
+            fontSize={14}
             textTransform="capitalize"
-            m="5px 0"
           >
             type of employment
           </Typography>
@@ -157,19 +139,19 @@ const Sidebar = ({ handleFilterClose }) => {
             skills={skills}
           />
           <CheckBox
-            value={"part time"}
+            value={"part time "}
             label={"Part Time Jobs"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"remote"}
+            value={"remote jobs"}
             label={"Remote Jobs"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"internship"}
+            value={"internship jobs"}
             label={"Internship Jobs"}
             setSkills={setSkills}
             skills={skills}
@@ -178,60 +160,60 @@ const Sidebar = ({ handleFilterClose }) => {
         <FormGroup sx={{ margin: "10px 0" }}>
           <Typography
             variant="h6"
+            textAlign={"left"}
             fontSize={14}
             textTransform="capitalize"
-            m="5px 0"
           >
-            Seniority Level
+            Experience Level
           </Typography>
           <CheckBox
-            value={"student"}
+            value={"student level"}
             label={"student level Jobs"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"entry"}
+            value={"entry level"}
             label={"entry level Jobs"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"mid"}
+            value={"mid level"}
             label={"Mid level Jobs"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"senior"}
+            value={"senior level"}
             label={"senior level Jobs"}
             setSkills={setSkills}
             skills={skills}
           />
         </FormGroup>
-        <FormGroup sx={{ margin: "10px 0" }}>
+        <FormGroup sx={{ margin: "15px 0" }}>
           <Typography
             variant="h6"
+            textAlign={"left"}
             fontSize={14}
             textTransform="capitalize"
-            m="5px 0"
           >
             Salary Range
           </Typography>
           <CheckBox
-            value={"30000"}
+            value={"15k-30k"}
             label={"15K-30K"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"50000"}
+            value={"30k-50k"}
             label={"30K-50K"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
-            value={"100000"}
+            value={"50k-1l"}
             label={"50K-1L"}
             setSkills={setSkills}
             skills={skills}

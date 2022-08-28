@@ -21,7 +21,7 @@ const OverviewPage = ({ label, description, loading }) => {
             component={"p"}
             sx={{ fontSize: "13px", lineHeight: "25px" }}
           >
-            <Skeleton variant="text" width={"70%"} height={25} />
+            <Skeleton variant="rectangular" width={"80%"} height={65} />
           </Typography>
         </>
       ) : (
@@ -33,13 +33,14 @@ const OverviewPage = ({ label, description, loading }) => {
             component="h6"
             padding={"5px 0 15px 0"}
             sx={{ color: "text.primary" }}
+            textAlign={"left"}
           >
             {label}
           </Typography>
           <Typography
             variant="subtitle2"
             component={"p"}
-            sx={{ fontSize: "13px", lineHeight: "25px" }}
+            sx={{ fontSize: "13px", lineHeight: "25px", textAlign: "left" }}
           >
             {description}
           </Typography>

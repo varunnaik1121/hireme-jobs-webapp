@@ -12,6 +12,21 @@ import { useDbFetch } from "../../context/userContext";
 const Jobs = () => {
   const [open, setOpen] = useState(false);
   const { data, loading } = useDbFetch("jobs");
+  //state for storing the total jobs that come from firebase
+  const [totalJobs, setTotalJobs] = useState([]);
+  //state for storing the user selected jobs
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  //state for storing only 12 cards
+  const [limitedJobs, setLimitedJobs] = useState([]);
+  console.log({ data });
+
+  useEffect(() => {
+    if (data) {
+      setTotalJobs([...data]);
+    }
+  }, [data]);
+
+  totalJobs && console.log({ totalJobs });
 
   const handleFilterClose = () => {
     setOpen(false);
@@ -38,7 +53,12 @@ const Jobs = () => {
       {open && (
         <AnimatedPage>
           <Drawer open={open} anchor="left">
-            <Sidebar handleFilterClose={handleFilterClose} />
+            <Sidebar
+              handleFilterClose={handleFilterClose}
+              totalJobs={totalJobs}
+              setTotalJobs={setTotalJobs}
+              data={data}
+            />
           </Drawer>
         </AnimatedPage>
       )}
@@ -80,6 +100,7 @@ const Jobs = () => {
             xs: "5px 0",
             md: "15px 0",
           },
+          // background: "#f6f7f9",
         }}
       >
         <Grid
@@ -93,10 +114,23 @@ const Jobs = () => {
             },
           }}
         >
-          <Sidebar />
+          <Sidebar
+            totalJobs={totalJobs}
+            setTotalJobs={setTotalJobs}
+            data={data}
+          />
         </Grid>
         <Grid item sm={12} xs={12} md={9} lg={10}>
-          <Feed data={data} loading={loading} />
+          <Feed
+            data={data}
+            loading={loading}
+            limitedJobs={limitedJobs}
+            setLimitedJobs={setLimitedJobs}
+            totalJobs={totalJobs}
+            setTotalJobs={setTotalJobs}
+            filteredJobs={filteredJobs}
+            setFilteredJobs={setFilteredJobs}
+          />
         </Grid>
       </Grid>
     </Box>

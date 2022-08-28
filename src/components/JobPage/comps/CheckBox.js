@@ -4,7 +4,7 @@ const CheckBox = ({ label, value, skills, setSkills }) => {
   const handleChange = (e) => {
     const index = skills.indexOf(e.target.value);
     if (index === -1) {
-      setSkills([...skills, e.target.value]);
+      setSkills([...skills, e.target.value.toString().toLowerCase()]);
     } else {
       setSkills(skills.filter((skill) => skill !== e.target.value));
     }
@@ -25,7 +25,7 @@ const CheckBox = ({ label, value, skills, setSkills }) => {
         <Checkbox
           value={value}
           size="small"
-          checked={skills?.includes(value)}
+          checked={skills?.includes(value.toString().toLowerCase())}
           onChange={handleChange}
           sx={{ textTransform: "capitalize" }}
         />

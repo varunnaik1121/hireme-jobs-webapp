@@ -7,7 +7,7 @@ const Skills = ({ skills, loading }) => {
     <Box sx={{ padding: "10px 10px" }}>
       {loading ? (
         <>
-          <Skeleton variant="text" width={"140px"} height={20}></Skeleton>
+          <Skeleton variant="text" width={"260px"} height={20}></Skeleton>
           <Skeleton variant="text" width={"260px"} height={20}></Skeleton>
           <Skeleton variant="text" width={"260px"} height={20}></Skeleton>
         </>
@@ -19,7 +19,7 @@ const Skills = ({ skills, loading }) => {
             fontWeight={700}
             component="h6"
             padding={"5px 0 15px 0"}
-            sx={{ color: "text.primary" }}
+            sx={{ color: "text.primary", textAlign: "left" }}
           >
             Job requirements
           </Typography>

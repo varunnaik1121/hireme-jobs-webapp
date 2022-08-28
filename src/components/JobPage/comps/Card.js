@@ -8,6 +8,7 @@ import {
   IconButton,
   Tooltip,
   Modal,
+  duration,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { styled } from "@mui/styles";
@@ -21,6 +22,7 @@ import { db } from "../../../services/firebase";
 import { doc } from "firebase/firestore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FormModal from "./FormModal";
+import { motion } from "framer-motion";
 const CardComp = ({ loading, data }) => {
   const { currentUser } = useAuthListener();
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
@@ -74,6 +76,12 @@ const CardComp = ({ loading, data }) => {
           transition: "all .2s ease",
         },
       }}
+      component={motion.div}
+      layout
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
     >
       <Box
         sx={{
@@ -92,11 +100,10 @@ const CardComp = ({ loading, data }) => {
             variant="rounded"
             alt="icon"
             sx={{ backgroundColor: "black", width: "44px", height: "44px" }}
-            src={
-              data?.companyProfile ||
-              "https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-            }
-          ></Avatar>
+            src={data?.companyProfile}
+          >
+            {!data?.companyProfile && data?.companyName.charAt(0).toUpperCase()}
+          </Avatar>
         )}
         <Box
           sx={{
