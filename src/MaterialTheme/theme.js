@@ -3,7 +3,8 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "rgb(98, 0, 238)",
+      // main: "rgb(98, 0, 238)",
+      main: "#4045db",
     },
     secondary: {
       main: "#1B1D2D",
@@ -21,6 +22,8 @@ export const theme = createTheme({
   },
   typography: {
     fontFamily: "'Raleway', sans-serif",
+    // fontFamily: "'ibm-plex-sans', sans-serif",
+
     h6: {
       color: "#100f10",
     },

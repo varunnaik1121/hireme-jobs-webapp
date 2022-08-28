@@ -6,9 +6,11 @@ import "../Home/Home.css";
 import { useGlobalUser } from "../../context/userContext";
 import { UserContext } from "../../context/useUser";
 import AnimatedPage from "../AnimatedPage";
-
-import Header from "../Header/Header";
-
+import Content from "./Content";
+import NavigationBar from "./NavigationBar";
+import Navbar from "../Header/Navbar";
+import { Divider, Box } from "@mui/material";
+import FeaturedJobs from "./FeaturedJobs";
 export const Home = () => {
   const { logOut } = useGlobalUser();
 
@@ -33,7 +35,11 @@ export const Home = () => {
 
   return (
     <AnimatedPage>
-      <Header logOut={handleLogOut} />
+      <Navbar />
+      <Divider />
+      <Content />
+
+      <NavigationBar />
     </AnimatedPage>
   );
 };

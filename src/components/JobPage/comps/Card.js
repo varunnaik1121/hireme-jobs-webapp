@@ -36,7 +36,6 @@ const CardComp = ({ loading, data }) => {
   }, []);
 
   const StyledBox = styled("div")(({ theme }) => ({
-    // border: "2px solid red",
     fontSize: 10,
     textAlign: "center",
     fontWeight: "500",
@@ -59,9 +58,9 @@ const CardComp = ({ loading, data }) => {
         flexDirection: "column",
         padding: "15px 25px 25px 25px",
         // height: "300px",
-        boxShadow: "1px 1px 4px rgba(0,0,0,.1)",
-        borderRadius: "10px",
-        minWidth: {
+        boxShadow: "2px 2px 6px rgba(0,0,0,.1)",
+        borderRadius: "4px",
+        width: {
           xs: "330px",
           sm: "350px",
           md: "360px",
@@ -86,11 +85,11 @@ const CardComp = ({ loading, data }) => {
         }}
       >
         {loading ? (
-          <SkeletonComp variant="circular" width={65} height={45} />
+          <SkeletonComp variant="rectangular" width={65} height={45} />
         ) : (
           <Avatar
             aria-label="recipe"
-            variant="circle"
+            variant="rounded"
             alt="icon"
             sx={{ backgroundColor: "black", width: "44px", height: "44px" }}
             src={
@@ -111,10 +110,11 @@ const CardComp = ({ loading, data }) => {
             <SkeletonComp variant={"text"} width={120} height={20} />
           ) : (
             <Typography
-              fontSize={16}
+              fontSize={14}
               fontWeight={700}
               textTransform={"capitalize"}
               mt={"4px"}
+              textAlign={"left"}
             >
               {data?.companyName}
             </Typography>
@@ -152,6 +152,7 @@ const CardComp = ({ loading, data }) => {
           // border: "1px solid red",
           // padding: "0 10px 0 5px",
           flex: 1,
+          textAlign: "left",
           // border: "1px solid red",
         }}
       >
@@ -161,8 +162,9 @@ const CardComp = ({ loading, data }) => {
           <Link href={`/jobDetails/${data?.id}`} underline="hover">
             <Typography
               variant="h6"
-              fontSize={14}
+              fontSize={16}
               fontWeight={700}
+              component="p"
               textTransform={"capitalize"}
             >
               {data?.title}

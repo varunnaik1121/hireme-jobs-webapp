@@ -27,6 +27,7 @@ const CheckBox = ({ label, value, skills, setSkills }) => {
           size="small"
           checked={skills?.includes(value)}
           onChange={handleChange}
+          sx={{ textTransform: "capitalize" }}
         />
       }
     />

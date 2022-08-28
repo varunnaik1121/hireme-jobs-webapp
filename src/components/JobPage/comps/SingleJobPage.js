@@ -9,10 +9,11 @@ import ButtonContainer from "./SingleJobPageComps/ButtonContainer";
 import { useParams } from "react-router";
 import { useEffect } from "react";
 import { useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebase";
 import { useGlobalUser } from "../../../context/userContext";
-import { onSnapshot } from "firebase/firestore";
+import { onSnapshot, where, query } from "firebase/firestore";
+import Error from "../../Error";
 import FormModal from "./FormModal";
 const SingleJobPage = () => {
   const { currentUser } = useGlobalUser();
@@ -22,6 +23,7 @@ const SingleJobPage = () => {
   const [myFavourites, setMyFavourites] = useState(null);
   const { id } = useParams();
   console.log(id);
+  console.log(data);
 
   useEffect(() => {
     setLoading(true);
@@ -37,16 +39,21 @@ const SingleJobPage = () => {
 
   useEffect(() => {
     if (data != null) {
-      const docRef = doc(db, "companies", data?.companyId);
-      getDoc(docRef)
-        .then((data) => setCompanyDetails(data.data()))
-        .then(() => setLoading(false))
-        .catch((err) => {
-          console.log(err);
-          setLoading(true);
-        });
+      const collectionRef = collection(db, "companies");
+      const q = query(collectionRef, where("companyId", "==", data?.companyId));
+      const unsub = onSnapshot(q, (snapshot) => {
+        setCompanyDetails(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+        setLoading(false);
+      });
+      return () => unsub();
     }
   }, [data]);
+
+  useEffect(() => {
+    console.log({ companyDetails });
+  }, [companyDetails]);
 
   useEffect(() => {
     const docRef = doc(db, `users/${currentUser?.uid}`);
@@ -56,6 +63,10 @@ const SingleJobPage = () => {
     });
     return () => unsub();
   }, []);
+
+  if (data === undefined) {
+    return <Error />;
+  }
 
   return (
     <Box
@@ -68,8 +79,10 @@ const SingleJobPage = () => {
     >
       <Container maxWidth="md">
         <ImageBox
-          companyCoverPhoto={companyDetails?.companyCoverPhoto}
-          companyProfile={companyDetails?.companyProfile}
+          companyCoverPhoto={
+            companyDetails && companyDetails[0]?.companyCoverPhoto
+          }
+          companyProfile={companyDetails && companyDetails[0]?.companyProfile}
           loading={loading}
         />
         <Box
@@ -89,6 +102,7 @@ const SingleJobPage = () => {
             loading={loading}
             location={data?.location}
             myFavourites={myFavourites}
+            companyId={companyDetails && companyDetails[0]?.companyId}
             id={id}
           />
           <OverviewPage
@@ -104,7 +118,7 @@ const SingleJobPage = () => {
           />
           <ButtonContainer loading={loading} />
         </Box>
-        <FormModal id={id} />
+        <FormModal id={id} companyId={data?.companyId} />
       </Container>
     </Box>
   );

@@ -18,12 +18,63 @@ import CheckBox from "./CheckBox";
 import ClearIcon from "@mui/icons-material/Clear";
 
 import { useState } from "react";
+import { useEffect } from "react";
 
 const Sidebar = ({ handleFilterClose }) => {
+  const [filtered, setFiltered] = useState([]);
+  const tempDb = [
+    {
+      title: "web developer",
+      salary: "20K-35K",
+      keywords: ["technical", "website", "developers"],
+      workType: "part time",
+      workLevel: "senior",
+    },
+    {
+      title: "data scientist",
+      salary: "50K-75K",
+      keywords: ["Ai", "data analyser", "tester"],
+      workType: "part time",
+      workLevel: "student",
+    },
+    {
+      title: "App developer",
+      salary: "10K-25K",
+      keywords: ["technical", "app", "developers"],
+      workType: "full time",
+      workLevel: "senior",
+    },
+  ];
   const [skills, setSkills] = useState([]);
   const handleFilter = () => {
     console.log("data filtered based on your choice");
   };
+
+  useEffect(() => {
+    setFiltered(tempDb);
+  }, []);
+
+  const filterJobsOnCheck = (jobs) => {
+    var filteredJobs = [];
+    jobs.forEach((job) => {
+      const singleJobKeyWords = [
+        job.title,
+        job.salary,
+        job.workType,
+        job.workLevel,
+      ];
+      if (job.includes(singleJobKeyWords)) {
+        filteredJobs.push(job);
+      }
+    });
+    return filteredJobs;
+  };
+
+  useEffect(() => {
+    if (skills) {
+      console.log(filterJobsOnCheck(tempDb));
+    }
+  }, [skills]);
 
   console.log({ skills });
   return (

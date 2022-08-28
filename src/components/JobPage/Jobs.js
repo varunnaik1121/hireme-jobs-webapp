@@ -59,7 +59,13 @@ const Jobs = () => {
         <Button
           variant="outlined"
           size="small"
-          sx={{ textTransform: "capitalize" }}
+          sx={{
+            textTransform: "capitalize",
+            marginLeft: {
+              xs: "15px",
+              sm: "35px",
+            },
+          }}
           startIcon={<FilterListIcon />}
           onClick={handleFilterOpen}
         >

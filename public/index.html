@@ -9,35 +9,41 @@
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <title>React App</title>
   <style>
-    .main {
-      width: 100%;
+    body {
+      text-align: center;
+      background-color: #fff;
+    }
+
+    * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    .parent {
+      width: 100vw;
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
     }
 
-    .loader {
-      border: 2px solid #f3f3f3;
-      border-top: 2px solid blue;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1s linear infinite;
+    .child {
+      width: 280px;
+      height: 280px;
 
     }
 
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
+    img {
+      width: 100%;
+      height: 100%;
 
-      100% {
-        transform: rotate(360deg);
-      }
     }
   </style>
 
@@ -46,8 +52,10 @@
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root">
-    <div class="main">
-      <div class="loader"></div>
+    <div class="parent">
+      <div class="child">
+        <img src="hiremeLogo.png" alt="no image"></img>
+      </div>
     </div>
   </div>
 

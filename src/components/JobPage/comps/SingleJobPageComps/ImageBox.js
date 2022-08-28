@@ -22,7 +22,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
               height: "55px",
 
               borderRadius: "6px",
-              border: "3px solid #f6f7f9",
+
               position: "absolute",
               left: "3%",
               bottom: "-14%",
@@ -48,11 +48,11 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
           ></img>
           <Box
             sx={{
-              width: "55px",
-              height: "55px",
+              width: "60px",
+              height: "60px",
 
               borderRadius: "6px",
-              border: "3px solid #f6f7f9",
+
               position: "absolute",
               left: "3%",
               bottom: "-14%",
@@ -69,6 +69,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
                 width: "100%",
                 height: "100%",
                 borderRadius: "inherit",
+                outline: "3px solid #f6f7f9",
               }}
             ></img>
           </Box>

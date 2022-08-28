@@ -13,6 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useGlobalUser } from "../../../../context/userContext";
+import { Link } from "react-router-dom";
 const PostHeader = ({
   title,
   companyName,
@@ -24,10 +25,10 @@ const PostHeader = ({
   salary,
   loading,
   myFavourites,
+  companyId,
   id,
 }) => {
-  const { addToFavourites, removeFromFavourites, currentUser } =
-    useGlobalUser();
+  const { addToFavourites, removeFromFavourites } = useGlobalUser();
 
   return (
     <Box sx={{ width: "100%", marginTop: "30px" }}>
@@ -70,8 +71,7 @@ const PostHeader = ({
               variant="h6"
               fontWeight={700}
               textTransform="capitalize"
-              fontSize={20}
-              color="primary"
+              fontSize={22}
             >
               {title}
             </Typography>
@@ -133,7 +133,9 @@ const PostHeader = ({
                 marginLeft: "3px",
               }}
             >
-              {companyName}
+              <a href={`/company/${companyId}`} style={{ color: "grey" }}>
+                {companyName}
+              </a>
             </Typography>
           )}
 

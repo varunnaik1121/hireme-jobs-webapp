@@ -19,6 +19,7 @@ import {
   onSnapshot,
   setDoc,
   arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "../services/firebase";
 const Context = createContext();
@@ -139,7 +140,19 @@ export const UserProvider = ({ children }) => {
     setIsOpenApplyModal(true);
   };
   const closeApplyModal = () => {
-  setIsOpenApplyModal(false);
+    setIsOpenApplyModal(false);
+  };
+
+  const deleteDataById = async (id, path, callback) => {
+    try {
+      await deleteDoc(doc(db, path, id));
+      toast.success("application removed successfully", {
+        delay: 0,
+      });
+      callback();
+    } catch (err) {
+      toast.error("something went wrong!!");
+    }
   };
 
   return (
@@ -160,6 +173,7 @@ export const UserProvider = ({ children }) => {
         setIsOpenApplyModal,
         openApplyModal,
         closeApplyModal,
+        deleteDataById,
       }}
     >
       {children}

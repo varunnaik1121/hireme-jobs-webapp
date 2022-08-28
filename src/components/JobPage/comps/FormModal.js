@@ -18,7 +18,7 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../../../services/firebase";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
 
-const FormModal = ({ id }) => {
+const FormModal = ({ id, companyId }) => {
   const [loading, setLoading] = useState(false);
   const [userDetails, setUserDetails] = useState({
     name: "",
@@ -50,6 +50,7 @@ const FormModal = ({ id }) => {
     if (userDetails.name && userDetails.email && file) {
       try {
         setLoading(true);
+        toast.loading("uploading..");
         const collectionRef = collection(db, `jobApplications`);
         const stoargeRef = ref(storage, `resumes/${Date.now()}`);
         const metadata = {
@@ -66,8 +67,12 @@ const FormModal = ({ id }) => {
           email: userDetails.email,
           resume: resumeUrl,
           jobId: id,
+          companyId,
         };
         const data = await addDoc(collectionRef, payload);
+        setLoading(false);
+        closeApplyModal();
+        toast.success("Application sent successfully..");
         console.log(data);
       } catch (err) {
         console.log(err);
@@ -206,8 +211,9 @@ const FormModal = ({ id }) => {
             variant="contained"
             onClick={handleSubmit}
             sx={{ width: "110px" }}
+            disabled={loading}
           >
-            Submit
+            {loading ? "uploading..." : "submit"}
           </Button>
           <Button
             variant="outlined"
@@ -220,6 +226,7 @@ const FormModal = ({ id }) => {
               closeApplyModal();
             }}
             sx={{ width: "110px" }}
+            disabled={loading}
           >
             Cancel
           </Button>
