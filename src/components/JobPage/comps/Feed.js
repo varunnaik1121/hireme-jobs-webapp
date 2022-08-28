@@ -9,7 +9,12 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  LayoutGroup,
+  AnimateSharedLayout,
+} from "framer-motion";
 import CardComp from "./Card";
 const Feed = ({
   data,
@@ -75,7 +80,7 @@ const Feed = ({
             fontWeight={600}
             fontSize={20}
           >
-            {totalJobs.length == 0
+            {totalJobs.length === 0
               ? "No Records Found"
               : `Showing ${totalJobs?.length} jobs`}
           </Typography>
@@ -120,12 +125,14 @@ const Feed = ({
             {limitedJobs &&
               limitedJobs.map((job, index) => {
                 return (
-                  <CardComp
-                    key={index}
-                    length={data.length}
-                    loading={loading}
-                    data={job}
-                  />
+                  
+                    <CardComp
+                      key={index}
+                      length={data.length}
+                      loading={loading}
+                      data={job}
+                    />
+                
                 );
               })}
           </AnimatePresence>

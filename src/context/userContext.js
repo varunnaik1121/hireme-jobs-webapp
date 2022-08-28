@@ -11,7 +11,8 @@ import {
 import { auth, useAuthListener } from "../services/firebase";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
-
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 import {
   arrayUnion,
   collection,
@@ -186,6 +187,9 @@ export const useGlobalUser = () => {
 };
 
 export const useDbFetch = (path) => {
+  TimeAgo.addLocale(en);
+  const timeAgo = new TimeAgo("en-US");
+
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -197,7 +201,9 @@ export const useDbFetch = (path) => {
     const unsub = onSnapshot(collectionRef, (snapshot) => {
       setData(
         snapshot.docs.map((doc) => {
-          return { ...doc.data(), id: doc.id };
+          let data = doc.data();
+          let time = timeAgo.format(data.timeStamp.seconds * 1000);
+          return { ...doc.data(), id: doc.id, time };
         })
       );
       setLoading(false);

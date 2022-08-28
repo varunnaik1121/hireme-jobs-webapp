@@ -38,8 +38,10 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
         job.workType.toString().toLowerCase(),
         job.workLevel.toString().toLowerCase(),
       ];
+      console.log(singleJobKeyWords);
       skills.forEach((value) => {
-        if (singleJobKeyWords.includes(value.toString().toLowerCase())) {
+        if (singleJobKeyWords.includes(value.toString().trim().toLowerCase())) {
+          console.log({ job });
           filteredJobs.push(job);
         } else {
           return;
@@ -64,7 +66,7 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
       sx={{
         padding: {
           xs: "10px 30px",
-          md: "20px",
+          md: "20px 30px",
         },
         width: {
           xs: "100vw",
@@ -116,19 +118,21 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
         <Typography
           variant="h6"
           fontSize={18}
-          fontWeight={600}
+          fontWeight={700}
           color="primary"
           textAlign="center"
           letterSpacing={1}
+          padding={"10px 0"}
         >
           Filter Jobs
         </Typography>
-        <FormGroup sx={{ margin: "15px 0" }}>
+        <FormGroup sx={{ margin: "10px 0" }}>
           <Typography
             variant="h6"
             textAlign={"left"}
             fontSize={14}
             textTransform="capitalize"
+            fontWeight={700}
           >
             type of employment
           </Typography>
@@ -163,6 +167,7 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
             textAlign={"left"}
             fontSize={14}
             textTransform="capitalize"
+            fontWeight={700}
           >
             Experience Level
           </Typography>
@@ -197,6 +202,7 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
             textAlign={"left"}
             fontSize={14}
             textTransform="capitalize"
+            fontWeight={700}
           >
             Salary Range
           </Typography>

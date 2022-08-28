@@ -23,6 +23,9 @@ import { doc } from "firebase/firestore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FormModal from "./FormModal";
 import { motion } from "framer-motion";
+import TimeAgo from "javascript-time-ago";
+
+import en from "javascript-time-ago/locale/en";
 const CardComp = ({ loading, data }) => {
   const { currentUser } = useAuthListener();
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
@@ -77,10 +80,9 @@ const CardComp = ({ loading, data }) => {
         },
       }}
       component={motion.div}
-      layout
-      animate={{ opacity: 1 }}
-      initial={{ opacity: 0 }}
-      exit={{ opacity: 0 }}
+      animate={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, x: 0 }}
+      exit={{ opacity: 0, x: 0 }}
       transition={{ duration: 0.3 }}
     >
       <Box
@@ -181,13 +183,35 @@ const CardComp = ({ loading, data }) => {
         {loading ? (
           <SkeletonComp variant={"text"} width={140} height={10} />
         ) : (
-          <Typography
-            variant="subtitle1"
-            component="span"
-            sx={{ fontSize: 12, fontWeight: "600", color: "text.secondary" }}
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              padding: "4px 0",
+            }}
           >
-            {data?.location}
-          </Typography>
+            <Typography
+              variant="subtitle1"
+              component="span"
+              sx={{ fontSize: 12, fontWeight: "600", color: "text.secondary" }}
+            >
+              {data?.location}
+            </Typography>
+            <Typography
+              variant="h6"
+              component={"span"}
+              sx={{
+                fontSize: "10px",
+                fontWeight: "600",
+                marginLeft: "4px",
+                color: "green",
+              }}
+            >
+              {" "}
+              {data?.time.toString()}
+            </Typography>
+          </Box>
         )}
       </Box>
       <Box
@@ -224,36 +248,6 @@ const CardComp = ({ loading, data }) => {
             <StyledBox>
               Sal : <span>{data?.salary}</span>
             </StyledBox>
-          )}
-        </Box>
-        <Box sx={{ display: "flex" }}>
-          {loading ? (
-            <SkeletonComp variant={"text"} width={70} height={18} />
-          ) : (
-            <>
-              {/* <Typography
-                variant="h6"
-                component={"span"}
-                fontSize={12}
-                fontWeight={600}
-                sx={{ color: "primary.main" }}
-              >
-                New
-              </Typography> */}
-              <Typography
-                variant="h6"
-                component={"span"}
-                sx={{
-                  fontSize: "12px",
-                  fontWeight: "600px",
-                  marginLeft: "4px",
-                  color: "text.secondary",
-                }}
-              >
-                {" "}
-                12d
-              </Typography>
-            </>
           )}
         </Box>
       </Box>
@@ -310,3 +304,24 @@ const CardComp = ({ loading, data }) => {
 };
 
 export default CardComp;
+
+{
+  /* <Box sx={{ display: "flex" }}>
+{loading ? (
+  <SkeletonComp variant={"text"} width={70} height={18} />
+) : (
+  <>
+    {/* <Typography
+      variant="h6"
+      component={"span"}
+      fontSize={12}
+      fontWeight={600}
+      sx={{ color: "primary.main" }}
+    >
+      New
+    </Typography> */
+}
+
+//   </>
+// )}
+// </Box> */}
