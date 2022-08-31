@@ -206,10 +206,11 @@ const CardComp = ({ loading, data }) => {
                 fontWeight: "600",
                 marginLeft: "4px",
                 color: "green",
+                textTransform: "lowercase",
               }}
             >
               {" "}
-              {data?.time.toString()}
+            {data?.time.toString()}
             </Typography>
           </Box>
         )}

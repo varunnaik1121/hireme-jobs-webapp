@@ -8,21 +8,42 @@ import { UserContext } from "../../context/useUser";
 import AnimatedPage from "../AnimatedPage";
 import Content from "./Content";
 import NavigationBar from "./NavigationBar";
+import AppWrap from "../HigherOrderComp/Wrapper";
 import Navbar from "../Header/Navbar";
 import { Divider, Box } from "@mui/material";
 import FeaturedJobs from "./FeaturedJobs";
-export const Home = () => {
-  const { logOut } = useGlobalUser();
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import { useState } from "react";
+const Home = () => {
 
-  const handleLogOut = () => {
-    logOut();
-  };
+  const [isCompany, setIsCompany] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { currentUser } = useContext(UserContext);
 
   useEffect(() => {
     console.count("home page");
   }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    const getCompanyId = async () => {
+      const q = query(
+        collection(db, "verifiedCompanies"),
+        where("companyId", "==", currentUser?.uid)
+      );
+      const data = await getDocs(q);
+      const companyStatus = data.docs.map((doc) => doc.data()).length > 0;
+      setIsCompany(companyStatus);
+      setLoading(false);
+    };
+    getCompanyId();
+  }, []);
+
+  if (isCompany) {
+    console.log(isCompany);
+  }
 
   useEffect(() => {
     toast.dismiss();
@@ -35,11 +56,11 @@ export const Home = () => {
 
   return (
     <AnimatedPage>
-      <Navbar />
+      <Navbar isCompany={isCompany} loading={loading} />
       <Divider />
-      <Content />
-
-      <NavigationBar />
+      <Content isCompany={isCompany}/>
     </AnimatedPage>
   );
 };
+
+export default AppWrap(Home);

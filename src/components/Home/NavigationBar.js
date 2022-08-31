@@ -8,15 +8,26 @@ import BottomNavigation from "@mui/material/BottomNavigation";
 import Box from "@mui/material/Box";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import InfoIcon from "@mui/icons-material/Info";
-
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 function NavigationBar({ widthbar }) {
-  const [value, setValue] = React.useState(0);
+  const navigate = useNavigate();
+
+  const handleClick = (path) => {
+    navigate(path);
+  };
+
+  const pathname = window.location.pathname;
+  const [value, setValue] = React.useState(pathname);
+
   const arr = [
-    { name: "Home", icon: <HomeIcon /> },
-    { name: "Jobs", icon: <WorkHistoryIcon /> },
-    { name: "Companies", icon: <ApartmentIcon /> },
-    { name: "About Us", icon: <InfoIcon /> },
+    { name: "Home", icon: <HomeIcon />, path: "/" },
+    { name: "Jobs", icon: <WorkHistoryIcon />, path: "/jobs" },
+    { name: "Companies", icon: <ApartmentIcon />, path: "/companies" },
+    { name: "Favourites", icon: <InfoIcon />, path: "/favourites" },
   ];
+
+  console.log(value);
   return (
     <>
       <Box
@@ -29,7 +40,7 @@ function NavigationBar({ widthbar }) {
             md: "none",
           },
           position: "fixed",
-          bottom: 0,
+          bottom: "20px",
           left: 0,
           right: 0,
           zIndex: "1000",
@@ -54,7 +65,9 @@ function NavigationBar({ widthbar }) {
                 }}
                 key={i}
                 label={item.name}
+                value={item.path}
                 icon={item.icon}
+                onClick={() => handleClick(item.path)}
               />
             );
           })}

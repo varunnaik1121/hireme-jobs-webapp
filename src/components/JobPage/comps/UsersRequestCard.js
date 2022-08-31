@@ -142,7 +142,12 @@ const UsersRequestCard = ({ name, email, resume, id }) => {
         >
           <MenuItem
             onClick={() => deleteDataById(id, "jobApplications", handleClose)}
-            sx={{ padding: "4px 10px", fontSize: 12, fontWeight: 600 }}
+            sx={{
+              padding: "4px 10px",
+              fontSize: 12,
+              fontWeight: 600,
+              color: "palette.error.main",
+            }}
           >
             delete{" "}
           </MenuItem>

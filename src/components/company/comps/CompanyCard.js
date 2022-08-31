@@ -2,12 +2,21 @@ import React from "react";
 import { Avatar, Card, Typography, Button, Box, Link } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
-const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
+const CompanyCard = ({
+  websiteLink,
+  companyId,
+  location,
+  industry,
+  name,
+  isDummyCard,
+  image,
+}) => {
   return (
     <Card
+      elevation={0}
       sx={{
         padding: "15px 20px",
-
+        boxShadow: "2px 2px 6px rgba(0,0,0,.1)",
         width: "360px",
         display: "flex",
         alignItems: "center",
@@ -16,40 +25,66 @@ const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
         margin: "12px",
         height: "170px",
         justifyContent: "center",
+        transition: "all .2s",
+        // border: "1px solid red",
+        "&:hover": {
+          transform: "scale(.99)",
+          boxShadow: "2px 2px 10px rgba(0,0,0,.2)",
+        },
       }}
     >
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Avatar
-          src="https://images.unsplash.com/photo-1661435805424-8eac4e3cc924?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80"
-          alt="logo"
-          sx={{ width: 60, height: 60 }}
-        ></Avatar>
-        <Box sx={{ padding: "0 0 0 20px" }}>
-          <Typography
-            variant="h6"
-            fontWeight={600}
-            fontSize={16}
-            padding={"10px 0"}
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          // border: "1px solid green",
+          width: "320px",
+        }}
+      >
+        <Avatar src={image} alt="logo" sx={{ width: 60, height: 60 }}></Avatar>
+        <Box
+          sx={{
+            padding: "0 0 0 20px",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "flex-start",
+            }}
           >
-            <Link
-              href={`/company/${companyId}`}
-              underline="none"
-              color={"text.primary"}
+            <Typography
+              variant="h6"
+              fontWeight={600}
+              fontSize={14}
+              padding={"0 0 10px 0"}
+              component={Link}
+              href={!isDummyCard ? `/company/${companyId}` : `/companies`}
+              sx={{
+                textDecoration: "none",
+                "&:hover": {
+                  textDecoration: "underline",
+                },
+              }}
             >
               {name}
-            </Link>
-          </Typography>
+            </Typography>
+          </Box>
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               width: "100%",
               justifyContent: "space-between",
+              // border: "1px solid green",
             }}
           >
             <div
               style={{
-                width: "120px",
+                // width: "120px",
                 display: "flex",
                 alignItems: "center",
                 padding: "0 5px 0 0",
@@ -57,11 +92,14 @@ const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
             >
               <p
                 style={{
-                  fontSize: 10,
+                  fontSize: 9,
                   letterSpacing: 0,
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  textTransform: "capitalize",
+                  fontWeight: 500,
+                  maxWidth: "90px",
                 }}
               >
                 {location}
@@ -73,19 +111,22 @@ const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
             </div>
             <div
               style={{
-                width: "120px",
+                // width: "120px",
                 display: "flex",
                 alignItems: "center",
-                padding: "0 0px 0 5px",
+                padding: "0 0 0 5px",
               }}
             >
               <p
                 style={{
-                  fontSize: 10,
+                  fontSize: 9,
                   letterSpacing: 0,
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
+                  textTransform: "capitalize",
+                  fontWeight: 500,
+                  maxWidth: "90px",
                 }}
               >
                 {industry}
@@ -101,7 +142,7 @@ const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
               width: "100%",
               display: "flex",
 
-              margin: "10px 0 0 0",
+              // margin: "10px 0 0 0",
               alignItems: "center",
               justifyContent: "space-between",
               marginTop: "15px",
@@ -119,7 +160,7 @@ const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
               }}
             >
               <Link
-                href={websiteLink}
+                href={!isDummyCard ? websiteLink : `/companies`}
                 target="_blank"
                 rel="noreferrer"
                 sx={{
@@ -141,10 +182,11 @@ const CompanyCard = ({ websiteLink, companyId, location, industry, name }) => {
                 padding: "4px 15px",
                 borderRadius: 0,
                 fontWeight: 600,
+                margin: "0 0 0 15px",
               }}
             >
               <Link
-                href={`/company/${companyId}`}
+                href={!isDummyCard ? `/company/${companyId}` : `/companies`}
                 underline="none"
                 color={"primary"}
                 sx={{ fontWeight: 400, fontSize: "12px" }}

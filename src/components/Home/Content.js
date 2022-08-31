@@ -8,28 +8,29 @@ import copy from "../../assests/HomePageImages/copy.png";
 import { Grid } from "@mui/material";
 import FeaturedJobs from "./FeaturedJobs";
 import { motion } from "framer-motion";
-export default function Content() {
-  const textVariants = {
-    hidden: { opacity: 0, y: -100 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      y: 0,
-
-      transition: { duration: 0.5 },
-    },
-  };
+import PopularCompanies from "./PopularCompanies";
+export default function Content({ isCompany }) {
   return (
     <React.Fragment>
       <Container
         maxWidth="lg"
         sx={{
           display: "flex",
-          py: 6,
+          py: {
+            xs: 2,
+            md: 0,
+          },
+
           flexDirection: "column",
+          border: "1px solid red",
         }}
       >
-        <Grid container direction="row" alignItems="center">
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          sx={{ minHeight: "90vh" }}
+        >
           <Grid item xs={12} sm={6} order={{ xs: 2, sm: 1 }}>
             <Box
               sx={{
@@ -42,7 +43,7 @@ export default function Content() {
             >
               <Typography
                 sx={{
-                  color: "primary",
+                  color: "text.primary",
                   fontWeight: "600",
                   paddingRight: "20px",
                   lineHeight: { xs: "50px", sm: "55px", md: "75px" },
@@ -56,19 +57,18 @@ export default function Content() {
                 variant="h3"
                 component="h3"
               >
-                <motion.div
-                  variants={textVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
+                <div>
                   Find Your Dream Job With{" "}
                   <span style={{ color: "#4045db", fontWeight: 600 }}>
-                    <span style={{ color: "black", fontWeight: 600 }}>
+                    <Box
+                      component={"span"}
+                      style={{ color: "text.primary", fontWeight: 600 }}
+                    >
                       Hire
-                    </span>
+                    </Box>
                     Me
                   </span>
-                </motion.div>
+                </div>
               </Typography>
 
               <Typography
@@ -77,6 +77,8 @@ export default function Content() {
                   color: "text.secondary",
                   //   border: "1px solid red",
                   margin: "10px auto",
+                  color: "text.secondary",
+                  fontWeight: 500,
                 }}
                 variant="p"
                 fontSize={12}
@@ -105,7 +107,7 @@ export default function Content() {
                 backgroundSize: "cover",
                 objectFit: "contain",
                 marginTop: {
-                  xs: "30px",
+                  xs: 0,
                   md: 0,
                 },
               }}
@@ -114,7 +116,7 @@ export default function Content() {
             />
           </Grid>
         </Grid>
-        <FeaturedJobs />
+        <FeaturedJobs isCompany={isCompany} />
       </Container>
     </React.Fragment>
   );

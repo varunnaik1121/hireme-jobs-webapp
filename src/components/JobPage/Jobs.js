@@ -8,6 +8,9 @@ import { useState } from "react";
 import AnimatedPage from "../AnimatedPage";
 import { useEffect } from "react";
 import { useDbFetch } from "../../context/userContext";
+import AppWrap from "../HigherOrderComp/Wrapper";
+import { Navigate } from "react-router";
+import NavigationBar from "../Home/NavigationBar";
 
 const Jobs = () => {
   const [open, setOpen] = useState(false);
@@ -133,6 +136,7 @@ const Jobs = () => {
           />
         </Grid>
       </Grid>
+      <NavigationBar />
     </Box>
   );
 };

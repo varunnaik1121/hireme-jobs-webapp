@@ -14,9 +14,14 @@ const FeaturedCard = ({ image, title, about, location, time, onClick }) => {
         // border: "1px solid red",
         padding: "20px 25px",
         boxShadow: "2px 2px 10px rgba(0,0,0,.1)",
-        margin: "10px ",
+        margin: "10px 15px",
+        transition: "all .2s",
+
+        "&:hover": {
+          transform: "scale(.99)",
+          boxShadow: "2px 2px 10px rgba(0,0,0,.2)",
+        },
       }}
-      onClick={onClick}
     >
       <Avatar src={image} variant="rounded"></Avatar>
       <Typography
@@ -25,7 +30,14 @@ const FeaturedCard = ({ image, title, about, location, time, onClick }) => {
         fontSize={"17px"}
         textAlign={"left"}
         padding={"14px 0"}
-        sx={{ color: "text.primary" }}
+        sx={{
+          color: "text.primary",
+          "&:hover": {
+            textDecoration: "underline",
+            cursor: "pointer",
+          },
+        }}
+        onClick={onClick}
       >
         {title}
       </Typography>

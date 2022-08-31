@@ -202,7 +202,7 @@ export const useDbFetch = (path) => {
       setData(
         snapshot.docs.map((doc) => {
           let data = doc.data();
-          let time = timeAgo.format(data.timeStamp.seconds * 1000);
+          let time = timeAgo.format(data.timestamp.seconds * 1000);
           return { ...doc.data(), id: doc.id, time };
         })
       );

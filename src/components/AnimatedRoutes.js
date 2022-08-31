@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Suspense } from "react";
 import Error from "./Error";
-import { Home } from "./Home/Home";
+import Home from "./Home/Home";
 import { Route, Routes, useLocation } from "react-router";
 import Loading from "./Loading/Loading";
 import PostJobPage from "./Post-A-Job/PostJobPage";
@@ -14,6 +14,7 @@ const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const Jobs = React.lazy(() => import("./JobPage/Jobs"));
 const CompaniesPage = React.lazy(() => import("./company/CompaniesPage"));
+const CompanyProfile = React.lazy(() => import("./company/CompanyProfile"));
 const AnimatedRoutes = ({ currentUser }) => {
   const navigate = useNavigate();
   useEffect(() => {
@@ -59,6 +60,7 @@ const AnimatedRoutes = ({ currentUser }) => {
         <Route path="/jobApplications" element={<JobApplications />}></Route>
         <Route path="/companies" element={<CompaniesPage />}></Route>
         <Route path="/dummy" element={<Dummy />}></Route>
+        <Route path="/companyProfile" element={<CompanyProfile />}></Route>
       </Routes>
     </Suspense>
   );
