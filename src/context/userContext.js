@@ -21,6 +21,10 @@ import {
   setDoc,
   arrayRemove,
   deleteDoc,
+  getDocs,
+  query,
+  where,
+  orderBy,
 } from "firebase/firestore";
 import { db } from "../services/firebase";
 const Context = createContext();
@@ -30,12 +34,28 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [IsOpenApplyModal, setIsOpenApplyModal] = useState(false);
-
+  const [isCompany, setIsCompany] = useState(false);
+  const [homeLoading, setHomeLoading] = useState(false);
   const provider = new GoogleAuthProvider();
 
   provider.setCustomParameters({ prompt: "select_account" });
 
   //function related to user login
+
+  useEffect(() => {
+    setHomeLoading(true);
+    const getCompanyId = async () => {
+      const q = query(
+        collection(db, "verifiedCompanies"),
+        where("companyId", "==", currentUser?.uid)
+      );
+      const data = await getDocs(q);
+      const companyStatus = data.docs.map((doc) => doc.data()).length > 0;
+      setIsCompany(companyStatus);
+      setHomeLoading(false);
+    };
+    getCompanyId();
+  }, []);
 
   const signUp = async (email, password, username, reset2) => {
     const signUpToastId = toast.loading("loading...");
@@ -175,6 +195,8 @@ export const UserProvider = ({ children }) => {
         openApplyModal,
         closeApplyModal,
         deleteDataById,
+        isCompany,
+        homeLoading,
       }}
     >
       {children}
@@ -197,8 +219,9 @@ export const useDbFetch = (path) => {
     setLoading(true);
 
     const collectionRef = collection(db, path);
+    const q = query(collectionRef, orderBy("timestamp", "desc"));
 
-    const unsub = onSnapshot(collectionRef, (snapshot) => {
+    const unsub = onSnapshot(q, (snapshot) => {
       setData(
         snapshot.docs.map((doc) => {
           let data = doc.data();

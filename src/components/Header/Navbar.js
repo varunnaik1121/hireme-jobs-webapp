@@ -43,8 +43,7 @@ export default function ButtonAppBar({ isCompany, loading }) {
   return (
     <Box>
       <AppBar
-        elevation={1}
-        position="static"
+        position="relative"
         sx={{
           py: 2,
           backgroundColor: "#fff",
@@ -54,7 +53,8 @@ export default function ButtonAppBar({ isCompany, loading }) {
           flexDirection: "row",
           justifyContent: "space-around",
           alignItems: "center",
-          boxShadow: "none",
+          zIndex: 1000,
+          boxShadow: "1px 1px 4px rgba(0,0,0,.2)",
         }}
       >
         <Typography

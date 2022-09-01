@@ -62,7 +62,6 @@ const Feed = ({
           md: "flex-start",
           lg: "flex-start",
         },
-        // border: "1px solid red",
       }}
     >
       {loading ? (
@@ -125,14 +124,12 @@ const Feed = ({
             {limitedJobs &&
               limitedJobs.map((job, index) => {
                 return (
-                  
-                    <CardComp
-                      key={index}
-                      length={data.length}
-                      loading={loading}
-                      data={job}
-                    />
-                
+                  <CardComp
+                    key={index}
+                    length={data.length}
+                    loading={loading}
+                    data={job}
+                  />
                 );
               })}
           </AnimatePresence>

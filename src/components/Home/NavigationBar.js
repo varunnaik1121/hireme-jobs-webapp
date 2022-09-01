@@ -40,7 +40,7 @@ function NavigationBar({ widthbar }) {
             md: "none",
           },
           position: "fixed",
-          bottom: "20px",
+          bottom: 0,
           left: 0,
           right: 0,
           zIndex: "1000",

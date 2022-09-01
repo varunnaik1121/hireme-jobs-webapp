@@ -11,6 +11,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
         borderRadius: "10px 10px 0 0",
         position: "relative",
         // border: "1px solid red",
+      
       }}
     >
       {loading ? (
@@ -35,7 +36,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
         <>
           <img
             src={companyCoverPhoto}
-            alt="company image"
+            alt="no image available"
             style={{
               width: "100%",
               height: "100%",

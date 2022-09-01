@@ -15,30 +15,13 @@ import FeaturedJobs from "./FeaturedJobs";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../../services/firebase";
 import { useState } from "react";
+import Footer from "../Footer/Footer";
 const Home = () => {
-
-  const [isCompany, setIsCompany] = useState(false);
-  const [loading, setLoading] = useState(false);
-
   const { currentUser } = useContext(UserContext);
+  const { isCompany } = useGlobalUser();
 
   useEffect(() => {
     console.count("home page");
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    const getCompanyId = async () => {
-      const q = query(
-        collection(db, "verifiedCompanies"),
-        where("companyId", "==", currentUser?.uid)
-      );
-      const data = await getDocs(q);
-      const companyStatus = data.docs.map((doc) => doc.data()).length > 0;
-      setIsCompany(companyStatus);
-      setLoading(false);
-    };
-    getCompanyId();
   }, []);
 
   if (isCompany) {
@@ -56,9 +39,10 @@ const Home = () => {
 
   return (
     <AnimatedPage>
-      <Navbar isCompany={isCompany} loading={loading} />
+      {/* <Navbar isCompany={isCompany} loading={loading} /> */}
       <Divider />
-      <Content isCompany={isCompany}/>
+      <Content isCompany={isCompany} />
+      {/* <Footer /> */}
     </AnimatedPage>
   );
 };

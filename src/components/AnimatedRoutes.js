@@ -9,7 +9,9 @@ import SingleJobPage from "./JobPage/comps/SingleJobPage";
 import { useNavigate } from "react-router-dom";
 import JobApplications from "./JobPage/comps/JobApplications";
 import Dummy from "../Dummy";
-
+import Navbar from "../components/Header/Navbar";
+import { useGlobalUser } from "../context/userContext";
+import Footer from "./Footer/Footer";
 const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const Jobs = React.lazy(() => import("./JobPage/Jobs"));
@@ -17,6 +19,7 @@ const CompaniesPage = React.lazy(() => import("./company/CompaniesPage"));
 const CompanyProfile = React.lazy(() => import("./company/CompanyProfile"));
 const AnimatedRoutes = ({ currentUser }) => {
   const navigate = useNavigate();
+  const { isCompany, homeLoading } = useGlobalUser();
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
@@ -39,6 +42,7 @@ const AnimatedRoutes = ({ currentUser }) => {
         </div>
       }
     >
+      <Navbar isCompany={isCompany} loading={homeLoading} />
       <Routes key={location.pathname} location={location}>
         <Route path="/login" element={<Login />}></Route>
         <Route
@@ -61,7 +65,10 @@ const AnimatedRoutes = ({ currentUser }) => {
         <Route path="/companies" element={<CompaniesPage />}></Route>
         <Route path="/dummy" element={<Dummy />}></Route>
         <Route path="/companyProfile" element={<CompanyProfile />}></Route>
+        <Route path="/postJob" element={<PostJobPage />}></Route>
+        <Route path="/company/:id" element={<PostJobPage />}></Route>
       </Routes>
+      <Footer />
     </Suspense>
   );
 };

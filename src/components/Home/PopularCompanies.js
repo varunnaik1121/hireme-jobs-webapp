@@ -7,7 +7,7 @@ import infoysis from "../../assests/HomePage-images/infoysis.jpg";
 import cognizant from "../../assests/HomePage-images/cognizant.webp";
 const PopularCompanies = () => {
   return (
-    <Box sx={{ bgcolor: "#f6f7f9" }}>
+    <Box sx={{ bgcolor: "#f6f7f9", paddingBottom: "40px" }}>
       <Typography
         variant="h6"
         fontWeight={600}
@@ -24,7 +24,6 @@ const PopularCompanies = () => {
             color: "primary.main",
             fontWeight: "500",
             fontSize: "inherit",
-
           }}
         >
           Explore
@@ -37,6 +36,7 @@ const PopularCompanies = () => {
           display: "flex",
           flexWrap: "wrap",
           paddingBottom: "50px",
+          padding: "0 10px",
           justifyContent: {
             xs: "center",
             sm: "center",
@@ -78,4 +78,3 @@ const PopularCompanies = () => {
 };
 
 export default PopularCompanies;
-

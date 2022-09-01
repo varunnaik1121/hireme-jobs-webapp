@@ -14,7 +14,9 @@ import { db } from "../../../services/firebase";
 import { useGlobalUser } from "../../../context/userContext";
 import { onSnapshot, where, query } from "firebase/firestore";
 import Error from "../../Error";
+import TimeAgo from "javascript-time-ago";
 import FormModal from "./FormModal";
+import en from "javascript-time-ago/locale/en";
 const SingleJobPage = () => {
   const { currentUser } = useGlobalUser();
   const [loading, setLoading] = useState(false);
@@ -24,12 +26,19 @@ const SingleJobPage = () => {
   const { id } = useParams();
   console.log(id);
   console.log(data);
+  TimeAgo.addLocale(en);
+  const timeAgo = new TimeAgo("en-US");
 
   useEffect(() => {
     setLoading(true);
     const docRef = doc(db, "jobs", id);
     getDoc(docRef)
-      .then((data) => setData(data.data()))
+      .then((doc) => {
+        let data = doc.data();
+        let time = timeAgo.format(data.timestamp.seconds * 1000);
+
+        setData({ ...doc.data(), id: data.id, time });
+      })
 
       .catch((err) => {
         console.log(err);
@@ -75,6 +84,7 @@ const SingleJobPage = () => {
         minHeight: "100vh",
 
         padding: "35px 0",
+        background: "#f6f7f9",
       }}
     >
       <Container maxWidth="md">
@@ -89,7 +99,9 @@ const SingleJobPage = () => {
           sx={{
             width: "100%",
             padding: "10px 20px 40px 20px",
-            border: "1px solid rgba(0,0,0,.1)",
+
+            boxShadow: "1px 1px 4px rgba(0,0,0,.1)",
+            background: "#fff",
           }}
         >
           <PostHeader
@@ -104,6 +116,7 @@ const SingleJobPage = () => {
             myFavourites={myFavourites}
             companyId={companyDetails && companyDetails[0]?.companyId}
             id={id}
+            time={data?.time}
           />
           <OverviewPage
             label={"overview"}

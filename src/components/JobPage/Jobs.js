@@ -19,7 +19,7 @@ const Jobs = () => {
   const [totalJobs, setTotalJobs] = useState([]);
   //state for storing the user selected jobs
   const [filteredJobs, setFilteredJobs] = useState([]);
-  //state for storing only 12 cards
+  //state for storing only 12 cards per page
   const [limitedJobs, setLimitedJobs] = useState([]);
   console.log({ data });
 

@@ -24,7 +24,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FormModal from "./FormModal";
 import { motion } from "framer-motion";
 import TimeAgo from "javascript-time-ago";
-
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import en from "javascript-time-ago/locale/en";
 const CardComp = ({ loading, data }) => {
   const { currentUser } = useAuthListener();
@@ -39,6 +39,8 @@ const CardComp = ({ loading, data }) => {
     });
     return () => unsub();
   }, []);
+
+  console.log({ data });
 
   const StyledBox = styled("div")(({ theme }) => ({
     fontSize: 10,
@@ -120,10 +122,11 @@ const CardComp = ({ loading, data }) => {
           ) : (
             <Typography
               fontSize={14}
-              fontWeight={700}
+              fontWeight={600}
               textTransform={"capitalize"}
               mt={"4px"}
               textAlign={"left"}
+              sx={{ color: "text.secondary" }}
             >
               {data?.companyName}
             </Typography>
@@ -191,13 +194,32 @@ const CardComp = ({ loading, data }) => {
               padding: "4px 0",
             }}
           >
-            <Typography
-              variant="subtitle1"
-              component="span"
-              sx={{ fontSize: 12, fontWeight: "600", color: "text.secondary" }}
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                padding: "0 0 0 2px",
+              }}
             >
-              {data?.location}
-            </Typography>
+              <Typography
+                variant="subtitle1"
+                component="span"
+                sx={{
+                  fontSize: 12,
+                  fontWeight: "600",
+                  color: "text.secondary",
+                }}
+              >
+                {data?.location}
+              </Typography>
+              <LocationOnOutlinedIcon
+                sx={{
+                  fontSize: "14px",
+                  color: "text.secondary",
+                  margin: "0 0 0 5px",
+                }}
+              />
+            </Box>
             <Typography
               variant="h6"
               component={"span"}
@@ -205,12 +227,12 @@ const CardComp = ({ loading, data }) => {
                 fontSize: "10px",
                 fontWeight: "600",
                 marginLeft: "4px",
-                color: "green",
+                color: "success.main",
                 textTransform: "lowercase",
               }}
             >
               {" "}
-            {data?.time.toString()}
+              {data?.time.toString()}
             </Typography>
           </Box>
         )}
@@ -247,7 +269,12 @@ const CardComp = ({ loading, data }) => {
             <SkeletonComp variant={"text"} width={60} height={24} />
           ) : (
             <StyledBox>
-              Sal : <span>{data?.salary}</span>
+              Sal :{" "}
+              <span>
+                {data?.salary.toString().toLowerCase() == "none"
+                  ? "--"
+                  : data?.salary}
+              </span>
             </StyledBox>
           )}
         </Box>
@@ -257,48 +284,10 @@ const CardComp = ({ loading, data }) => {
         sx={{
           width: "100%",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           marginTop: "8px",
         }}
-      >
-        {loading ? (
-          <SkeletonComp variant={"text"} width={120} height={35} />
-        ) : (
-          <Button
-            variant="contained"
-            size="small"
-            sx={{
-              textTransform: "capitalize",
-              minWidth: "120px",
-              fontWeight: "600",
-              fontSize: 12,
-            }}
-            onClick={openApplyModal}
-          >
-            Apply Now
-          </Button>
-        )}
-        {loading ? (
-          <SkeletonComp variant={"text"} width={120} height={35} />
-        ) : (
-          <Link href={`jobDetails/${data?.id}`} underline="none">
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                textTransform: "capitalize",
-                minWidth: "120px",
-                fontWeight: "600",
-                padding: "5px",
-                fontSize: 12,
-                backgroundColor: "#f6f7f9",
-              }}
-            >
-              View More
-            </Button>
-          </Link>
-        )}
-      </Box>
+      ></Box>
       <FormModal />
     </Card>
   );
@@ -326,3 +315,42 @@ export default CardComp;
 //   </>
 // )}
 // </Box> */}
+
+// {loading ? (
+//   <SkeletonComp variant={"text"} width={120} height={35} />
+// ) : (
+//   <Button
+//     variant="contained"
+//     size="small"
+//     sx={{
+//       textTransform: "capitalize",
+//       minWidth: "120px",
+//       fontWeight: "600",
+//       fontSize: 12,
+//     }}
+//     onClick={openApplyModal}
+//   >
+//     Apply Now
+//   </Button>
+// )}
+
+// {loading ? (
+//   <SkeletonComp variant={"text"} width={120} height={35} />
+// ) : (
+//   <Link href={`jobDetails/${data?.id}`} underline="none">
+//     <Button
+//       variant="contained"
+//       size="small"
+//       sx={{
+//         textTransform: "capitalize",
+//         minWidth: "120px",
+//         fontWeight: "600",
+//         padding: "5px",
+//         fontSize: 12,
+//         flex: 1,
+//       }}
+//     >
+//       View More
+//     </Button>
+//   </Link>
+// )}

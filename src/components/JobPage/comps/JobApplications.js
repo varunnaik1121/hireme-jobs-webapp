@@ -16,6 +16,7 @@ const JobApplications = () => {
   const [applications, setApplications] = useState(null);
   console.log(loading, { applications });
 
+  console.log("this is applications");
   const navigate = useNavigate();
   useEffect(() => {
     if (!currentUser) {
@@ -53,14 +54,16 @@ const JobApplications = () => {
   });
 
   if (applications?.length === 0) {
-    return <div>No Data found</div>;
+    return (
+      <Box sx={{ marginTop: "20px", minHeight: "100vh" }}>No Data found</Box>
+    );
   }
 
   return (
     <Box
       sx={{
         width: "100vw",
-        border: "1px solid red",
+
         minHeight: "100vh",
         backgroundColor: "#f6f7f9",
         padding: {

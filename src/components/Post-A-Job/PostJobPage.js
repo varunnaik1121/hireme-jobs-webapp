@@ -12,7 +12,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { useGlobalUser } from "../../context/userContext";
 import { useState } from "react";
-
+import JobApplication from "../JobPage/JobPost/JobApplication";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
 
@@ -146,7 +146,11 @@ const PostJobPage = React.memo(({ currentUser }) => {
   }
 
   if (myCompanyDetails?.length && myCompanyDetails[0]?.status === "success") {
-    return <div>post job page</div>;
+    return (
+      <Box sx={{ width: "100vw", minHeight: "100vh" }}>
+        <JobApplication myCompanyDetails={myCompanyDetails[0]} />
+      </Box>
+    );
   }
 
   if (

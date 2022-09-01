@@ -27,6 +27,7 @@ const PostHeader = ({
   myFavourites,
   companyId,
   id,
+  time,
 }) => {
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
 
@@ -126,10 +127,9 @@ const PostHeader = ({
               component={"span"}
               sx={{
                 // color: "text.secondary",
-                fontSize: "13px",
-                fontWeight: "600",
+                fontSize: "12px",
+                fontWeight: "500",
                 marginRight: "10px",
-                letterSpacing: "1px",
                 marginLeft: "3px",
               }}
             >
@@ -178,8 +178,11 @@ const PostHeader = ({
             {" "}
             <Typography variant="h6" fontSize={12} textTransform="none">
               Posted
-              <Box component={"span"} sx={{ color: "text.secondary" }}>
-                &nbsp;8 days ago
+              <Box
+                component={"span"}
+                sx={{ color: "text.secondary", fontWeight: 500 }}
+              >
+                &nbsp;{time}
               </Box>
             </Typography>
           </>

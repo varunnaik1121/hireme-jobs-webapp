@@ -22,7 +22,6 @@ export default function Content({ isCompany }) {
           },
 
           flexDirection: "column",
-          border: "1px solid red",
         }}
       >
         <Grid
