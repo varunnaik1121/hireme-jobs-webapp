@@ -92,7 +92,7 @@ const CompanyCard = ({
             >
               <p
                 style={{
-                  fontSize: 9,
+                  fontSize: 10,
                   letterSpacing: 0,
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",
@@ -119,7 +119,7 @@ const CompanyCard = ({
             >
               <p
                 style={{
-                  fontSize: 9,
+                  fontSize: 10,
                   letterSpacing: 0,
                   textOverflow: "ellipsis",
                   whiteSpace: "nowrap",

@@ -12,11 +12,12 @@ import Dummy from "../Dummy";
 import Navbar from "../components/Header/Navbar";
 import { useGlobalUser } from "../context/userContext";
 import Footer from "./Footer/Footer";
+import App from "./company/singleCompanyPage/App";
 const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const Jobs = React.lazy(() => import("./JobPage/Jobs"));
 const CompaniesPage = React.lazy(() => import("./company/CompaniesPage"));
-const CompanyProfile = React.lazy(() => import("./company/CompanyProfile"));
+
 const AnimatedRoutes = ({ currentUser }) => {
   const navigate = useNavigate();
   const { isCompany, homeLoading } = useGlobalUser();
@@ -64,9 +65,9 @@ const AnimatedRoutes = ({ currentUser }) => {
         <Route path="/jobApplications" element={<JobApplications />}></Route>
         <Route path="/companies" element={<CompaniesPage />}></Route>
         <Route path="/dummy" element={<Dummy />}></Route>
-        <Route path="/companyProfile" element={<CompanyProfile />}></Route>
+
         <Route path="/postJob" element={<PostJobPage />}></Route>
-        <Route path="/company/:id" element={<PostJobPage />}></Route>
+        <Route path="/company/:id" element={<App />}></Route>
       </Routes>
       <Footer />
     </Suspense>

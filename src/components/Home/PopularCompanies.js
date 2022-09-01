@@ -50,6 +50,7 @@ const PopularCompanies = () => {
           location={"california,USA"}
           name={"Google"}
           image={google}
+          isDummyCard
         />
         <CompanyCard
           websiteLink={""}
@@ -57,6 +58,7 @@ const PopularCompanies = () => {
           location={"california,USA"}
           name={"intel"}
           image={intel}
+          isDummyCard
         />
         <CompanyCard
           websiteLink={"https://google.com"}
@@ -64,6 +66,7 @@ const PopularCompanies = () => {
           location={"Bengaluru, Karnataka"}
           name={"infoysis"}
           image={infoysis}
+          isDummyCard
         />
         <CompanyCard
           websiteLink={"https://google.com"}
@@ -71,6 +74,7 @@ const PopularCompanies = () => {
           location={"new jesrsey, USA"}
           name={"cognizant"}
           image={cognizant}
+          isDummyCard
         />
       </Box>
     </Box>
