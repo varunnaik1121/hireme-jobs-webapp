@@ -117,6 +117,7 @@ const SingleJobPage = () => {
             companyId={companyDetails && companyDetails[0]?.companyId}
             id={id}
             time={data?.time}
+            companyDocId={companyDetails && companyDetails[0]?.id}
           />
           <OverviewPage
             label={"overview"}

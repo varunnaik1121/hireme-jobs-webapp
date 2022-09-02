@@ -11,7 +11,6 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
         borderRadius: "10px 10px 0 0",
         position: "relative",
         // border: "1px solid red",
-      
       }}
     >
       {loading ? (
@@ -35,7 +34,10 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
       ) : (
         <>
           <img
-            src={companyCoverPhoto}
+            src={
+              companyCoverPhoto ||
+              "https://images.unsplash.com/photo-1549032305-07743102559d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1185&q=80"
+            }
             alt="no image available"
             style={{
               width: "100%",

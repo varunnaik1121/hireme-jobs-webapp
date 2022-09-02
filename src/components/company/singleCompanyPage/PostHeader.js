@@ -11,21 +11,14 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-const PostHeader = ({
-  title,
-  companyName,
-  location,
-  timestamp,
-  experience,
-  workLevel,
-  workType,
-  salary,
-  loading,
-  myFavourites,
-  id,
-}) => {
+const PostHeader = ({ title, location, loading }) => {
   return (
-    <Box sx={{ width: "100%", marginTop: "30px" }}>
+    <Box
+      sx={{
+        width: "100%",
+        marginTop: "30px",
+      }}
+    >
       <Box
         sx={{
           width: "100%",
@@ -68,27 +61,9 @@ const PostHeader = ({
               fontSize={20}
               color="primary"
             >
-              Microsoft
+              {title}
             </Typography>
             <ButtonGroup>
-              {myFavourites?.includes(id) ? (
-                <>
-                  <Tooltip title="Remove from favourites">
-                    <IconButton>
-                      <FavoriteIcon fontSize="small" color="error" />
-                    </IconButton>
-                  </Tooltip>
-                </>
-              ) : (
-                <>
-                  <Tooltip title="add to favourites">
-                    <IconButton>
-                      <FavoriteBorderIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                </>
-              )}
-
               <Tooltip title="share">
                 <IconButton>
                   <ShareIcon fontSize="small" />
@@ -118,25 +93,56 @@ const PostHeader = ({
                 padding: "0 10px",
               }}
             >
-              Delhi,India
+              {location}
             </Typography>
           </>
         )}
       </Box>
-      <Button
+      <Box
         sx={{
-          marginTop: "15px",
-          backgroundColor: "#4045db",
-          padding: "5px 28px",
-          marginLeft: "6px",
-          border: "1px solid red",
+          // border: "1px solid red",
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
         }}
-        variant="contained"
       >
-        follow
-      </Button>
+        {loading ? (
+          <Skeleton width={100} height={40}></Skeleton>
+        ) : (
+          <Button
+            sx={{
+              marginTop: "15px",
+              backgroundColor: "#4045db",
+              padding: "5px 28px",
+              marginLeft: "6px",
+              // border: "1px solid red",
+            }}
+            variant="contained"
+          >
+            follow
+          </Button>
+        )}
+      </Box>
     </Box>
   );
 };
 
 export default PostHeader;
+
+// {myFavourites?.includes(id) ? (
+//   <>
+//     <Tooltip title="Remove from favourites">
+//       <IconButton>
+//         <FavoriteIcon fontSize="small" color="error" />
+//       </IconButton>
+//     </Tooltip>
+//   </>
+// ) : (
+//   <>
+//     <Tooltip title="add to favourites">
+//       <IconButton>
+//         <FavoriteBorderIcon fontSize="small" />
+//       </IconButton>
+//     </Tooltip>
+//   </>
+// )}

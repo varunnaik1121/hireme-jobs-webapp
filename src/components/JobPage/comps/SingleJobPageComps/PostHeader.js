@@ -28,6 +28,7 @@ const PostHeader = ({
   companyId,
   id,
   time,
+  companyDocId,
 }) => {
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
 
@@ -127,14 +128,14 @@ const PostHeader = ({
               component={"span"}
               sx={{
                 // color: "text.secondary",
-                fontSize: "12px",
+                fontSize: "14px",
                 fontWeight: "500",
                 marginRight: "10px",
                 marginLeft: "3px",
               }}
             >
               <a
-                href={`/company/${companyId}`}
+                href={`/company/${companyDocId}`}
                 style={{ textDecoration: "none" }}
               >
                 {companyName}
@@ -176,7 +177,12 @@ const PostHeader = ({
         ) : (
           <>
             {" "}
-            <Typography variant="h6" fontSize={12} textTransform="none">
+            <Typography
+              variant="h6"
+              fontSize={12}
+              textTransform="none"
+              sx={{ fontWeight: 500 }}
+            >
               Posted
               <Box
                 component={"span"}

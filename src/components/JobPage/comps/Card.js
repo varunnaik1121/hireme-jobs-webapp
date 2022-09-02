@@ -27,10 +27,12 @@ import TimeAgo from "javascript-time-ago";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import en from "javascript-time-ago/locale/en";
 const CardComp = ({ loading, data }) => {
+  TimeAgo.addLocale(en);
+  const timeAgo = new TimeAgo("en-US");
   const { currentUser } = useAuthListener();
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
   const [myFavourites, setMyFavourites] = useState(null);
-  const { openApplyModal } = useGlobalUser();
+
   useEffect(() => {
     const docRef = doc(db, `users/${currentUser?.uid}`);
 
@@ -67,7 +69,7 @@ const CardComp = ({ loading, data }) => {
         // height: "300px",
         boxShadow: "2px 2px 6px rgba(0,0,0,.1)",
         borderRadius: "4px",
-        width: {
+        minWidth: {
           xs: "330px",
           sm: "350px",
           md: "360px",
@@ -232,7 +234,7 @@ const CardComp = ({ loading, data }) => {
               }}
             >
               {" "}
-              {data?.time.toString()}
+              {timeAgo.format(data?.timestamp.seconds * 1000)}
             </Typography>
           </Box>
         )}

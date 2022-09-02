@@ -10,12 +10,20 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import LinkIcon from "@mui/icons-material/Link";
 import LocalPostOfficeIcon from "@mui/icons-material/LocalPostOffice";
 
-const About = () => {
+const About = ({
+  industry,
+  benefits,
+  about,
+  specialities,
+  website,
+  images,
+  workType,
+}) => {
   const colorvalue = "#4045db";
   const textcolor = "#495057";
   return (
     <div style={{ width: "100%", marginLeft: "12px", marginTop: "25px" }}>
-      <Grid sx={{}} container spacing={5}>
+      <Grid container spacing={5}>
         <Grid item xs={12} sm={6}>
           <>
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
@@ -28,20 +36,17 @@ const About = () => {
               >
                 Industry
               </Typography>
-              <BusinessIcon
-                fontSize="small"
-                sx={{ marginBottom: "10px", color: colorvalue }}
-              />
+              <BusinessIcon fontSize="small" sx={{ color: colorvalue }} />
             </Box>
             <Typography
               variant="p"
               fontSize={14}
-              fontWeight={400}
+              fontWeight={500}
               component="h6"
               padding={"6px 15px 6px 0px"}
               sx={{ color: textcolor, textAlign: "left" }}
             >
-              Software development
+              {industry}
             </Typography>
           </>
         </Grid>
@@ -62,18 +67,24 @@ const About = () => {
             <Typography
               variant="p"
               fontSize={14}
-              fontWeight={400}
+              fontWeight={500}
               component="h6"
               padding={"6px 15px 6px 0px"}
               sx={{ color: textcolor, textAlign: "left" }}
             >
-              Sagar,Karnataka
+              {}
             </Typography>
           </>
         </Grid>
         <Grid item xs={12} sm={6}>
           <>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
               <Typography
                 variant="h6"
                 fontSize={16}
@@ -83,21 +94,28 @@ const About = () => {
               >
                 WebsiteLink
               </Typography>
-              <LinkIcon
-                fontSize="small"
-                sx={{ marginBottom: "10px", color: colorvalue }}
-              />
+              <LinkIcon fontSize="small" sx={{ color: colorvalue }} />
             </Box>
-            <Typography
-              variant="p"
-              fontSize={14}
-              fontWeight={400}
-              component="h6"
-              padding={"6px 15px 6px 0px"}
-              sx={{ color: textcolor, textAlign: "left" }}
-            >
-              www.kingkong.com
-            </Typography>
+            <Box sx={{ textAlign: "left" }}>
+              <Typography
+                variant="p"
+                fontSize={14}
+                fontWeight={500}
+                component="a"
+                padding={"6px 15px 6px 0px"}
+                sx={{
+                  color: "primary.main",
+                  textAlign: "left ",
+                  // border: "1px solid red",
+
+                  width: "100%",
+                }}
+                href={website}
+                target="_blank"
+              >
+                {website}
+              </Typography>
+            </Box>
           </>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -112,20 +130,17 @@ const About = () => {
               >
                 Benifits
               </Typography>
-              <FamilyRestroomIcon
-                fontSize="small"
-                sx={{ marginBottom: "10px", color: colorvalue }}
-              />
+              <FamilyRestroomIcon fontSize="small" sx={{ color: colorvalue }} />
             </Box>
             <Typography
               variant="p"
               fontSize={14}
-              fontWeight={400}
+              fontWeight={500}
               component="h6"
               padding={"6px 15px 6px 0px"}
               sx={{ color: textcolor, textAlign: "left" }}
             >
-              Jym,SportsRoom,Movitheater
+              {benefits}
             </Typography>
           </>
         </Grid>
@@ -148,21 +163,14 @@ const About = () => {
               />
             </Box>
             <Typography
-              fullWidth
               variant="p"
               fontSize={14}
-              fontWeight={400}
+              fontWeight={500}
               component="h6"
               padding={"6px 15px 6px 0px"}
-              sx={{ color: textcolor, textAlign: "left" }}
+              sx={{ color: textcolor, textAlign: "left", lineHeight: "25px" }}
             >
-              API documentation for the React Tabs component. ... The name
-              MuiTabs can be used when providing default props or style
-              overrides in the theme.API documentation for the React Tabs
-              component. ... The name MuiTabs can be used when providing default
-              props or style overrides in the theme.API documentation for the
-              React Tabs component. ... The name MuiTabs can be used when
-              providing default props or style overrides in the theme.
+              {about}
             </Typography>
           </>
         </Grid>
@@ -178,20 +186,17 @@ const About = () => {
               >
                 WorkType
               </Typography>
-              <WorkOutlineIcon
-                fontSize="small"
-                sx={{ marginBottom: "10px", color: colorvalue }}
-              />
+              <WorkOutlineIcon fontSize="small" sx={{ color: colorvalue }} />
             </Box>
             <Typography
               variant="p"
               fontSize={14}
-              fontWeight={400}
+              fontWeight={500}
               component="h6"
               padding={"6px 15px 6px 0px"}
               sx={{ color: textcolor, textAlign: "left" }}
             >
-              Offline
+              {workType}
             </Typography>
           </>
         </Grid>
@@ -207,20 +212,17 @@ const About = () => {
               >
                 Specalities
               </Typography>
-              <BarChartIcon
-                fontSize="small"
-                sx={{ marginBottom: "10px", color: colorvalue }}
-              />
+              <BarChartIcon fontSize="small" sx={{ color: colorvalue }} />
             </Box>
             <Typography
               variant="p"
               fontSize={14}
-              fontWeight={400}
+              fontWeight={500}
               component="h6"
               padding={"6px 15px 6px 0px"}
               sx={{ color: textcolor, textAlign: "left" }}
             >
-              Branches
+              {specialities}
             </Typography>
           </>
         </Grid>

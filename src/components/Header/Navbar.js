@@ -151,7 +151,7 @@ export default function ButtonAppBar({ isCompany, loading }) {
                   },
                   bgcolor: "text.primary",
                 }}
-                src={currentUser.photoURL}
+                src={currentUser?.photoURL}
               >
                 {currentUser?.displayName.toString().charAt(0)}
               </Avatar>

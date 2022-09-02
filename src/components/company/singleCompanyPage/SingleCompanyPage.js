@@ -1,4 +1,4 @@
-import { Box, Tabs } from "@mui/material";
+import { Box, Skeleton, Tabs } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 import "./App.css";
@@ -8,20 +8,80 @@ import { useState } from "react";
 import ImageBox from "./ImageBox";
 import PostHeader from "./PostHeader";
 import Details from "./Details";
+import { doc, getDoc, query } from "firebase/firestore";
+import { db } from "../../../services/firebase";
 
 const SingleCompanyPage = () => {
+  const { id } = useParams();
+  console.log(id);
+  const [loading, setLoading] = useState(false);
+  const [companyDetails, setCompanyDetails] = useState([]);
+  useEffect(() => {
+    setLoading(true);
+    const docRef = doc(db, "companies", id);
+    getDoc(docRef)
+      .then((data) => {
+        setCompanyDetails(data.data());
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
+
+  // useEffect(() => {
+
+  //     const collectionRef = collection(db, "companies");
+  //     const q = query(collectionRef, where("companyId", "==", data?.companyId));
+  //     const unsub = onSnapshot(q, (snapshot) => {
+  //       setCompanyDetails(
+  //         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+  //       );
+  //       setLoading(false);
+  //       return ()=>unsub()
+
+  // }, [data]);
+
   return (
     <Box
       sx={{
         width: "100vw",
         minHeight: "100vh",
         padding: "35px 0",
+        background: "#f6f7f9",
       }}
     >
       <Container maxWidth="md">
-        <ImageBox />
-        <PostHeader />
-        <Details />
+        <ImageBox
+          loading={loading}
+          companyCoverPhoto={companyDetails?.coverPhoto}
+          companyProfile={companyDetails?.companyProfile}
+        />
+
+        <Box
+          sx={{
+            border: "1px solid rgba(0,0,0,.1)",
+            padding: "0 20px 40px 20px",
+          }}
+        >
+          <PostHeader
+            title={companyDetails?.name}
+            location={companyDetails?.headquatar}
+            loading={loading}
+          />
+          <Details
+            industry={companyDetails?.industry}
+            benefits={companyDetails?.benefits}
+            about={companyDetails?.about}
+            specialities={companyDetails?.specialities}
+            website={companyDetails?.website}
+            images={companyDetails?.images}
+            workType={companyDetails?.type}
+            companyId={companyDetails?.companyId}
+            title={companyDetails?.name}
+            loading={loading}
+          />
+        </Box>
       </Container>
     </Box>
   );

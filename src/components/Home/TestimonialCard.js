@@ -2,9 +2,9 @@ import React from "react";
 import "./testimonials.css";
 const TestimonialCard = ({ image, name, jobTitle, description }) => {
   return (
-    <figure class="snip1192">
+    <figure className="snip1192">
       <blockquote>{description}</blockquote>
-      <div class="author">
+      <div className="author">
         <img src={image} alt="sq-sample1" />
         <h5>
           {jobTitle}
