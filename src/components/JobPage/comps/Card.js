@@ -42,8 +42,6 @@ const CardComp = ({ loading, data }) => {
     return () => unsub();
   }, []);
 
-  console.log({ data });
-
   const StyledBox = styled("div")(({ theme }) => ({
     fontSize: 10,
     textAlign: "center",
@@ -65,7 +63,7 @@ const CardComp = ({ loading, data }) => {
         // border: "1px solid red",
         display: "flex",
         flexDirection: "column",
-        padding: "15px 25px 25px 25px",
+        padding: "15px 25px 15px 25px",
         // height: "300px",
         boxShadow: "2px 2px 6px rgba(0,0,0,.1)",
         borderRadius: "4px",
@@ -75,6 +73,13 @@ const CardComp = ({ loading, data }) => {
           md: "360px",
           lg: "360px",
         },
+        maxWidth: {
+          xs: "330px",
+          sm: "350px",
+          md: "360px",
+          lg: "360px",
+        },
+        height: "200px",
 
         margin: "10px 10px",
         "&:hover": {

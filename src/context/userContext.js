@@ -13,6 +13,7 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import { useNavigate } from "react-router";
 import {
   arrayUnion,
   collection,
@@ -55,7 +56,7 @@ export const UserProvider = ({ children }) => {
       setHomeLoading(false);
     };
     getCompanyId();
-  }, []);
+  }, [currentUser]);
 
   const signUp = async (email, password, username, reset2) => {
     const signUpToastId = toast.loading("loading...");
@@ -217,6 +218,9 @@ export const useDbFetch = (path) => {
 
   useEffect(() => {
     setLoading(true);
+    const currTime = Date.now();
+    console.log(currTime);
+    
 
     const collectionRef = collection(db, path);
     const q = query(collectionRef, orderBy("timestamp", "desc"));

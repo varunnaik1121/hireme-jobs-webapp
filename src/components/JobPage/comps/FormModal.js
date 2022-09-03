@@ -38,6 +38,7 @@ const FormModal = ({ id, companyId }) => {
   const handleFileChange = (e) => {
     e.preventDefault();
     const selectedFile = e.target.files[0];
+    e.target.value = "";
     if (selectedFile) {
       console.log(selectedFile);
       setFile(selectedFile);

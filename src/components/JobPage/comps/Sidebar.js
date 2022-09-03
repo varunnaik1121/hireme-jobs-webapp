@@ -66,7 +66,8 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
       sx={{
         padding: {
           xs: "10px 30px",
-          md: "20px 30px",
+          sm: "10px 25px",
+          md: "20px 20px",
         },
         width: {
           xs: "100vw",
@@ -173,25 +174,25 @@ const Sidebar = ({ handleFilterClose, totalJobs, setTotalJobs, data }) => {
           </Typography>
           <CheckBox
             value={"student level"}
-            label={"student level Jobs"}
+            label={"student level"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
             value={"entry level"}
-            label={"entry level Jobs"}
+            label={"entry level"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
             value={"mid level"}
-            label={"Mid level Jobs"}
+            label={"Mid level"}
             setSkills={setSkills}
             skills={skills}
           />
           <CheckBox
             value={"senior level"}
-            label={"senior level Jobs"}
+            label={"senior level"}
             setSkills={setSkills}
             skills={skills}
           />

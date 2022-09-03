@@ -25,7 +25,7 @@ const Home = () => {
   }, []);
 
   if (isCompany) {
-    console.log(isCompany);
+    console.log({ isCompany });
   }
 
   useEffect(() => {

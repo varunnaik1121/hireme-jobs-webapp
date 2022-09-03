@@ -10,6 +10,7 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { FavoriteBorderOutlined } from "@mui/icons-material";
 function NavigationBar({ widthbar }) {
   const navigate = useNavigate();
 
@@ -24,7 +25,11 @@ function NavigationBar({ widthbar }) {
     { name: "Home", icon: <HomeIcon />, path: "/" },
     { name: "Jobs", icon: <WorkHistoryIcon />, path: "/jobs" },
     { name: "Companies", icon: <ApartmentIcon />, path: "/companies" },
-    { name: "Favourites", icon: <InfoIcon />, path: "/favourites" },
+    {
+      name: "Favourites",
+      icon: <FavoriteBorderOutlined />,
+      path: "/favourites",
+    },
   ];
 
   console.log(value);

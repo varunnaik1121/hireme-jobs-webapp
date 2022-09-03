@@ -13,6 +13,8 @@ import Navbar from "../components/Header/Navbar";
 import { useGlobalUser } from "../context/userContext";
 import Footer from "./Footer/Footer";
 import App from "./company/singleCompanyPage/App";
+import Favourites from "./Favourites/Favourites";
+import CompanyProfile from "./company/CompanyProfile/CompanyProfile";
 const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const Jobs = React.lazy(() => import("./JobPage/Jobs"));
@@ -25,7 +27,7 @@ const AnimatedRoutes = ({ currentUser }) => {
     if (!currentUser) {
       navigate("/login");
     }
-  }, []);
+  }, [currentUser]);
   const location = useLocation();
   return (
     <Suspense
@@ -68,6 +70,8 @@ const AnimatedRoutes = ({ currentUser }) => {
 
         <Route path="/postJob" element={<PostJobPage />}></Route>
         <Route path="/company/:id" element={<App />}></Route>
+        <Route path="/favourites" element={<Favourites />}></Route>
+        <Route path="/companyProfile" element={<CompanyProfile />}></Route>
       </Routes>
       <Footer />
     </Suspense>
