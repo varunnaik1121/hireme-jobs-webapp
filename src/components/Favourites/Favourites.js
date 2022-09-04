@@ -90,7 +90,9 @@ const Favourites = () => {
             padding={"20px 0"}
             sx={{ color: "text.primary" }}
           >{`${favouriteJobs.length} jobs in your favourite list`}</Typography>
-          <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Box
+            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+          >
             {favouriteJobs &&
               favouriteJobs?.map((job, index) => {
                 return <CardComp loading={loading} key={index} data={job} />;

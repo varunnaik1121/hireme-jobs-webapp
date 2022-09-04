@@ -8,7 +8,7 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-const CompanyInfo = ({ onChange, change, company, Location, setChange }) => {
+const CompanyInfo = ({ onChange, change, name, headquatar }) => {
   const [loading, setLoading] = useState(false);
 
   return (
@@ -16,7 +16,7 @@ const CompanyInfo = ({ onChange, change, company, Location, setChange }) => {
       <Box
         sx={{
           width: "80%",
-          justifyContent:{sm:"center",md:"space-between"},
+          justifyContent: { sm: "center", md: "space-between" },
           display: "flex",
           alignItems: "center",
           padding: "10px 10px",
@@ -55,15 +55,14 @@ const CompanyInfo = ({ onChange, change, company, Location, setChange }) => {
                   fontWeight: "700",
                   colo: "#000",
                 }}
-                id="company"
+                id="name"
                 onChange={onChange}
                 className={!change ? "new" : "newone"}
                 disabled={!change}
                 type="text"
-                value={company}
+                value={name}
               />
             </>
-            
           </>
         )}
       </Box>
@@ -84,18 +83,16 @@ const CompanyInfo = ({ onChange, change, company, Location, setChange }) => {
               <>
                 <input
                   style={{ fontSize: "15px", fontWeight: "500" }}
-                  id="Location"
+                  id="headquatar"
                   onChange={onChange}
                   className={!change ? "new" : "newone"}
                   disabled={!change}
                   type="text"
-                  value={Location}
+                  value={headquatar}
                 />
               </>
-              
             )}
           </Box>
-          
         </Box>
       </Box>
 

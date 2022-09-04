@@ -11,13 +11,13 @@ import LinkIcon from "@mui/icons-material/Link";
 import LocalPostOfficeIcon from "@mui/icons-material/LocalPostOffice";
 
 const Textfield = ({
-  WorkType,
+  type,
   industry,
-  Headquatars,
-  WebsiteLink,
-  Benifits,
+  headquatar,
+  website,
+  benefits,
   specialities,
-  overview,
+  about,
   onChange,
   change,
 }) => {
@@ -74,12 +74,12 @@ const Textfield = ({
             </Box>
             <input
               style={{ fontSize: "14px", width: "100%", fontWeight: 500 }}
-              id="Headquatars"
+              id="headquatar"
               onChange={onChange}
               className={!change ? "new" : "newone"}
               disabled={!change}
               type="text"
-              value={Headquatars}
+              value={headquatar}
             />
           </>
         </Grid>
@@ -103,12 +103,12 @@ const Textfield = ({
             </Box>
             <input
               style={{ fontSize: "14px", width: "100%", fontWeight: 500 }}
-              id="WebsiteLink"
+              id="website"
               onChange={onChange}
               className={!change ? "new" : "newone"}
               disabled={!change}
               type="text"
-              value={WebsiteLink}
+              value={website}
             />
           </>
         </Grid>
@@ -132,12 +132,12 @@ const Textfield = ({
             </Box>
             <input
               style={{ fontSize: "14px", width: "100%", fontWeight: 500 }}
-              id="Benifits"
+              id="benefits"
               onChange={onChange}
               className={!change ? "new" : "newone"}
               disabled={!change}
               type="text"
-              value={Benifits}
+              value={benefits}
             />
           </>
         </Grid>
@@ -152,7 +152,7 @@ const Textfield = ({
                 padding={"5px 0 15px 0"}
                 sx={{ color: "text.primary" }}
               >
-                Overview
+                about
               </Typography>
               <LocalPostOfficeIcon
                 fontSize="small"
@@ -171,9 +171,9 @@ const Textfield = ({
               }}
               onChange={onChange}
               className={!change ? "new" : "newone"}
-              id="overview"
+              id="about"
               type="text"
-              value={overview}
+              value={about}
               disabled={!change}
             />
           </>
@@ -198,12 +198,12 @@ const Textfield = ({
             </Box>
             <input
               style={{ fontSize: "14px", width: "100%", fontWeight: 500 }}
-              id="WorkType"
+              id="type"
               onChange={onChange}
               className={!change ? "new" : "newone"}
               disabled={!change}
               type="text"
-              value={WorkType}
+              value={type}
             />
           </>
         </Grid>

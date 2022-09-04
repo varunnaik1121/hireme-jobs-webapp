@@ -15,12 +15,13 @@ export default function Life({ images }) {
       }}
     >
       {images &&
-        images.map((item) => {
+        images.map((item, index) => {
           return (
             <img
               style={{ margin: "20px", height: "250px", width: "350px" }}
               src={item}
               alt="image"
+              key={index}
             />
           );
         })}

@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBar from "./comps/SearchBar";
+// import SearchBar from "./comps/SearchBar";
 import { Box, Grid, Button, Typography, Drawer } from "@mui/material";
 import Feed from "./comps/Feed";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -11,7 +11,7 @@ import { useDbFetch } from "../../context/userContext";
 import AppWrap from "../HigherOrderComp/Wrapper";
 import { Navigate } from "react-router";
 import NavigationBar from "../Home/NavigationBar";
-
+import SearchBar from "./SearchBar/App";
 const Jobs = () => {
   const [open, setOpen] = useState(false);
   const { data, loading } = useDbFetch("jobs");
@@ -65,7 +65,7 @@ const Jobs = () => {
           </Drawer>
         </AnimatedPage>
       )}
-      <Typography variant="h5">Navbar</Typography>
+      {/* <Typography variant="h5">Navbar</Typography> */}
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <SearchBar />
       </Box>
