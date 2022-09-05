@@ -61,6 +61,8 @@ const CardComp = ({ loading, data }) => {
       sx={{
         // width: "280px",
         // border: "1px solid red",
+        position: "relative",
+        zIndex: 1,
         display: "flex",
         flexDirection: "column",
         padding: "15px 25px 15px 25px",

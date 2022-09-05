@@ -67,7 +67,7 @@ const Jobs = () => {
       )}
       {/* <Typography variant="h5">Navbar</Typography> */}
       <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        <SearchBar />
+        <SearchBar data={data} setTotalJobs={setTotalJobs} />
       </Box>
       <Box
         sx={{
@@ -88,6 +88,8 @@ const Jobs = () => {
               xs: "15px",
               sm: "35px",
             },
+            position: "relative",
+            zIndex: 1,
           }}
           startIcon={<FilterListIcon />}
           onClick={handleFilterOpen}
