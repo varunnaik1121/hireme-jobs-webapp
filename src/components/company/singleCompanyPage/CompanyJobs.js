@@ -1,10 +1,12 @@
 import { Box, cardActionsClasses, Skeleton } from "@mui/material";
 import {
+  arrayRemove,
   collection,
   doc,
   getDocs,
   onSnapshot,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import React from "react";
@@ -44,22 +46,7 @@ const CompanyJobs = ({ companyId }) => {
 
   //code for removing favourites from all the users collection
 
-  useEffect(() => {
-    const collectionRef = collection(db, "users");
-    getDocs(collectionRef).then((data) => {
-      console.log("this is favourites array");
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-  }, []);
-
-  useEffect(() => {
-    if (users) {
-      const promises = [];
-      users.forEach((userId) => {
-        const docRef = doc(db, `users/${userId}`);
-      });
-    }
-  }, [users]);
+  
   return (
     <Box
       sx={{

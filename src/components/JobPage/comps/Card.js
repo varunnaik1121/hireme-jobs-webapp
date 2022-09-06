@@ -20,7 +20,13 @@ import { onSnapshot } from "firebase/firestore";
 import { useAuthListener } from "../../../services/firebase";
 import { db } from "../../../services/firebase";
 import { Menu, MenuItem } from "@mui/material";
-import { doc } from "firebase/firestore";
+import {
+  doc,
+  collection,
+  getDocs,
+  updateDoc,
+  arrayRemove,
+} from "firebase/firestore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FormModal from "./FormModal";
 import { motion } from "framer-motion";
@@ -34,6 +40,7 @@ const CardComp = ({ loading, data, isOwner }) => {
   const { currentUser, deleteDataById } = useGlobalUser();
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
   const [myFavourites, setMyFavourites] = useState(null);
+  const [users, setUsers] = useState(null);
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -55,6 +62,33 @@ const CardComp = ({ loading, data, isOwner }) => {
   }, []);
 
   console.log({ data });
+
+  useEffect(() => {
+    const collectionRef = collection(db, "users");
+    getDocs(collectionRef).then((data) => {
+      console.log("this is favourites array");
+      setUsers(data?.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+  }, []);
+
+  console.log({ myFavourites });
+
+  useEffect(() => {
+    if (users) {
+      const promises = [];
+      users?.forEach((userId) => {
+        const docRef = doc(db, "users", userId.id);
+        promises.push(
+          updateDoc(docRef, {
+            favourites: arrayRemove(data?.id),
+          })
+        );
+      });
+      Promise.all(promises).then((snapshot) => {
+        console.log(snapshot.forEach((doc) => doc.data()));
+      });
+    }
+  }, [users]);
   const StyledBox = styled("div")(({ theme }) => ({
     fontSize: 10,
     textAlign: "center",

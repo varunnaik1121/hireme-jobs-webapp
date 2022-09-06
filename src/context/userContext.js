@@ -139,6 +139,7 @@ export const UserProvider = ({ children }) => {
       { merge: true }
     ).catch((err) => {
       toast.error("something went wrong");
+      console.log(err);
     });
   };
 
