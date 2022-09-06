@@ -22,10 +22,10 @@ import Loading from "../Loading/Loading";
 import { useEffect } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const arr = [
-  { name: "Home", icon: <HomeIcon /> },
-  { name: "Jobs", icon: <PeopleAltIcon /> },
-  { name: "Companies", icon: <WorkHistoryIcon /> },
-  { name: "Favourites", icon: <FavoriteBorderIcon /> },
+  { name: "Home", icon: <HomeIcon />, path: "/" },
+  { name: "Jobs", icon: <PeopleAltIcon />, path: "/jobs" },
+  { name: "Companies", icon: <WorkHistoryIcon />, path: "/companies" },
+  { name: "Favourites", icon: <FavoriteBorderIcon />, path: "favourites" },
 ];
 
 export default function ButtonAppBar({ isCompany, loading }) {
@@ -179,6 +179,7 @@ export default function ButtonAppBar({ isCompany, loading }) {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
+              onClick={handleCloseUserMenu}
             >
               {isCompany ? (
                 <div>
@@ -195,6 +196,7 @@ export default function ButtonAppBar({ isCompany, loading }) {
                         fontWeight: 500,
                         color: "text.secondary",
                       }}
+                      onClick={handleCloseUserMenu}
                     >
                       {"profile"}
                     </Typography>

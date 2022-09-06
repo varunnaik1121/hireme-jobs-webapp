@@ -19,6 +19,7 @@ import { useEffect } from "react";
 import { onSnapshot } from "firebase/firestore";
 import { useAuthListener } from "../../../services/firebase";
 import { db } from "../../../services/firebase";
+import { Menu, MenuItem } from "@mui/material";
 import { doc } from "firebase/firestore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FormModal from "./FormModal";
@@ -26,12 +27,23 @@ import { motion } from "framer-motion";
 import TimeAgo from "javascript-time-ago";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import en from "javascript-time-ago/locale/en";
-const CardComp = ({ loading, data }) => {
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+const CardComp = ({ loading, data, isOwner }) => {
   TimeAgo.addLocale(en);
   const timeAgo = new TimeAgo("en-US");
-  const { currentUser } = useAuthListener();
+  const { currentUser, deleteDataById } = useGlobalUser();
   const { addToFavourites, removeFromFavourites } = useGlobalUser();
   const [myFavourites, setMyFavourites] = useState(null);
+
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   useEffect(() => {
     const docRef = doc(db, `users/${currentUser?.uid}`);
@@ -42,6 +54,7 @@ const CardComp = ({ loading, data }) => {
     return () => unsub();
   }, []);
 
+  console.log({ data });
   const StyledBox = styled("div")(({ theme }) => ({
     fontSize: 10,
     textAlign: "center",
@@ -115,7 +128,7 @@ const CardComp = ({ loading, data }) => {
             sx={{ backgroundColor: "black", width: "44px", height: "44px" }}
             src={data?.companyProfile}
           >
-            {!data?.companyProfile && data?.companyName.charAt(0).toUpperCase()}
+            {data?.companyName.charAt(0).toUpperCase()}
           </Avatar>
         )}
         <Box
@@ -298,6 +311,54 @@ const CardComp = ({ loading, data }) => {
         }}
       ></Box>
       <FormModal />
+      {isOwner && (
+        <div>
+          <IconButton
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              border: "1px solid red",
+            }}
+            size="small"
+          >
+            <MoreVertIcon fontSize="small" />
+          </IconButton>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <MenuItem
+              onClick={() =>
+                deleteDataById(
+                  data?.id,
+                  "jobs",
+                  handleClose,
+                  "job removed successfully"
+                )
+              }
+              sx={{
+                padding: "4px 10px",
+                fontSize: 12,
+                fontWeight: 600,
+                color: "palette.error.main",
+              }}
+            >
+              delete{" "}
+            </MenuItem>
+          </Menu>
+        </div>
+      )}
     </Card>
   );
 };

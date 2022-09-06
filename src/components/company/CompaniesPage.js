@@ -60,7 +60,7 @@ const CompaniesPage = () => {
           fontSize={16}
           padding="15px 0"
         >
-          5 results found
+          {companies?.length} companies found
         </Typography>
         <Box
           sx={{
@@ -83,9 +83,7 @@ const CompaniesPage = () => {
                 companyId={company.id}
                 location={company.headquatar}
                 industry={company.industry}
-                image={
-                  "https://images.unsplash.com/photo-1661435805424-8eac4e3cc924?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80"
-                }
+                image={company.companyProfile}
               />
             );
           })}

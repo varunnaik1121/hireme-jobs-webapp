@@ -49,7 +49,7 @@ const useStyles = makeStyles({
 const PostJobPage = React.memo(({ currentUser }) => {
   const classes = useStyles();
   const { isFormSubmitted } = useGlobalUser();
-  const [myCompanyDetails, setMyCompanyDetails] = useState([]);
+  const [myCompanyDetails, setMyCompanyDetails] = useState(null);
   const [activeStep, setActiveStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [formDetails, setFormDetails] = useState({
@@ -105,9 +105,13 @@ const PostJobPage = React.memo(({ currentUser }) => {
       where("companyId", "==", currentUser?.uid)
     );
     const unsub = onSnapshot(q, (snapshot) => {
-      setMyCompanyDetails(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-      );
+      if (snapshot) {
+        setMyCompanyDetails(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      } else {
+        setMyCompanyDetails(null);
+      }
       setLoading(false);
     });
     return () => unsub();
@@ -161,7 +165,12 @@ const PostJobPage = React.memo(({ currentUser }) => {
   }
 
   if (myCompanyDetails?.length && myCompanyDetails[0]?.status === "rejected") {
-    return <RejectedPage myCompanyDetails={myCompanyDetails} />;
+    return (
+      <RejectedPage
+        myCompanyDetails={myCompanyDetails}
+        companyLoading={loading}
+      />
+    );
   }
   return (
     <>

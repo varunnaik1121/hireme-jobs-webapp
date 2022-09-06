@@ -12,11 +12,12 @@ import { db } from "../../../services/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import Loading from "../../Loading/Loading";
-
+import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import useStyles from "../../../MaterialTheme/styles";
 import rejectedImage from "../../../assests/pending/rejected.jpg";
-const RejectedPage = ({ myCompanyDetails }) => {
+const RejectedPage = ({ myCompanyDetails, companyLoading }) => {
   const classes = useStyles();
+  console.log(myCompanyDetails);
 
   const [loading, setLoading] = useState(false);
   const deleteRequest = async (id, path) => {
@@ -29,15 +30,22 @@ const RejectedPage = ({ myCompanyDetails }) => {
     } catch (err) {
       console.log(err);
       setLoading(true);
-      window.location.realod();
     }
   };
+
+  if (companyLoading) {
+    return (
+      <div styles={{ width: "100vw", minHeight: "90vh" }}>
+        <Loading width={40} height={40} color={"#4045db"} />
+      </div>
+    );
+  }
 
   return (
     <div
       style={{
         width: "100vw",
-        minHeight: "100vh",
+        minHeight: "90vh",
 
         display: "flex",
         justifyContent: "center",
@@ -46,72 +54,27 @@ const RejectedPage = ({ myCompanyDetails }) => {
         position: "relative",
       }}
     >
-      <Card
-        sx={{
-          padding: "20px",
-          display: "flex",
-          flexDirection: {
-            xs: "column",
-            xl: "row",
-          },
-          minHeight: "350px",
-        }}
-      >
-        <Box
-          elevation={1}
-          sx={{
-            padding: "30px 20px",
-
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-          className={classes.flex}
+      <Box sx={{ padding: "20px " }}>
+        <NotInterestedIcon sx={{ fontSize: "80px", color: "error.main" }} />
+        <Typography
+          sx={{ fontWeight: 600, padding: "20px 0", fontSize: "30px" }}
         >
-          <CardContent>
-            <Typography
-              component="div"
-              variant="h6"
-              sx={{
-                borderBottom: "1px solid purple",
-                textAlign: "center",
-                minWidth: "max-content",
-                margin: "10px 0",
-              }}
-              color="secondary"
-            >
-              Your request was rejected
-            </Typography>
-          </CardContent>
-          <Button
-            variant="outlined"
-            onClick={() => deleteRequest(myCompanyDetails?.id, "requests")}
-          >
-            Continue
-          </Button>
-        </Box>
-        <CardMedia
-          component="img"
-          src={rejectedImage}
-          width={260}
-          height={260}
-        ></CardMedia>
-      </Card>
-      {loading && (
-        <Box
-          className={classes.flex}
-          sx={{
-            width: "100%",
-            height: "100%",
-
-            position: "absolute",
-            top: 0,
-            left: 0,
-            background: "rgba(0,0,0,.2)",
-          }}
+          Your request was rejected
+        </Typography>
+        <Button
+          variant="outlined"
+          onClick={() =>
+            deleteRequest(
+              myCompanyDetails && myCompanyDetails[0].id,
+              "requests"
+            )
+          }
+          disabled={loading}
+          size="medium"
         >
-          <Loading width={40} height={40} color="purple" />
-        </Box>
-      )}
+          {loading ? "loading..." : "continue"}
+        </Button>
+      </Box>
     </div>
   );
 };

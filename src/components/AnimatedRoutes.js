@@ -15,6 +15,7 @@ import Footer from "./Footer/Footer";
 import App from "./company/singleCompanyPage/App";
 import Favourites from "./Favourites/Favourites";
 import CompanyProfile from "./company/CompanyProfile/CompanyProfile";
+import NavigationBar from "./Home/NavigationBar";
 const Login = React.lazy(() => import("../components/Login/Login"));
 const ProtectedRoute = React.lazy(() => import("../components/ProtectedRoute"));
 const Jobs = React.lazy(() => import("./JobPage/Jobs"));
@@ -67,12 +68,12 @@ const AnimatedRoutes = ({ currentUser }) => {
         <Route path="/jobApplications" element={<JobApplications />}></Route>
         <Route path="/companies" element={<CompaniesPage />}></Route>
         <Route path="/dummy" element={<Dummy />}></Route>
-
         <Route path="/postJob" element={<PostJobPage />}></Route>
         <Route path="/company/:id" element={<App />}></Route>
         <Route path="/favourites" element={<Favourites />}></Route>
         <Route path="/companyProfile" element={<CompanyProfile />}></Route>
       </Routes>
+      <NavigationBar />
       <Footer />
     </Suspense>
   );

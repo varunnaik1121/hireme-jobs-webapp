@@ -45,17 +45,17 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     setHomeLoading(true);
-    const getCompanyId = async () => {
-      const q = query(
-        collection(db, "verifiedCompanies"),
-        where("companyId", "==", currentUser?.uid)
-      );
-      const data = await getDocs(q);
-      const companyStatus = data.docs.map((doc) => doc.data()).length > 0;
+
+    const q = query(
+      collection(db, "verifiedCompanies"),
+      where("companyId", "==", currentUser?.uid)
+    );
+    const unsub = onSnapshot(q, (snapshot) => {
+      let companyStatus = snapshot.docs.map((doc) => doc.data()).length > 0;
       setIsCompany(companyStatus);
       setHomeLoading(false);
-    };
-    getCompanyId();
+    });
+    return () => unsub();
   }, [currentUser]);
 
   const signUp = async (email, password, username, reset2) => {
@@ -165,10 +165,10 @@ export const UserProvider = ({ children }) => {
     setIsOpenApplyModal(false);
   };
 
-  const deleteDataById = async (id, path, callback) => {
+  const deleteDataById = async (id, path, callback, message) => {
     try {
       await deleteDoc(doc(db, path, id));
-      toast.success("application removed successfully", {
+      toast.success(message, {
         delay: 0,
       });
       callback();
@@ -220,7 +220,6 @@ export const useDbFetch = (path) => {
     setLoading(true);
     const currTime = Date.now();
     console.log(currTime);
-    
 
     const collectionRef = collection(db, path);
     const q = query(collectionRef, orderBy("timestamp", "desc"));

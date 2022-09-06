@@ -198,7 +198,6 @@ const CompanyProfile = () => {
         headquatar,
       };
     }
-    
 
     try {
       const docRef = doc(db, `companies/${myCompanyDetails?.id}`);
@@ -233,6 +232,7 @@ const CompanyProfile = () => {
           setChange={setChange}
           change={change}
           onChange={onChange}
+          id={myCompanyDetails && myCompanyDetails?.id}
         />
         <TextField {...details} onChange={onChange} change={change} />
         {change && (
@@ -253,6 +253,7 @@ const CompanyProfile = () => {
             {loading ? "loading.." : "save changes"}
           </Button>
         )}
+
         {originalMode && (
           <Button
             variant="contained"
@@ -267,6 +268,23 @@ const CompanyProfile = () => {
             }}
           >
             edit details
+          </Button>
+        )}
+        {change && (
+          <Button
+            sx={{
+              marginTop: "50px",
+
+              padding: "5px 28px",
+              marginLeft: "20px",
+            }}
+            variant="outlined"
+            onClick={() => {
+              setOriginalMode(true);
+              setChange(false);
+            }}
+          >
+            cancel
           </Button>
         )}
       </Container>

@@ -30,7 +30,7 @@ const Textfield = ({
             <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <Typography
                 variant="h6"
-                fontSize={18}
+                fontSize={16}
                 fontWeight={700}
                 component="h6"
                 padding={"5px 0 15px 0"}
@@ -161,7 +161,7 @@ const Textfield = ({
             </Box>
             <textarea
               cols="30"
-              rows="4"
+              rows="3"
               style={{
                 resize: "none",
                 fontSize: "14px",

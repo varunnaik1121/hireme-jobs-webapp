@@ -19,11 +19,14 @@ function App({ data, setTotalJobs }) {
   useEffect(() => {
     if (debouncedTerm) {
       setIsSearching(true);
-      setResults(
-        data.filter((job) =>
-          job.title.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
+      let tempResults = [];
+      data.forEach((job) => {
+        if (job.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+          tempResults.push(job.title);
+        }
+      });
+
+      setResults([...new Set(tempResults)]);
     } else {
       setResults([]);
       setIsSearching(false);
@@ -82,7 +85,7 @@ function App({ data, setTotalJobs }) {
               height: "100%",
               padding: "10px 20px",
               fontSize: "16px",
-              border: "2px solid #ccc",
+              border: "1px solid #ccc",
               borderRadius: "6px",
               boxShadow: "1px 1px 6px rgba(0,0,0,.1)",
               background: "#fff",
@@ -164,17 +167,7 @@ function App({ data, setTotalJobs }) {
                       setIsModalOpen(false);
                     }}
                   >
-                    {result.title}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontWeight: 500,
-                      fontSize: 12,
-                      color: "text.secondary",
-                      padding: "5px",
-                    }}
-                  >
-                    - {result.companyName}
+                    {result}
                   </Typography>
                 </Box>
               );

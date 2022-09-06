@@ -8,7 +8,8 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-const CompanyInfo = ({ onChange, change, name, headquatar }) => {
+const CompanyInfo = ({ onChange, change, name, headquatar, id }) => {
+  console.log({ id });
   const [loading, setLoading] = useState(false);
 
   return (
@@ -47,22 +48,37 @@ const CompanyInfo = ({ onChange, change, name, headquatar }) => {
           </>
         ) : (
           <>
-            <>
-              <input
+            {!change ? (
+              <Typography
                 style={{
-                  fontSize: "22px",
+                  fontSize: "20px",
                   width: "auto",
                   fontWeight: "700",
-                  colo: "#000",
+                  color: "text.primary",
+                  // colo: "#000",
+                }}
+                component={"a"}
+                href={`/company/${id}`}
+              >
+                {name}
+              </Typography>
+            ) : (
+              <input
+                style={{
+                  fontSize: "20px",
+                  width: "auto",
+                  fontWeight: "700",
+                  color: "text.primary",
+                  // colo: "#000",
                 }}
                 id="name"
                 onChange={onChange}
-                className={!change ? "new" : "newone"}
+                className={"newone"}
                 disabled={!change}
                 type="text"
                 value={name}
               />
-            </>
+            )}
           </>
         )}
       </Box>
