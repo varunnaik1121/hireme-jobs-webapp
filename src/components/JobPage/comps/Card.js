@@ -4,11 +4,8 @@ import {
   Box,
   Avatar,
   Typography,
-  Button,
   IconButton,
   Tooltip,
-  Modal,
-  duration,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { styled } from "@mui/styles";
@@ -16,17 +13,11 @@ import SkeletonComp from "./SkeletonComp";
 import { useGlobalUser } from "../../../context/userContext";
 import { Link } from "@mui/material";
 import { useEffect } from "react";
-import { onSnapshot } from "firebase/firestore";
-import { useAuthListener } from "../../../services/firebase";
+import { onSnapshot, setDoc } from "firebase/firestore";
+
 import { db } from "../../../services/firebase";
 import { Menu, MenuItem } from "@mui/material";
-import {
-  doc,
-  collection,
-  getDocs,
-  updateDoc,
-  arrayRemove,
-} from "firebase/firestore";
+import { doc, collection, getDocs, arrayRemove } from "firebase/firestore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FormModal from "./FormModal";
 import { motion } from "framer-motion";
@@ -72,23 +63,29 @@ const CardComp = ({ loading, data, isOwner }) => {
   }, []);
 
   console.log({ myFavourites });
-
-  useEffect(() => {
+  const removeAllJobReferences = (jobId) => {
     if (users) {
       const promises = [];
-      users?.forEach((userId) => {
-        const docRef = doc(db, "users", userId.id);
-        promises.push(
-          updateDoc(docRef, {
-            favourites: arrayRemove(data?.id),
-          })
+      users.forEach((user) => {
+        const docRef = doc(db, `users/${user?.id}`);
+        const tempPromise = setDoc(
+          docRef,
+          { favourites: arrayRemove(jobId) },
+          { merge: true }
         );
+        promises.push(tempPromise);
       });
       Promise.all(promises).then((snapshot) => {
-        console.log(snapshot.forEach((doc) => doc.data()));
+        console.log(snapshot);
       });
     }
-  }, [users]);
+  };
+
+  const handleJobDelete = () => {
+    removeAllJobReferences(data?.id);
+    deleteDataById(data?.id, "jobs", handleClose, "job removed successfully");
+  };
+
   const StyledBox = styled("div")(({ theme }) => ({
     fontSize: 10,
     textAlign: "center",
@@ -106,24 +103,22 @@ const CardComp = ({ loading, data, isOwner }) => {
     <Card
       elevation={0}
       sx={{
-        // width: "280px",
-        // border: "1px solid red",
         position: "relative",
         zIndex: 1,
         display: "flex",
         flexDirection: "column",
         padding: "15px 25px 15px 25px",
-        // height: "300px",
+
         boxShadow: "2px 2px 6px rgba(0,0,0,.1)",
         borderRadius: "4px",
         minWidth: {
-          xs: "330px",
+          xs: "340px",
           sm: "350px",
           md: "360px",
           lg: "360px",
         },
         maxWidth: {
-          xs: "330px",
+          xs: "340px",
           sm: "350px",
           md: "360px",
           lg: "360px",
@@ -149,7 +144,6 @@ const CardComp = ({ loading, data, isOwner }) => {
           alignItems: "flex-start",
           margin: "10px 0",
           justifyContent: "space-between",
-          // border: "1px solid red",
         }}
       >
         {loading ? (
@@ -169,8 +163,6 @@ const CardComp = ({ loading, data, isOwner }) => {
           sx={{
             padding: "5px 10px 0 20px",
             width: "100%",
-
-            // border: "1px solid red",
           }}
         >
           {loading ? (
@@ -217,11 +209,8 @@ const CardComp = ({ loading, data, isOwner }) => {
 
       <Box
         sx={{
-          // border: "1px solid red",
-          // padding: "0 10px 0 5px",
           flex: 1,
           textAlign: "left",
-          // border: "1px solid red",
         }}
       >
         {loading ? (
@@ -232,7 +221,7 @@ const CardComp = ({ loading, data, isOwner }) => {
               variant="h6"
               fontSize={16}
               fontWeight={700}
-              component="p"
+              component="span"
               textTransform={"capitalize"}
             >
               {data?.title}
@@ -357,7 +346,6 @@ const CardComp = ({ loading, data, isOwner }) => {
               position: "absolute",
               top: 0,
               right: 0,
-              border: "1px solid red",
             }}
             size="small"
           >
@@ -373,14 +361,7 @@ const CardComp = ({ loading, data, isOwner }) => {
             }}
           >
             <MenuItem
-              onClick={() =>
-                deleteDataById(
-                  data?.id,
-                  "jobs",
-                  handleClose,
-                  "job removed successfully"
-                )
-              }
+              onClick={handleJobDelete}
               sx={{
                 padding: "4px 10px",
                 fontSize: 12,
@@ -398,63 +379,3 @@ const CardComp = ({ loading, data, isOwner }) => {
 };
 
 export default CardComp;
-
-{
-  /* <Box sx={{ display: "flex" }}>
-{loading ? (
-  <SkeletonComp variant={"text"} width={70} height={18} />
-) : (
-  <>
-    {/* <Typography
-      variant="h6"
-      component={"span"}
-      fontSize={12}
-      fontWeight={600}
-      sx={{ color: "primary.main" }}
-    >
-      New
-    </Typography> */
-}
-
-//   </>
-// )}
-// </Box> */}
-
-// {loading ? (
-//   <SkeletonComp variant={"text"} width={120} height={35} />
-// ) : (
-//   <Button
-//     variant="contained"
-//     size="small"
-//     sx={{
-//       textTransform: "capitalize",
-//       minWidth: "120px",
-//       fontWeight: "600",
-//       fontSize: 12,
-//     }}
-//     onClick={openApplyModal}
-//   >
-//     Apply Now
-//   </Button>
-// )}
-
-// {loading ? (
-//   <SkeletonComp variant={"text"} width={120} height={35} />
-// ) : (
-//   <Link href={`jobDetails/${data?.id}`} underline="none">
-//     <Button
-//       variant="contained"
-//       size="small"
-//       sx={{
-//         textTransform: "capitalize",
-//         minWidth: "120px",
-//         fontWeight: "600",
-//         padding: "5px",
-//         fontSize: 12,
-//         flex: 1,
-//       }}
-//     >
-//       View More
-//     </Button>
-//   </Link>
-// )}

@@ -1,7 +1,7 @@
 import React from "react";
 import "./Error.css";
 import AnimatedPage from "./AnimatedPage";
-import error from "../assests/errorpageimages/error.png";
+
 import { Link } from "react-router-dom";
 const Error = () => {
   return (

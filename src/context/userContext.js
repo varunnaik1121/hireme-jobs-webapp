@@ -13,7 +13,7 @@ import { toast } from "react-hot-toast";
 import { useEffect } from "react";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
-import { useNavigate } from "react-router";
+
 import {
   arrayUnion,
   collection,
@@ -22,7 +22,6 @@ import {
   setDoc,
   arrayRemove,
   deleteDoc,
-  getDocs,
   query,
   where,
   orderBy,
@@ -36,26 +35,47 @@ export const UserProvider = ({ children }) => {
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
   const [IsOpenApplyModal, setIsOpenApplyModal] = useState(false);
   const [isCompany, setIsCompany] = useState(false);
+  const [applications, setApplications] = useState(null);
   const [homeLoading, setHomeLoading] = useState(false);
   const provider = new GoogleAuthProvider();
 
   provider.setCustomParameters({ prompt: "select_account" });
 
-  //function related to user login
-
   useEffect(() => {
-    setHomeLoading(true);
+    let unsub;
+    if (currentUser) {
+      setHomeLoading(true);
 
-    const q = query(
-      collection(db, "verifiedCompanies"),
-      where("companyId", "==", currentUser?.uid)
-    );
-    const unsub = onSnapshot(q, (snapshot) => {
-      let companyStatus = snapshot.docs.map((doc) => doc.data()).length > 0;
-      setIsCompany(companyStatus);
-      setHomeLoading(false);
-    });
-    return () => unsub();
+      const q = query(
+        collection(db, "verifiedCompanies"),
+        where("companyId", "==", currentUser?.uid)
+      );
+      unsub = onSnapshot(q, (snapshot) => {
+        let companyStatus = snapshot.docs.map((doc) => doc.data()).length > 0;
+        setIsCompany(companyStatus);
+        setHomeLoading(false);
+      });
+    }
+
+    return unsub;
+  }, [currentUser]);
+
+  //for fetching the applications of companies
+  useEffect(() => {
+    let unsub;
+    if (currentUser) {
+      const collectionRef = collection(db, "jobApplications");
+      const q = query(
+        collectionRef,
+        where("companyId", "==", currentUser?.uid)
+      );
+      unsub = onSnapshot(q, (snapshot) => {
+        setApplications(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        );
+      });
+    }
+    return unsub;
   }, [currentUser]);
 
   const signUp = async (email, password, username, reset2) => {
@@ -199,6 +219,7 @@ export const UserProvider = ({ children }) => {
         deleteDataById,
         isCompany,
         homeLoading,
+        applications,
       }}
     >
       {children}
@@ -240,36 +261,3 @@ export const useDbFetch = (path) => {
   }, [path]);
   return { data, loading };
 };
-
-/*const handleSubmit = async () => {
-  const addImages = async () => {
-    images.forEach((file) => {
-      const storageRef = ref(storage, `images/${file.name}`);
-      uploadBytes(storageRef, file).then(() => {
-        getDownloadURL(storageRef);
-      });
-    });
-    console.log(urls);
-  };
-
-  addImages();
-
-  // const addComapnyDetails = async () => {
-  //   const payload = {
-  //     name: formDetails.name,
-  //     headquatar: formDetails.headquatar,
-  //     about: formDetails.about,
-  //     benefits: formDetails.benefits,
-  //     industry: formDetails.industry,
-  //     website: formDetails.website,
-  //     type: formDetails.type,
-  //     specialities: formDetails.specialities,
-  //     timestamp: serverTimestamp(),
-  //     isVerified: false,
-  //     image: urls,
-  //   };
-  //   await addDoc(collectionRef, payload);
-  // };
-
-  // await awaitedPush(callback);
-};*/

@@ -8,8 +8,7 @@ import {
   Button,
   Skeleton,
 } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+
 import ShareIcon from "@mui/icons-material/Share";
 const PostHeader = ({ title, location, loading }) => {
   return (
@@ -98,9 +97,9 @@ const PostHeader = ({ title, location, loading }) => {
           </>
         )}
       </Box>
-      <Box
+      {/* <Box
         sx={{
-          // border: "1px solid red",
+         
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
@@ -115,14 +114,14 @@ const PostHeader = ({ title, location, loading }) => {
               backgroundColor: "#4045db",
               padding: "5px 28px",
               marginLeft: "6px",
-              // border: "1px solid red",
+             
             }}
             variant="contained"
           >
             follow
           </Button>
         )}
-      </Box>
+      </Box> */}
     </Box>
   );
 };

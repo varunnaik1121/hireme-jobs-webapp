@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@mui/material";
 import { useGlobalUser } from "../../../../context/userContext";
 const ButtonContainer = ({ loading }) => {
-  const { openApplyModal, setIsApplyOpenModal } = useGlobalUser();
+  const { openApplyModal } = useGlobalUser();
   return (
     <Box
       sx={{

@@ -8,8 +8,7 @@ import { useState } from "react";
 import AnimatedPage from "../AnimatedPage";
 import { useEffect } from "react";
 import { useDbFetch } from "../../context/userContext";
-import AppWrap from "../HigherOrderComp/Wrapper";
-import { Navigate } from "react-router";
+
 import NavigationBar from "../Home/NavigationBar";
 import SearchBar from "./SearchBar/App";
 const Jobs = () => {

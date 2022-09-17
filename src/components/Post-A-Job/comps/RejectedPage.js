@@ -7,14 +7,14 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+
 import { db } from "../../../services/firebase";
 import { deleteDoc, doc } from "firebase/firestore";
 import { useState } from "react";
 import Loading from "../../Loading/Loading";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import useStyles from "../../../MaterialTheme/styles";
-import rejectedImage from "../../../assests/pending/rejected.jpg";
+
 const RejectedPage = ({ myCompanyDetails, companyLoading }) => {
   const classes = useStyles();
   console.log(myCompanyDetails);

@@ -17,7 +17,11 @@ const CompanyCard = ({
       sx={{
         padding: "15px 20px",
         boxShadow: "2px 2px 6px rgba(0,0,0,.1)",
-        width: "360px",
+        width: {
+          xs: "350px",
+          md: "360px",
+          sm: "360px",
+        },
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
@@ -26,6 +30,7 @@ const CompanyCard = ({
         height: "170px",
         justifyContent: "center",
         transition: "all .2s",
+
         // border: "1px solid red",
         "&:hover": {
           transform: "scale(.99)",

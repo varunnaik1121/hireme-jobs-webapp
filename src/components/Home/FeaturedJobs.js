@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import Card from "../../components/JobPage/comps/Card";
-import CardComp from "../../components/JobPage/comps/Card";
+
 import FeaturedCard from "./FeaturedCard";
 import { useNavigate } from "react-router";
 import InteractiveBar from "./InteractiveBar";
@@ -17,7 +16,7 @@ const FeaturedJobs = ({ isCompany }) => {
       <Box
         sx={{
           width: "100%",
-          // border: "1px solid red",
+
           padding: "0 15px 20px 15px",
           background: "#f6f7f9",
           marginTop: {
@@ -27,6 +26,7 @@ const FeaturedJobs = ({ isCompany }) => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          maxWidth: "100vw",
         }}
       >
         <Typography

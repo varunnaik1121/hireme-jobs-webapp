@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import HomeIcon from "@mui/icons-material/Home";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+import MarkunreadIcon from "@mui/icons-material/Markunread";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import {
   Tooltip,
@@ -15,12 +15,16 @@ import {
   Avatar,
   Menu,
   Skeleton,
+  Badge,
 } from "@mui/material";
 import { useGlobalUser } from "../../context/userContext";
 import { Link } from "react-router-dom";
-import Loading from "../Loading/Loading";
+
 import { useEffect } from "react";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../../services/firebase";
+import { useState } from "react";
 const arr = [
   { name: "Home", icon: <HomeIcon />, path: "/" },
   { name: "Jobs", icon: <PeopleAltIcon />, path: "/jobs" },
@@ -28,7 +32,7 @@ const arr = [
   { name: "Favourites", icon: <FavoriteBorderIcon />, path: "favourites" },
 ];
 
-export default function ButtonAppBar({ isCompany, loading }) {
+export default function ButtonAppBar({ isCompany, loading, applications }) {
   useEffect(() => {
     handleCloseUserMenu();
   }, []);
@@ -45,6 +49,8 @@ export default function ButtonAppBar({ isCompany, loading }) {
     setAnchorElUser(null);
   };
 
+  console.log({ applications });
+
   return (
     <Box>
       <AppBar
@@ -53,7 +59,11 @@ export default function ButtonAppBar({ isCompany, loading }) {
           py: 2,
           backgroundColor: "#fff",
           color: "#000",
-          width: "100vw",
+          width: {
+            xs: "100%",
+            md: "100vw",
+            sm: "100vw",
+          },
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
@@ -89,10 +99,11 @@ export default function ButtonAppBar({ isCompany, loading }) {
             return (
               <Typography
                 variant="p"
-                component="p"
+                component="a"
                 key={i}
                 sx={{
                   fontFamily: "Poppins,sans-serif",
+                  color: "text.primary",
                   mx: 3,
                   "&:hover": {
                     background: "#4045db",
@@ -103,7 +114,9 @@ export default function ButtonAppBar({ isCompany, loading }) {
                   padding: "4px 14px",
                   transition: "all .3s ease",
                   borderRadius: "2px",
+                  textDecoration: "none",
                 }}
+                href={item.path}
               >
                 {item.name}
               </Typography>
@@ -124,24 +137,6 @@ export default function ButtonAppBar({ isCompany, loading }) {
                   },
                 }}
               >
-                {/* {currentUser?.photoURL ? (
-                <Avatar
-                  src={currentUser?.photoURL.toString()}
-                  sx={{
-                    width: {
-                      xs: 35,
-                      sm: 40,
-                      md: 40,
-                    },
-                    height: {
-                      xs: 35,
-                      sm: 40,
-                      md: 40,
-                    },
-                    bgcolor: "text.secondary",
-                  }}
-                ></Avatar>
-              ) : ( */}
                 <Avatar
                   sx={{
                     width: {
@@ -201,7 +196,7 @@ export default function ButtonAppBar({ isCompany, loading }) {
                       {"profile"}
                     </Typography>
                   </MenuItem>
-                  <MenuItem>
+                  <MenuItem sx={{ display: "flex", alignItems: "center" }}>
                     <Typography
                       textAlign="center"
                       padding={"2px 15px 0 5px"}
@@ -214,9 +209,16 @@ export default function ButtonAppBar({ isCompany, loading }) {
                         fontWeight: 500,
                         color: "text.secondary",
                       }}
+                      onClick={handleCloseUserMenu}
                     >
-                      {"Applications"}
+                      Applications
                     </Typography>
+                    <Badge
+                      badgeContent={(applications && applications.length) || 0}
+                      color="error"
+                    >
+                      <MarkunreadIcon color="action" fontSize="small" />
+                    </Badge>
                   </MenuItem>
                   <MenuItem>
                     <Typography
@@ -307,29 +309,30 @@ export default function ButtonAppBar({ isCompany, loading }) {
             {loading ? (
               <Skeleton
                 width={100}
-                height={50}
+                height={40}
                 sx={{
                   display: {
                     xs: "none",
                     md: "block",
                     sm: "block",
                   },
+                  marginLeft: "10px",
                 }}
+                variant="text"
               ></Skeleton>
             ) : isCompany ? (
               <Button
                 variant="outlined"
                 sx={{
+                  borderRadius: "2px",
+                  padding: "0px 20px",
                   marginLeft: "10px",
                   display: {
                     xs: "none",
-                    sm: "inline",
-                    md: "inline",
+                    sm: "block",
+                    md: "block",
                   },
-                  padding: "4px 15px",
-                  borderRadius: "2px",
                 }}
-                size="small"
                 component={Link}
                 to="/postJob"
               >
@@ -339,14 +342,14 @@ export default function ButtonAppBar({ isCompany, loading }) {
               <Button
                 variant="outlined"
                 sx={{
+                  borderRadius: "2px",
+                  padding: "0px 20px",
                   marginLeft: "10px",
                   display: {
                     xs: "none",
-                    sm: "inline",
-                    md: "inline",
+                    sm: "block",
+                    md: "block",
                   },
-                  padding: "8px 15px",
-                  borderRadius: "2px",
                 }}
                 component={Link}
                 to="/postJob"

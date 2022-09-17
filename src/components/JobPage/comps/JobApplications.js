@@ -1,8 +1,8 @@
-import { Box, Container, Divider, Paper, Typography } from "@mui/material";
+import { Box, Divider, Paper, Typography } from "@mui/material";
 import React from "react";
 import UsersRequestCard from "./UsersRequestCard";
 import { toast } from "react-hot-toast";
-import { compose, styled } from "@mui/system";
+import { styled } from "@mui/system";
 import { useState } from "react";
 import { useEffect } from "react";
 import { collection, onSnapshot, where, query } from "firebase/firestore";
@@ -101,12 +101,10 @@ const JobApplications = () => {
           </Typography>
           <Box
             sx={{
-              // border: "1px solid red",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               flexDirection: "column",
-
               margin: "0 auto",
               boxShadow: "0px 0px 4px rgba(0,0,0,.15)",
             }}
@@ -124,9 +122,7 @@ const JobApplications = () => {
                   sm: "4px 20px",
                   md: "6px 25px",
                 },
-
                 display: "flex",
-                border: "1px solid rgba(0,0,0,.1)",
               }}
             >
               <StyledBox>Details</StyledBox>

@@ -5,7 +5,6 @@ import {
   Card,
   CardMedia,
   IconButton,
-  Paper,
   Typography,
 } from "@mui/material";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
@@ -17,13 +16,13 @@ import { db, storage } from "../../../../services/firebase";
 import { serverTimestamp } from "firebase/firestore";
 import TextBox from "../TextBox";
 import Loading from "../../../Loading/Loading";
-import { useGlobalUser } from "../../../../context/userContext";
+
 import imageCompression from "browser-image-compression";
 
 const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
   const [images, setImages] = useState([]);
   const [companyImage, setCompanyImage] = useState(null);
-  const { setIsFormSubmitted } = useGlobalUser();
+
   const USER_ID = auth.currentUser.uid;
   const [loading, setLoading] = useState(false);
   const collectionRef = collection(db, "requests");
@@ -68,7 +67,7 @@ const Step3 = ({ formDetails, onChange, handlePrevClick }) => {
 
     try {
       const promises = [];
-      //compressing profiel picture
+     
 
       for (var i = 0; i < images.length; i++) {
         const file = images[i];

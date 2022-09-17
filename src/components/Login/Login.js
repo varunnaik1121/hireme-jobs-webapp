@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import AnimatedPage from "../AnimatedPage";
 const Login = () => {
-  // const { currentUser } = useContext(userContext);
+
   const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
 

@@ -14,7 +14,7 @@ const CompaniesPage = () => {
       <Box
         sx={{
           width: "100vw",
-          minHeight: "100vh",
+          minHeight: "90vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",

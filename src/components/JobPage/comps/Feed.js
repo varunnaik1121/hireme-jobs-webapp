@@ -9,12 +9,7 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { useState, useEffect } from "react";
-import {
-  motion,
-  AnimatePresence,
-  LayoutGroup,
-  AnimateSharedLayout,
-} from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import CardComp from "./Card";
 const Feed = ({
   data,
@@ -112,12 +107,8 @@ const Feed = ({
               lg: "flex-start",
             },
             alignItems: "center",
-            // display: "grid",
-            // gridTemplateColumns: "repeat(autoFit,minmax(340px,1fr))",
           }}
           component={motion.div}
-          // animate={{ opacity: 1 }}
-          // initial={{ opacity: 0 }}
         >
           {" "}
           <AnimatePresence>

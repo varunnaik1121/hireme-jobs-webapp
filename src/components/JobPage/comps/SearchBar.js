@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, styled, Typography } from "@mui/material";
 import * as React from "react";
-import Checkbox from "@mui/material/Checkbox";
+
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import SearchIcon from "@mui/icons-material/Search";

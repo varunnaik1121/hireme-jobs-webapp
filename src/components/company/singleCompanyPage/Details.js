@@ -49,21 +49,7 @@ export default function Details({
   title,
   loading,
 }) {
-  const Primarycolor = "#4045db";
   const [value, setValue] = React.useState(0);
-
-  // const [details, setDetails] = React.useState({
-  //   company: "Microsoft",
-  //   Location: "Delhi,India",
-  //   industry: "Software-Development",
-  //   Headquatars: "sagar,karnataka",
-  //   WebsiteLink: "www.justexample.com",
-  //   Benifits: "coffee,movies,money,gym",
-  //   specialities: "US Branch",
-  //   WorkType: "offline",
-  //   overview:
-  //     "computing, computer software, quantum computing, e-commerce, artificial intelligence,[9] and consumer electronics. It has been referred to as the most powerful company in the world and one of the world's most valuable brands due to its market dominance, data collection, and technological advantages in the area of artificial intelligence.[11][12][13] It is considered one of the Big Five American information technology companies, alongside Amazon, Apple, Meta, and Microsoft.",
-  // });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -128,7 +114,12 @@ export default function Details({
               fontWeight={600}
               textAlign="center"
               fontSize={14}
-              sx={{ padding: "10px" }}
+              sx={{
+                padding: "10px",
+                marginTop: "15px",
+                color: "text.secondary",
+                fontSize: 16,
+              }}
             >
               Jobs posted by {title}
             </Typography>

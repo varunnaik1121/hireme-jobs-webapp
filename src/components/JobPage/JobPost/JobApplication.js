@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import AutoComplete from "./AutoComplete";
@@ -10,9 +10,11 @@ import Button from "@mui/material/Button";
 import { Typography, Card } from "@mui/material";
 import { db } from "../../../services/firebase";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 const JobApplication = ({ myCompanyDetails }) => {
+  const navigate = useNavigate();
   const [jobTitle, setJobTitle] = useState("");
   const [location, setLocation] = useState("");
   const [salary, setSalary] = React.useState("");
@@ -23,7 +25,7 @@ const JobApplication = ({ myCompanyDetails }) => {
   const [keywords, setKeyWords] = React.useState([]);
   const [reqirements, setReqirements] = React.useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [jobPosted, setJobPosted] = useState(false);
   const setDefaultValues = () => {
     setJobTitle("");
     setLocation("");
@@ -35,6 +37,15 @@ const JobApplication = ({ myCompanyDetails }) => {
     setEmpType("");
     setWorkType("");
   };
+
+  if (jobPosted) {
+    return (
+      <Box sx={{ padding: "30px 0", marginTop: "30px" }}>
+        <Typography>Job posted successfully</Typography>
+        <Button onClick={() => navigate("/")}>continue</Button>
+      </Box>
+    );
+  }
   const addJobToFirebase = async () => {
     if (jobTitle && location && workType && overView && keywords) {
       setLoading(true);
@@ -56,16 +67,19 @@ const JobApplication = ({ myCompanyDetails }) => {
           overview: overView,
           experience: workType,
           companyProfile: myCompanyDetails.companyProfile,
+          coverPhoto: "",
         };
         const data = await addDoc(collectionRef, payload);
         console.log(data);
         setLoading(false);
         toast.success("job posted successfully");
         setDefaultValues();
+        setJobPosted(true);
       } catch (err) {
         toast.error("something went wrong");
       }
     } else {
+      toast.dismiss();
       toast.error("please fill all the fields");
     }
   };

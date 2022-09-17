@@ -1,22 +1,14 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+
 import Grid from "@mui/material/Grid";
-import Select from "@mui/material/Select";
+
 import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import { useForm } from "react-hook-form";
+
 import { Typography } from "@mui/material";
-import { InputBase, FormControl, FormHelperText } from "@mui/material";
+import { InputBase } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import top100Films from "./data";
-import countris from "./countries";
-import Button from "@mui/material/Button";
 
 const MultiType = ({ setReqirements, setKeyWords, reqirements, keywords }) => {
   const inputfocus = React.useRef(null);

@@ -20,10 +20,12 @@ import { storage } from "../../../services/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import Loading from "../../Loading/Loading";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 import QuotesLoading from "../../Loading/QuotesLoading";
 const CompanyProfile = () => {
   const { currentUser } = useGlobalUser();
   const [change, setChange] = useState(false);
+  const navigate = useNavigate();
   const [details, setDetails] = useState({
     name: "",
 
@@ -63,16 +65,27 @@ const CompanyProfile = () => {
   };
 
   useEffect(() => {
-    setFetchLoading(true);
-    const collectionRef = collection(db, "companies");
-    const q = query(collectionRef, where("companyId", "==", currentUser?.uid));
-    const unsub = onSnapshot(q, (snapshot) => {
-      setMyCompanyDetails(
-        snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0]
+    if (!currentUser) {
+      navigate("/");
+    }
+  }, []);
+  useEffect(() => {
+    let unsub;
+    if (currentUser) {
+      setFetchLoading(true);
+      const collectionRef = collection(db, "companies");
+      const q = query(
+        collectionRef,
+        where("companyId", "==", currentUser?.uid)
       );
-      setFetchLoading(false);
-    });
-    return () => unsub();
+      unsub = onSnapshot(q, (snapshot) => {
+        setMyCompanyDetails(
+          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0]
+        );
+        setFetchLoading(false);
+      });
+    }
+    return unsub;
   }, []);
 
   useEffect(() => {
@@ -210,7 +223,11 @@ const CompanyProfile = () => {
   };
 
   if (loading) {
-    return <QuotesLoading />;
+    return (
+      <Box sx={{ width: "100vw", minHeight: "90vh" }}>
+        <Loading width={40} height={40} color="#4045db" />
+      </Box>
+    );
   }
   return (
     <Box sx={{ width: "100vw", minHeight: "100vh" }}>

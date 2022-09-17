@@ -1,14 +1,5 @@
-import { Box, cardActionsClasses, Skeleton } from "@mui/material";
-import {
-  arrayRemove,
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
+import { Box, Typography } from "@mui/material";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useGlobalUser } from "../../../context/userContext";
@@ -17,7 +8,7 @@ import CardComp from "../../JobPage/comps/Card";
 import Loading from "../../Loading/Loading";
 
 const CompanyJobs = ({ companyId }) => {
-  const [users, setUsers] = useState(null);
+  // const [users, setUsers] = useState(null);
   const { currentUser } = useGlobalUser();
   console.log({ uid: currentUser.uid });
   const [isOwner, setIsOwner] = useState(false);
@@ -45,8 +36,14 @@ const CompanyJobs = ({ companyId }) => {
   }, [companyId, currentUser]);
 
   //code for removing favourites from all the users collection
+  if (!loading && jobs?.length === 0) {
+    return (
+      <Typography sx={{ fontWeight: 600, padding: "20px 0" }}>
+        no jobs found
+      </Typography>
+    );
+  }
 
-  
   return (
     <Box
       sx={{

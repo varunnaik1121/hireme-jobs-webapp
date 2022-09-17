@@ -1,16 +1,16 @@
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home";
-import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+
 import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
-import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
+
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import Box from "@mui/material/Box";
 import ApartmentIcon from "@mui/icons-material/Apartment";
-import InfoIcon from "@mui/icons-material/Info";
+
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import { FavoriteBorderOutlined } from "@mui/icons-material";
+
+import FavoriteIcon from "@mui/icons-material/Favorite";
 function NavigationBar({ widthbar }) {
   const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ function NavigationBar({ widthbar }) {
     { name: "Companies", icon: <ApartmentIcon />, path: "/companies" },
     {
       name: "Favourites",
-      icon: <FavoriteBorderOutlined />,
+      icon: <FavoriteIcon />,
       path: "/favourites",
     },
   ];

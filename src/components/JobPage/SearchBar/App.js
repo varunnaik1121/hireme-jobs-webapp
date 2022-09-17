@@ -5,7 +5,9 @@ import useDebounce from "../../../Hooks/useDebounce";
 import { useState } from "react";
 import { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import { Close } from "@mui/icons-material";
+import { SearchOffOutlined } from "@mui/icons-material";
+import SearchIcon from "@mui/icons-material/Search";
+
 function App({ data, setTotalJobs }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
@@ -87,9 +89,10 @@ function App({ data, setTotalJobs }) {
               fontSize: "16px",
               border: "1px solid #ccc",
               borderRadius: "6px",
-              boxShadow: "1px 1px 6px rgba(0,0,0,.1)",
+              boxShadow: "1px 1px 4px rgba(0,0,0,.1)",
               background: "#fff",
             }}
+            placeholder="Search Jobs here"
             onChange={(e) => {
               setSearchTerm(e.target.value);
             }}
@@ -99,10 +102,15 @@ function App({ data, setTotalJobs }) {
           <IconButton
             sx={{
               position: "absolute",
-              right: "100px",
+              right: {
+                xs: "20%",
+                sm: "16%",
+                md: "16%",
+              },
               zIndex: 10000,
 
-              top: "5px",
+              top: "50%",
+              transform: "translateY(-50%)",
             }}
             onClick={() => setSearchTerm("")}
           >
@@ -116,11 +124,33 @@ function App({ data, setTotalJobs }) {
               right: 0,
               bottom: 0,
               borderRadius: 0,
+              display: {
+                xs: "none",
+                sm: "block",
+                md: "block",
+              },
             }}
             type="submit"
           >
             Find Job
           </Button>
+          <Button
+            variant="contained"
+            sx={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              borderRadius: 0,
+              display: {
+                xs: "block",
+                sm: "none",
+                md: "none",
+              },
+            }}
+            type="submit"
+            endIcon={<SearchIcon />}
+          ></Button>
         </Box>
         <Card
           sx={{

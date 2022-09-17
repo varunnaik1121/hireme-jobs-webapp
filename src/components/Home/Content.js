@@ -7,8 +7,7 @@ import copy from "../../assests/HomePageImages/copy.png";
 
 import { Grid } from "@mui/material";
 import FeaturedJobs from "./FeaturedJobs";
-import { motion } from "framer-motion";
-import PopularCompanies from "./PopularCompanies";
+
 export default function Content({ isCompany }) {
   return (
     <React.Fragment>
@@ -28,9 +27,15 @@ export default function Content({ isCompany }) {
           container
           direction="row"
           alignItems="center"
-          sx={{ minHeight: "90vh" }}
+          sx={{ minHeight: "90vh", maxWidth: "100vw" }}
         >
-          <Grid item xs={12} sm={6} order={{ xs: 2, sm: 1 }}>
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            order={{ xs: 2, sm: 1 }}
+            sx={{ maxWidth: "100vw" }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -51,7 +56,6 @@ export default function Content({ isCompany }) {
                     sm: "45px",
                     md: "55px",
                   },
-                  //   border: "1px solid red",
                 }}
                 variant="h3"
                 component="h3"
@@ -74,9 +78,9 @@ export default function Content({ isCompany }) {
                 sx={{
                   maxWidth: "80%",
                   color: "text.secondary",
-                  //   border: "1px solid red",
+
                   margin: "10px auto",
-                  color: "text.secondary",
+
                   fontWeight: 500,
                 }}
                 variant="p"
@@ -94,6 +98,7 @@ export default function Content({ isCompany }) {
             sm={6}
             justifyContent="center"
             order={{ xs: 2, sm: 2 }}
+            sx={{ maxWidth: "100vw" }}
           >
             <Box
               sx={{
@@ -106,7 +111,7 @@ export default function Content({ isCompany }) {
                 backgroundSize: "cover",
                 objectFit: "contain",
                 marginTop: {
-                  xs: 0,
+                  xs: "-40px",
                   md: 0,
                 },
               }}

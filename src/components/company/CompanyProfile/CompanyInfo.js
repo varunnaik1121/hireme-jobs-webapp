@@ -5,7 +5,6 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Button,
   Skeleton,
 } from "@mui/material";
 const CompanyInfo = ({ onChange, change, name, headquatar, id }) => {

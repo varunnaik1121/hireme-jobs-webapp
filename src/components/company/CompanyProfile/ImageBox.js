@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React, { useState } from "react";
 import { Skeleton } from "@mui/material";
 import { useEffect } from "react";
@@ -109,7 +109,7 @@ const ImageBox = ({
                     ? URL.createObjectURL(companyCoverPhoto)
                     : coverPhoto
                 }
-                alt="no-image"
+                alt="cover"
               />
             </Box>
           </>
@@ -151,8 +151,6 @@ const ImageBox = ({
                       // border: "1px solid rgba(0,0,0,.1)",
                       margin: "20px 0 0 50px",
                       padding: "10px",
-
-                      // border: "1px solid red",
                     }}
                     component={"label"}
                   >

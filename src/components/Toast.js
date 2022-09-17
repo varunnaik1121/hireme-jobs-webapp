@@ -9,7 +9,7 @@ const Toast = () => {
       containerClassName=""
       containerStyle={{}}
       toastOptions={{
-        // Define default options
+     
         className: "",
         duration: 3000,
         style: {
@@ -17,7 +17,7 @@ const Toast = () => {
           color: "#363636",
           fontSize: "12px",
         },
-        // Default options for specific types
+        
         success: {
           duration: 3000,
           theme: {

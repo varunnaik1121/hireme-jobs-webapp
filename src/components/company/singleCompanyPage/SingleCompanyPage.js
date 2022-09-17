@@ -1,4 +1,4 @@
-import { Box, Skeleton, Tabs } from "@mui/material";
+import { Box } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 import "./App.css";
@@ -8,7 +8,7 @@ import { useState } from "react";
 import ImageBox from "./ImageBox";
 import PostHeader from "./PostHeader";
 import Details from "./Details";
-import { doc, getDoc, query } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../services/firebase";
 
 const SingleCompanyPage = () => {
@@ -28,19 +28,6 @@ const SingleCompanyPage = () => {
         console.log(err);
       });
   }, [id]);
-
-  // useEffect(() => {
-
-  //     const collectionRef = collection(db, "companies");
-  //     const q = query(collectionRef, where("companyId", "==", data?.companyId));
-  //     const unsub = onSnapshot(q, (snapshot) => {
-  //       setCompanyDetails(
-  //         snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-  //       );
-  //       setLoading(false);
-  //       return ()=>unsub()
-
-  // }, [data]);
 
   return (
     <Box

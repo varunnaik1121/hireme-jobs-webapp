@@ -3,7 +3,7 @@ import { Avatar, Card } from "@mui/material";
 import { Typography, Box } from "@mui/material";
 import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
-import { useNavigate } from "react-router";
+
 const FeaturedCard = ({ image, title, about, location, time, onClick }) => {
   return (
     <Card
@@ -11,7 +11,7 @@ const FeaturedCard = ({ image, title, about, location, time, onClick }) => {
       sx={{
         width: "250px",
         height: "250px",
-        // border: "1px solid red",
+      
         padding: "20px 25px",
         boxShadow: "2px 2px 10px rgba(0,0,0,.1)",
         margin: "10px 15px",
@@ -48,7 +48,7 @@ const FeaturedCard = ({ image, title, about, location, time, onClick }) => {
         fontSize={12}
         sx={{
           color: "text.secondary",
-          //   border: "1px solid red",
+         
           textAlign: "left",
           lineHeight: "20px",
           overflow: "scroll",

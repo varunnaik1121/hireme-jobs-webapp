@@ -3,14 +3,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* font-family: "Poppins", sans-serif; */
-  /* font-family: "Ubuntu", sans-serif; */
-  /* border: 1px solid green; */
-  /* font-family: 'Jost', sans-serif; */
+
 }
 
 .new{
-  /* color: rgb(87, 87, 87); */
+
     border: none;
     background-color: transparent;
 }

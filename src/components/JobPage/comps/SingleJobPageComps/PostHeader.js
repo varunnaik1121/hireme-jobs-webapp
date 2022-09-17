@@ -5,7 +5,6 @@ import {
   IconButton,
   Tooltip,
   Typography,
-  Button,
   Skeleton,
 } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -13,19 +12,19 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { useGlobalUser } from "../../../../context/userContext";
-import { Link } from "react-router-dom";
+
 const PostHeader = ({
   title,
   companyName,
   location,
-  timestamp,
+
   experience,
   workLevel,
   workType,
   salary,
   loading,
   myFavourites,
-  companyId,
+
   id,
   time,
   companyDocId,

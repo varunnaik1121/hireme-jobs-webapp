@@ -1,29 +1,16 @@
 import { Box, Button, Container, Typography } from "@mui/material";
-import { collection, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useGlobalUser } from "../../context/userContext";
 import { db } from "../../services/firebase";
 import CardComp from "../../components/JobPage/comps/Card";
+import Loading from "../Loading/Loading";
 const Favourites = () => {
   const { currentUser } = useGlobalUser();
   const [favouriteJobs, setFavouriteJobs] = useState([]);
   const [loading, setLoading] = useState(false);
-  //   const [ids, setIds] = useState([]);
-  //   useEffect(() => {
-  //     const getIds = async () => {
-  //       try {
-  //         const docRef = doc(db, `users/${currentUser.uid}`);
-  //         const data = await getDoc(docRef);
-
-  //         setIds(data.data()?.favourites);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     };
-  //     getIds();
-  //   }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -55,6 +42,23 @@ const Favourites = () => {
   }, []);
 
   console.log({ favouriteJobs });
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          width: "100vw",
+          minHeight: "90vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Loading width={40} height={40} color="#4045db">
+          loading...
+        </Loading>
+      </Box>
+    );
+  }
 
   if (!loading && favouriteJobs.length == 0) {
     return (

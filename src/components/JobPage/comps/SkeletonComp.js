@@ -7,7 +7,7 @@ const SkeletonComp = ({ variant, width, height }) => {
       variant={variant}
       width={width}
       height={height}
-      //   animation="wave"
+      
       sx={{ marginRight: "5px" }}
     />
   );

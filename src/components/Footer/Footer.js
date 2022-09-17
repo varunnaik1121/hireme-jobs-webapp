@@ -1,6 +1,6 @@
 import { Box, Container, IconButton, Typography } from "@mui/material";
 import React from "react";
-import InstagramIcon from "@mui/icons-material/Instagram";
+
 import instagram from "../../assests/footerImages/instagram.png";
 import gmail from "../../assests/footerImages/gmail.png";
 import CopyrightIcon from "@mui/icons-material/Copyright";
@@ -10,7 +10,7 @@ const Footer = () => {
       maxWidth="md"
       sx={{
         padding: "30px 0",
-        // border: "1px solid red",
+      
 
         marginBottom: {
           xs: "40px",
@@ -18,7 +18,7 @@ const Footer = () => {
           md: "0",
         },
         width: "100%",
-        // border: "1px solid red",
+       
         overflowX: "hidden",
       }}
     >

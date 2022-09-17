@@ -12,6 +12,7 @@ const Testimonials = () => {
         display: "flex",
         flexDirection: "column",
         padding: "20px",
+        maxWidth: "100vw",
       }}
     >
       <Typography

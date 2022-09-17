@@ -8,7 +8,7 @@ import PostJobPage from "./Post-A-Job/PostJobPage";
 import SingleJobPage from "./JobPage/comps/SingleJobPage";
 import { useNavigate } from "react-router-dom";
 import JobApplications from "./JobPage/comps/JobApplications";
-import Dummy from "../Dummy";
+
 import Navbar from "../components/Header/Navbar";
 import { useGlobalUser } from "../context/userContext";
 import Footer from "./Footer/Footer";
@@ -23,7 +23,7 @@ const CompaniesPage = React.lazy(() => import("./company/CompaniesPage"));
 
 const AnimatedRoutes = ({ currentUser }) => {
   const navigate = useNavigate();
-  const { isCompany, homeLoading } = useGlobalUser();
+  const { isCompany, homeLoading, applications } = useGlobalUser();
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
@@ -46,7 +46,11 @@ const AnimatedRoutes = ({ currentUser }) => {
         </div>
       }
     >
-      <Navbar isCompany={isCompany} loading={homeLoading} />
+      <Navbar
+        isCompany={isCompany}
+        loading={homeLoading}
+        applications={applications}
+      />
       <Routes key={location.pathname} location={location}>
         <Route path="/login" element={<Login />}></Route>
         <Route
@@ -67,7 +71,7 @@ const AnimatedRoutes = ({ currentUser }) => {
         <Route path="/jobDetails/:id" element={<SingleJobPage />}></Route>
         <Route path="/jobApplications" element={<JobApplications />}></Route>
         <Route path="/companies" element={<CompaniesPage />}></Route>
-        <Route path="/dummy" element={<Dummy />}></Route>
+
         <Route path="/postJob" element={<PostJobPage />}></Route>
         <Route path="/company/:id" element={<App />}></Route>
         <Route path="/favourites" element={<Favourites />}></Route>

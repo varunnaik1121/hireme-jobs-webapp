@@ -1,6 +1,6 @@
 import React from "react";
-import { Box, IconButton, Skeleton, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, Skeleton, Typography } from "@mui/material";
+
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 const Skills = ({ skills, loading }) => {
   return (
@@ -29,7 +29,7 @@ const Skills = ({ skills, loading }) => {
                 <Box
                   sx={{
                     width: "100%",
-                    // border: "1px solid red",
+                 
                     display: "flex",
                     alignItems: "center",
                   }}

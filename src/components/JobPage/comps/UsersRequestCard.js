@@ -52,7 +52,7 @@ const UsersRequestCard = ({ name, email, resume, id }) => {
     <Box
       sx={{
         width: "100%",
-        // border: "1px solid red",
+       
 
         display: "flex",
         alignItems: "center",
@@ -64,9 +64,10 @@ const UsersRequestCard = ({ name, email, resume, id }) => {
           flex: 1,
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-start",
-          border: "1px solid red",
+          justifyContent: "center",
+
           textAlign: "left",
+          alignItems: "center",
 
           padding: {
             xs: "4px",
@@ -136,6 +137,7 @@ const UsersRequestCard = ({ name, email, resume, id }) => {
           anchorEl={anchorEl}
           open={open}
           onClose={handleClose}
+          onClick={handleClose}
           MenuListProps={{
             "aria-labelledby": "basic-button",
           }}

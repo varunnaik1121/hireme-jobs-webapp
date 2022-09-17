@@ -13,9 +13,10 @@ body {
 }
 *{
    font-family: 'Poppins', sans-serif;
-  /* font-family: 'ibm-plex-sans', sans-serif;  */
-  /* font-family: 'Times New Roman', Times, serif; */
-  /* font-family: "San Francisco"; */
+   padding: 0;
+   margin: 0;
+   box-sizing: border-box;
+
 
 }
 

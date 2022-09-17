@@ -38,7 +38,7 @@ const ImageBox = ({ companyProfile, companyCoverPhoto, loading }) => {
               companyCoverPhoto ||
               "https://images.unsplash.com/photo-1549032305-07743102559d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1185&q=80"
             }
-            alt="no image available"
+            alt="not available"
             style={{
               width: "100%",
               height: "100%",

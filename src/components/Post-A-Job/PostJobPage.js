@@ -16,14 +16,7 @@ import JobApplication from "../JobPage/JobPost/JobApplication";
 import { useEffect } from "react";
 import { db } from "../../services/firebase";
 
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  onSnapshot,
-  doc,
-} from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 
 import Loading from "../Loading/Loading";
 
@@ -74,47 +67,26 @@ const PostJobPage = React.memo(({ currentUser }) => {
     ],
   });
 
-  // useEffect(() => {
-  //   setLoading(true);
-
-  //   const getData = async () => {
-  //     try {
-  //       const q = query(
-  //         collection(db, "requests"),
-  //         where("companyId", "==", currentUser?.uid)
-  //       );
-  //       const querySnapshot = await getDocs(q);
-  //       querySnapshot.forEach((doc) => {
-  //         // doc.data() is never undefined for query doc snapshots
-  //         setMyCompanyDetails({ ...doc.data(), id: doc.id });
-  //       });
-  //       setLoading(false);
-  //     } catch (err) {
-  //       console.log(err);
-  //       setLoading(true);
-  //     }
-  //   };
-
-  //   getData();
-  // }, []);
-
   useEffect(() => {
-    setLoading(true);
-    const q = query(
-      collection(db, "requests"),
-      where("companyId", "==", currentUser?.uid)
-    );
-    const unsub = onSnapshot(q, (snapshot) => {
-      if (snapshot) {
-        setMyCompanyDetails(
-          snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-        );
-      } else {
-        setMyCompanyDetails(null);
-      }
-      setLoading(false);
-    });
-    return () => unsub();
+    let unsub;
+    if (currentUser) {
+      setLoading(true);
+      const q = query(
+        collection(db, "requests"),
+        where("companyId", "==", currentUser?.uid)
+      );
+      unsub = onSnapshot(q, (snapshot) => {
+        if (snapshot) {
+          setMyCompanyDetails(
+            snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          );
+        } else {
+          setMyCompanyDetails(null);
+        }
+        setLoading(false);
+      });
+    }
+    return unsub;
   }, []);
 
   console.log(myCompanyDetails && myCompanyDetails?.status);
